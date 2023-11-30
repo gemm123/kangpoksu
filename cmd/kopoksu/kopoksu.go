@@ -1,15 +1,17 @@
 package main
 
 import (
+	"log"
+	"template/config"
+	"template/internal/handler"
+	"template/internal/repository"
+	"template/internal/service"
+	"template/middleware"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"log"
-	"template/config"
-	"template/internal/handler"
-	"template/internal/service"
-	"template/middleware"
 )
 
 func main() {
@@ -24,8 +26,15 @@ func main() {
 	}
 	defer config.CloseDB(db)
 
+	//Repository
+	productRepository := repository.NewProductRepository(db)
+
+	//Service
 	adminService := service.NewAdminService()
-	dashboardHandler := handler.NewDashboardHandler(adminService)
+	productService := service.NewProductService(productRepository)
+
+	//Handler
+	dashboardHandler := handler.NewDashboardHandler(adminService, productService)
 
 	router := gin.Default()
 
@@ -46,6 +55,7 @@ func main() {
 
 	dashboard.Use(middleware.AuthAdmin())
 	dashboard.GET("/home", dashboardHandler.Home)
+	dashboard.GET("/products/formula-milks", dashboardHandler.GetAllProductFormulaMilk)
 
 	router.Run()
 }
