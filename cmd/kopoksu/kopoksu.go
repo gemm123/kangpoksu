@@ -56,6 +56,7 @@ func main() {
 	dashboard.Use(middleware.AuthAdmin())
 	dashboard.GET("/home", dashboardHandler.Home)
 	dashboard.GET("/products/formula-milks", dashboardHandler.GetAllProductFormulaMilk)
+	dashboard.GET("/products/formula-milks/create", dashboardHandler.CreateProductFormulaMilk)
 
 	router.Run()
 }

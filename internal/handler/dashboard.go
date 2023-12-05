@@ -39,6 +39,7 @@ func (h *dashboardHandler) PostLogin(ctx *gin.Context) {
 	ok := h.adminService.CheckCredentials(admin.Email, admin.Password)
 	if !ok {
 		log.Println("wrong credentials")
+		ctx.HTML(http.StatusOK, "dashboard-login.html", gin.H{})
 		return
 	}
 
@@ -77,6 +78,12 @@ func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-milk.html", gin.H{
 		"data": formulaMilks,
 	})
+
+	return
+}
+
+func (h *dashboardHandler) CreateProductFormulaMilk(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "dashboard-product-formula-mlik-create.html", gin.H{})
 
 	return
 }
