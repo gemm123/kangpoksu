@@ -38,7 +38,8 @@ func main() {
 
 	router := gin.Default()
 
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob("web/templates/*")
+	router.Static("/static", "./web/static")
 
 	store := cookie.NewStore([]byte("kopoksu"))
 	store.Options(sessions.Options{
@@ -57,6 +58,7 @@ func main() {
 	dashboard.GET("/home", dashboardHandler.Home)
 	dashboard.GET("/products/formula-milks", dashboardHandler.GetAllProductFormulaMilk)
 	dashboard.GET("/products/formula-milks/create", dashboardHandler.CreateProductFormulaMilk)
+	dashboard.POST("/products/formula-milks/create", dashboardHandler.PostCreateProductFormulaMilk)
 
 	router.Run()
 }

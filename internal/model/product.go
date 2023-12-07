@@ -9,10 +9,11 @@ import (
 type Product struct {
 	Id          uuid.UUID `gorm:"column:id"`
 	CategoryId  uuid.UUID `gorm:"column:category_id"`
-	Name        string    `gorm:"column:name"`
-	Description string    `gorm:"column:description"`
-	Quantity    int       `gorm:"column:quantity"`
-	Price       int       `gorm:"column:price"`
+	Name        string    `gorm:"column:name" form:"product-name"`
+	Description string    `gorm:"column:description" form:"description"`
+	Quantity    int       `gorm:"column:quantity" form:"quantity"`
+	Price       int       `gorm:"column:price" form:"price"`
+	Image       string    `gorm:"column:image"`
 	CreatedAt   time.Time `gorm:"column:created_at"`
 	UpdatedAt   time.Time `gorm:"column:updated_at"`
 }

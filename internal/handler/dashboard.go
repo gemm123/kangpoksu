@@ -3,11 +3,13 @@ package handler
 import (
 	"log"
 	"net/http"
+	"path/filepath"
 	"template/internal/model"
 	"template/internal/service"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type dashboardHandler struct {
@@ -84,6 +86,40 @@ func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
 
 func (h *dashboardHandler) CreateProductFormulaMilk(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-mlik-create.html", gin.H{})
+
+	return
+}
+
+func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
+	var formulaMilk model.Product
+
+	if err := ctx.ShouldBind(&formulaMilk); err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	file, err := ctx.FormFile("image")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	extension := filepath.Ext(file.Filename)
+	nameFile := uuid.NewString() + extension
+	destination := "web/static/images/uploads/" + nameFile
+
+	if err := ctx.SaveUploadedFile(file, destination); err != nil {
+		log.Println("An error occurred: ", err.Error())
+	}
+
+	formulaMilk.Image = "/static/images/uploads/" + nameFile
+
+	if err := h.productService.SaveProductFormulaMilk(formulaMilk); err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
 
 	return
 }
