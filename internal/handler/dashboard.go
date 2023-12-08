@@ -26,7 +26,6 @@ func NewDashboardHandler(adminService service.AdminService, productService servi
 
 func (h *dashboardHandler) Login(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-login.html", gin.H{})
-	return
 }
 
 func (h *dashboardHandler) PostLogin(ctx *gin.Context) {
@@ -50,8 +49,6 @@ func (h *dashboardHandler) PostLogin(ctx *gin.Context) {
 	session.Save()
 
 	ctx.Redirect(http.StatusFound, "/dashboard/home")
-
-	return
 }
 
 func (h *dashboardHandler) Logout(ctx *gin.Context) {
@@ -61,13 +58,10 @@ func (h *dashboardHandler) Logout(ctx *gin.Context) {
 	session.Save()
 
 	ctx.Redirect(http.StatusFound, "/dashboard/login")
-
-	return
 }
 
 func (h *dashboardHandler) Home(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-home.html", gin.H{})
-	return
 }
 
 func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
@@ -80,14 +74,10 @@ func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-milk.html", gin.H{
 		"data": formulaMilks,
 	})
-
-	return
 }
 
 func (h *dashboardHandler) CreateProductFormulaMilk(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-mlik-create.html", gin.H{})
-
-	return
 }
 
 func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
@@ -110,6 +100,7 @@ func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
 
 	if err := ctx.SaveUploadedFile(file, destination); err != nil {
 		log.Println("An error occurred: ", err.Error())
+		return
 	}
 
 	formulaMilk.Image = "/static/images/uploads/" + nameFile
@@ -120,6 +111,16 @@ func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
 	}
 
 	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
+}
 
-	return
+func (h *dashboardHandler) DeleteProduct(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	if err := h.productService.DeleteProduct(id); err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
 }

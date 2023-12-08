@@ -3,6 +3,7 @@ package repository
 import (
 	"template/internal/model"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -13,6 +14,8 @@ type productRepository struct {
 type ProductRepository interface {
 	GetAllProductsFormulaMilk() ([]model.Product, error)
 	SaveProductFormulaMilk(formulaMilk model.Product) error
+	DeleteProduct(product model.Product) error
+	GetProductById(id uuid.UUID) (model.Product, error)
 }
 
 func NewProductRepository(DB *gorm.DB) *productRepository {
@@ -30,4 +33,14 @@ func (r *productRepository) GetAllProductsFormulaMilk() ([]model.Product, error)
 func (r *productRepository) SaveProductFormulaMilk(formulaMilk model.Product) error {
 	err := r.DB.Create(&formulaMilk).Error
 	return err
+}
+
+func (r *productRepository) DeleteProduct(product model.Product) error {
+	return r.DB.Delete(&product).Error
+}
+
+func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) {
+	var product model.Product
+	err := r.DB.First(&product, "id = ?", id).Error
+	return product, err
 }

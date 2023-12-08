@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+	"os"
 	"template/internal/model"
 	"template/internal/repository"
 	"time"
@@ -15,6 +17,7 @@ type productService struct {
 type ProductService interface {
 	GetAllProductsFormulaMilk() ([]model.Product, error)
 	SaveProductFormulaMilk(formulaMilk model.Product) error
+	DeleteProduct(id uuid.UUID) error
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -34,4 +37,27 @@ func (s *productService) SaveProductFormulaMilk(formulaMilk model.Product) error
 	formulaMilk.UpdatedAt = time.Now()
 
 	return s.productRepository.SaveProductFormulaMilk(formulaMilk)
+}
+
+func (s *productService) DeleteProduct(id uuid.UUID) error {
+	product, err := s.productRepository.GetProductById(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	imageDir := "./web"
+	imagePath := imageDir + product.Image
+
+	if err := os.Remove(imagePath); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	if err := s.productRepository.DeleteProduct(product); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
 }

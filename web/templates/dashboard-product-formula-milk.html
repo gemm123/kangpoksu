@@ -15,6 +15,9 @@
                 {{ .Description }} <br>
                 {{ .Price }} <br>
                 {{ .Quantity }} <br>
+                <form action="/dashboard/products/delete/{{.Id}}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
             </li>
         {{ end }}
     </ol>
