@@ -113,12 +113,61 @@ func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
 }
 
-func (h *dashboardHandler) DeleteProduct(ctx *gin.Context) {
+func (h *dashboardHandler) DeleteProductFormulaMilk(ctx *gin.Context) {
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
 	if err := h.productService.DeleteProduct(id); err != nil {
 		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
+}
+
+func (h *dashboardHandler) EditProductFormulaMilk(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	product, err := h.productService.EditProduct(id)
+	if err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "dashboard-product-formula-milk-edit.html", gin.H{
+		"data": product,
+	})
+}
+
+func (h *dashboardHandler) UpdateProductFormulaMilk(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	var newProduct model.Product
+
+	if err := ctx.ShouldBind(&newProduct); err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	file, _ := ctx.FormFile("image")
+
+	if file != nil {
+		extension := filepath.Ext(file.Filename)
+		nameFile := uuid.NewString() + extension
+		destination := "web/static/images/uploads/" + nameFile
+
+		if err := ctx.SaveUploadedFile(file, destination); err != nil {
+			log.Println("An error occurred: ", err.Error())
+			return
+		}
+
+		newProduct.Image = "/static/images/uploads/" + nameFile
+	}
+
+	if err := h.productService.UpdateProduct(newProduct, id); err != nil {
+		log.Println("error: " + err.Error())
 		return
 	}
 

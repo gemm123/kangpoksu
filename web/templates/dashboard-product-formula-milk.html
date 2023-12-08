@@ -15,7 +15,10 @@
                 {{ .Description }} <br>
                 {{ .Price }} <br>
                 {{ .Quantity }} <br>
-                <form action="/dashboard/products/delete/{{.Id}}" method="post">
+                <form action="/dashboard/products/formula-milks/edit/{{.Id}}" method="get">
+                    <button type="submit">Edit</button>
+                </form>
+                <form action="/dashboard/products/formula-milks/delete/{{.Id}}" method="post">
                     <button type="submit">Delete</button>
                 </form>
             </li>

@@ -16,6 +16,7 @@ type ProductRepository interface {
 	SaveProductFormulaMilk(formulaMilk model.Product) error
 	DeleteProduct(product model.Product) error
 	GetProductById(id uuid.UUID) (model.Product, error)
+	UpdateProduct(product model.Product) error
 }
 
 func NewProductRepository(DB *gorm.DB) *productRepository {
@@ -43,4 +44,8 @@ func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) 
 	var product model.Product
 	err := r.DB.First(&product, "id = ?", id).Error
 	return product, err
+}
+
+func (r *productRepository) UpdateProduct(product model.Product) error {
+	return r.DB.Save(&product).Error
 }

@@ -59,8 +59,9 @@ func main() {
 	dashboard.GET("/products/formula-milks", dashboardHandler.GetAllProductFormulaMilk)
 	dashboard.GET("/products/formula-milks/create", dashboardHandler.CreateProductFormulaMilk)
 	dashboard.POST("/products/formula-milks/create", dashboardHandler.PostCreateProductFormulaMilk)
-
-	dashboard.POST("/products/delete/:id", dashboardHandler.DeleteProduct)
+	dashboard.GET("/products/formula-milks/edit/:id", dashboardHandler.EditProductFormulaMilk)
+	dashboard.POST("/products/formula-milks/edit/:id", dashboardHandler.UpdateProductFormulaMilk)
+	dashboard.POST("/products/formula-milks/delete/:id", dashboardHandler.DeleteProductFormulaMilk)
 
 	router.Run()
 }
