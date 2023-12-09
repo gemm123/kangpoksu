@@ -21,6 +21,7 @@ type ProductService interface {
 	EditProduct(id uuid.UUID) (model.Product, error)
 	UpdateProduct(newProduct model.Product, id uuid.UUID) error
 	GetAllProductsBabyDiaper() ([]model.Product, error)
+	SaveProductBabyDiaper(babyDiaper model.Product) error
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -39,7 +40,7 @@ func (s *productService) SaveProductFormulaMilk(formulaMilk model.Product) error
 	formulaMilk.CreatedAt = time.Now()
 	formulaMilk.UpdatedAt = time.Now()
 
-	return s.productRepository.SaveProductFormulaMilk(formulaMilk)
+	return s.productRepository.SaveProduct(formulaMilk)
 }
 
 func (s *productService) DeleteProduct(id uuid.UUID) error {
@@ -116,4 +117,18 @@ func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
 	}
 
 	return diapers, nil
+}
+
+func (s *productService) SaveProductBabyDiaper(babyDiaper model.Product) error {
+	babyDiaper.Id = uuid.New()
+	babyDiaper.CategoryId = uuid.MustParse("981464fb-3241-4a33-97ae-33b110e2d4aa")
+	babyDiaper.CreatedAt = time.Now()
+	babyDiaper.UpdatedAt = time.Now()
+
+	if err := s.productRepository.SaveProduct(babyDiaper); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
 }

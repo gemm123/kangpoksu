@@ -13,7 +13,7 @@ type productRepository struct {
 
 type ProductRepository interface {
 	GetAllProductsFormulaMilk() ([]model.Product, error)
-	SaveProductFormulaMilk(formulaMilk model.Product) error
+	SaveProduct(product model.Product) error
 	DeleteProduct(product model.Product) error
 	GetProductById(id uuid.UUID) (model.Product, error)
 	UpdateProduct(product model.Product) error
@@ -32,8 +32,14 @@ func (r *productRepository) GetAllProductsFormulaMilk() ([]model.Product, error)
 	return products, err
 }
 
-func (r *productRepository) SaveProductFormulaMilk(formulaMilk model.Product) error {
-	err := r.DB.Create(&formulaMilk).Error
+func (r *productRepository) GetAllProductsBabyDiaper() ([]model.Product, error) {
+	var products []model.Product
+	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
+	return products, err
+}
+
+func (r *productRepository) SaveProduct(product model.Product) error {
+	err := r.DB.Create(&product).Error
 	return err
 }
 
@@ -49,10 +55,4 @@ func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) 
 
 func (r *productRepository) UpdateProduct(product model.Product) error {
 	return r.DB.Save(&product).Error
-}
-
-func (r *productRepository) GetAllProductsBabyDiaper() ([]model.Product, error) {
-	var products []model.Product
-	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
-	return products, err
 }
