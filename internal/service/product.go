@@ -22,6 +22,8 @@ type ProductService interface {
 	UpdateProduct(newProduct model.Product, id uuid.UUID) error
 	GetAllProductsBabyDiaper() ([]model.Product, error)
 	SaveProductBabyDiaper(babyDiaper model.Product) error
+	GetAllProductsAdultDiaper() ([]model.Product, error)
+	SaveProductAdultDiaper(adultDiaper model.Product) error
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -41,6 +43,54 @@ func (s *productService) SaveProductFormulaMilk(formulaMilk model.Product) error
 	formulaMilk.UpdatedAt = time.Now()
 
 	return s.productRepository.SaveProduct(formulaMilk)
+}
+
+func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
+	diapers, err := s.productRepository.GetAllProductsBabyDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return diapers, err
+	}
+
+	return diapers, nil
+}
+
+func (s *productService) SaveProductBabyDiaper(babyDiaper model.Product) error {
+	babyDiaper.Id = uuid.New()
+	babyDiaper.CategoryId = uuid.MustParse("981464fb-3241-4a33-97ae-33b110e2d4aa")
+	babyDiaper.CreatedAt = time.Now()
+	babyDiaper.UpdatedAt = time.Now()
+
+	if err := s.productRepository.SaveProduct(babyDiaper); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
+}
+
+func (s *productService) GetAllProductsAdultDiaper() ([]model.Product, error) {
+	diapers, err := s.productRepository.GetAllProductsAdultDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return diapers, err
+	}
+
+	return diapers, nil
+}
+
+func (s *productService) SaveProductAdultDiaper(adultDiaper model.Product) error {
+	adultDiaper.Id = uuid.New()
+	adultDiaper.CategoryId = uuid.MustParse("f5976ce9-7496-4fd2-8322-3beaef36e4d8")
+	adultDiaper.CreatedAt = time.Now()
+	adultDiaper.UpdatedAt = time.Now()
+
+	if err := s.productRepository.SaveProduct(adultDiaper); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
 }
 
 func (s *productService) DeleteProduct(id uuid.UUID) error {
@@ -102,30 +152,6 @@ func (s *productService) UpdateProduct(newProduct model.Product, id uuid.UUID) e
 	product.UpdatedAt = time.Now()
 
 	if err := s.productRepository.UpdateProduct(product); err != nil {
-		log.Println("error: " + err.Error())
-		return err
-	}
-
-	return nil
-}
-
-func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
-	diapers, err := s.productRepository.GetAllProductsBabyDiaper()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return diapers, err
-	}
-
-	return diapers, nil
-}
-
-func (s *productService) SaveProductBabyDiaper(babyDiaper model.Product) error {
-	babyDiaper.Id = uuid.New()
-	babyDiaper.CategoryId = uuid.MustParse("981464fb-3241-4a33-97ae-33b110e2d4aa")
-	babyDiaper.CreatedAt = time.Now()
-	babyDiaper.UpdatedAt = time.Now()
-
-	if err := s.productRepository.SaveProduct(babyDiaper); err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}

@@ -71,5 +71,12 @@ func main() {
 	dashboard.GET("/products/baby-diapers/edit/:id", dashboardHandler.EditProductBabyDiaper)
 	dashboard.POST("/products/baby-diapers/edit/:id", dashboardHandler.UpdateProductBabyDiaper)
 
+	dashboard.GET("/products/adult-diapers", dashboardHandler.GetAllProductAdultDiaper)
+	dashboard.GET("/products/adult-diapers/create", dashboardHandler.CreateProductAdultDiaper)
+	dashboard.POST("/products/adult-diapers/create", dashboardHandler.PostCreateProductAdultDiaper)
+	dashboard.POST("/products/adult-diapers/delete/:id", dashboardHandler.DeleteProductAdultDiaper)
+	dashboard.GET("/products/adult-diapers/edit/:id", dashboardHandler.EditProductAdultDiaper)
+	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
+
 	router.Run()
 }
