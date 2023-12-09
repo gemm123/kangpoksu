@@ -173,3 +173,15 @@ func (h *dashboardHandler) UpdateProductFormulaMilk(ctx *gin.Context) {
 
 	ctx.Redirect(http.StatusFound, "/dashboard/products/formula-milks")
 }
+
+func (h *dashboardHandler) GetAllProductBabyDiaper(ctx *gin.Context) {
+	diapers, err := h.productService.GetAllProductsBabyDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "dashboard-product-baby-diaper.html", gin.H{
+		"data": diapers,
+	})
+}

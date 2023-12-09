@@ -17,6 +17,7 @@ type ProductRepository interface {
 	DeleteProduct(product model.Product) error
 	GetProductById(id uuid.UUID) (model.Product, error)
 	UpdateProduct(product model.Product) error
+	GetAllProductsBabyDiaper() ([]model.Product, error)
 }
 
 func NewProductRepository(DB *gorm.DB) *productRepository {
@@ -48,4 +49,10 @@ func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) 
 
 func (r *productRepository) UpdateProduct(product model.Product) error {
 	return r.DB.Save(&product).Error
+}
+
+func (r *productRepository) GetAllProductsBabyDiaper() ([]model.Product, error) {
+	var products []model.Product
+	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
+	return products, err
 }

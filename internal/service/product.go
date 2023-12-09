@@ -20,6 +20,7 @@ type ProductService interface {
 	DeleteProduct(id uuid.UUID) error
 	EditProduct(id uuid.UUID) (model.Product, error)
 	UpdateProduct(newProduct model.Product, id uuid.UUID) error
+	GetAllProductsBabyDiaper() ([]model.Product, error)
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -105,4 +106,14 @@ func (s *productService) UpdateProduct(newProduct model.Product, id uuid.UUID) e
 	}
 
 	return nil
+}
+
+func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
+	diapers, err := s.productRepository.GetAllProductsBabyDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return diapers, err
+	}
+
+	return diapers, nil
 }

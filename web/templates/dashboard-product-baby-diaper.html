@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/dashboard/products/diapers/create">Tambah</a>
+
+    <ol>
+        {{ range .data }}
+            <li>
+                {{ .Name }} <br>
+                {{ .Description }} <br>
+                {{ .Price }} <br>
+                {{ .Quantity }} <br>
+                <form action="/dashboard/products/baby-diapers/edit/{{.Id}}" method="get">
+                    <button type="submit">Edit</button>
+                </form>
+                <form action="/dashboard/products/baby-diapers/delete/{{.Id}}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {{ end }}
+    </ol>
+</body>
+</html>
