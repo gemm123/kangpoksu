@@ -1,8 +1,8 @@
 package service
 
 import (
+	"kopoksu/config"
 	"log"
-	"template/config"
 )
 
 type adminService struct {

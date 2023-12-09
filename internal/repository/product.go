@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"template/internal/model"
+	"kopoksu/internal/model"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

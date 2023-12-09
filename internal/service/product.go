@@ -1,10 +1,10 @@
 package service
 
 import (
+	"kopoksu/internal/model"
+	"kopoksu/internal/repository"
 	"log"
 	"os"
-	"template/internal/model"
-	"template/internal/repository"
 	"time"
 
 	"github.com/google/uuid"

@@ -1,4 +1,4 @@
-module template
+module kopoksu
 
 go 1.20
 

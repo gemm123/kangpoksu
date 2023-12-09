@@ -1,12 +1,12 @@
 package main
 
 import (
+	"kopoksu/config"
+	handler "kopoksu/internal/handler/dashboard"
+	"kopoksu/internal/repository"
+	"kopoksu/internal/service"
+	"kopoksu/middleware"
 	"log"
-	"template/config"
-	"template/internal/handler"
-	"template/internal/repository"
-	"template/internal/service"
-	"template/middleware"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -38,7 +38,8 @@ func main() {
 
 	router := gin.Default()
 
-	router.LoadHTMLGlob("web/templates/*")
+	router.LoadHTMLGlob("web/templates/**/*")
+
 	router.Static("/static", "./web/static")
 
 	store := cookie.NewStore([]byte("kopoksu"))
