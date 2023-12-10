@@ -81,6 +81,8 @@ func main() {
 	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
 
 	router.GET("/", homeHandler.Home)
+	router.GET("/formula-milks", homeHandler.GetAllFormulaMilks)
+	router.GET("/formula-milks/:id", homeHandler.GetFormulaMilksById)
 
 	router.Run()
 }

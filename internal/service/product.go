@@ -27,6 +27,7 @@ type ProductService interface {
 	GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error)
 	GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error)
 	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
+	GetProductById(id uuid.UUID) (model.Product, error)
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -36,7 +37,13 @@ func NewProductService(productRepository repository.ProductRepository) *productS
 }
 
 func (s *productService) GetAllProductsFormulaMilk() ([]model.Product, error) {
-	return s.productRepository.GetAllProductsFormulaMilk()
+	products, err := s.productRepository.GetAllProductsFormulaMilk()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return products, err
+	}
+
+	return products, nil
 }
 
 func (s *productService) GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error) {
@@ -110,6 +117,15 @@ func (s *productService) GetAllProductsAdultDiaperLimit(limit int) ([]model.Prod
 	}
 
 	return diapers, nil
+}
+
+func (s *productService) GetProductById(id uuid.UUID) (model.Product, error) {
+	product, err := s.productRepository.GetProductById(id)
+	if err != nil {
+		return product, err
+	}
+
+	return product, nil
 }
 
 func (s *productService) SaveProductAdultDiaper(adultDiaper model.Product) error {

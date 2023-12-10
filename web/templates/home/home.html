@@ -7,10 +7,11 @@
 </head>
 <body>
     <h1>Susu Formula</h1>
+    <a href="/formula-milks">Lihat semua</a>
     <ol>
         {{ range .formulaMilks }}
             <li>
-                {{ .Name }} <br>
+                <a href="/formula-milks/{{ .Id }}">{{ .Name }}</a> <br>
                 {{ .Price }} <br>
                 <img src="{{ .Image }}" alt="formula-milk"> <br>
             </li>

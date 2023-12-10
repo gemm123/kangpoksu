@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Susu Formula</h1>
+    <ol>
+        {{ range .formulaMilks }}
+            <li>
+                <a href="/formula-milks/{{ .Id }}">{{ .Name }}</a> <br>
+                {{ .Price }} <br>
+                <img src="{{ .Image }}" alt="formula-milk"> <br>
+            </li>
+        {{ end }}
+    </ol>
+</body>
+</html>
