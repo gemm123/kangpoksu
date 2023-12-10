@@ -11,9 +11,8 @@
         {{ range .formulaMilks }}
             <li>
                 {{ .Name }} <br>
-                {{ .Description }} <br>
                 {{ .Price }} <br>
-                {{ .Quantity }} <br>
+                <img src="{{ .Image }}" alt="formula-milk"> <br>
             </li>
         {{ end }}
     </ol>
@@ -23,9 +22,8 @@
         {{ range .babyDiapers }}
             <li>
                 {{ .Name }} <br>
-                {{ .Description }} <br>
                 {{ .Price }} <br>
-                {{ .Quantity }} <br>
+                <img src="{{ .Image }}" alt="baby-diaper"> <br>
             </li>
         {{ end }}
     </ol>
@@ -35,9 +33,8 @@
         {{ range .adultDiapers }}
             <li>
                 {{ .Name }} <br>
-                {{ .Description }} <br>
                 {{ .Price }} <br>
-                {{ .Quantity }} <br>
+                <img src="{{ .Image }}" alt="adult-diaper"> <br>
             </li>
         {{ end }}
     </ol>
