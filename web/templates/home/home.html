@@ -31,10 +31,11 @@
     </ol>
 
     <h1>Popok Dewasa</h1>
+    <a href="/adult-diapers">Lihat semua</a>
     <ol>
         {{ range .adultDiapers }}
             <li>
-                {{ .Name }} <br>
+                <a href="/adult-diapers/{{ .Id }}">{{ .Name }}</a> <br>
                 {{ .Price }} <br>
                 <img src="{{ .Image }}" alt="adult-diaper"> <br>
             </li>

@@ -87,5 +87,8 @@ func main() {
 	router.GET("/baby-diapers", homeHandler.GetAllBabyDiapers)
 	router.GET("/baby-diapers/:id", homeHandler.GetBabyDiaperById)
 
+	router.GET("/adult-diapers", homeHandler.GetAllAdultDiapers)
+	router.GET("/adult-diapers/:id", homeHandler.GetAdultDiaperById)
+
 	router.Run()
 }
