@@ -19,10 +19,11 @@
     </ol>
 
     <h1>Popok Bayi</h1>
+    <a href="/baby-diapers">Lihat semua</a>
     <ol>
         {{ range .babyDiapers }}
             <li>
-                {{ .Name }} <br>
+                <a href="/baby-diapers/{{ .Id }}">{{ .Name }}</a> <br>
                 {{ .Price }} <br>
                 <img src="{{ .Image }}" alt="baby-diaper"> <br>
             </li>
