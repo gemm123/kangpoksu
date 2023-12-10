@@ -2,7 +2,8 @@ package main
 
 import (
 	"kopoksu/config"
-	handler "kopoksu/internal/handler/dashboard"
+	dashboardHandler "kopoksu/internal/handler/dashboard"
+	homeHandler "kopoksu/internal/handler/home"
 	"kopoksu/internal/repository"
 	"kopoksu/internal/service"
 	"kopoksu/middleware"
@@ -34,7 +35,8 @@ func main() {
 	productService := service.NewProductService(productRepository)
 
 	//Handler
-	dashboardHandler := handler.NewDashboardHandler(adminService, productService)
+	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService)
+	homeHandler := homeHandler.NewHomeHandler(productService)
 
 	router := gin.Default()
 
@@ -77,6 +79,8 @@ func main() {
 	dashboard.POST("/products/adult-diapers/delete/:id", dashboardHandler.DeleteProductAdultDiaper)
 	dashboard.GET("/products/adult-diapers/edit/:id", dashboardHandler.EditProductAdultDiaper)
 	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
+
+	router.GET("/", homeHandler.Home)
 
 	router.Run()
 }

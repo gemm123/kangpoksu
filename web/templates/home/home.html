@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Susu Formula</h1>
+    <ol>
+        {{ range .formulaMilks }}
+            <li>
+                {{ .Name }} <br>
+                {{ .Description }} <br>
+                {{ .Price }} <br>
+                {{ .Quantity }} <br>
+            </li>
+        {{ end }}
+    </ol>
+
+    <h1>Popok Bayi</h1>
+    <ol>
+        {{ range .babyDiapers }}
+            <li>
+                {{ .Name }} <br>
+                {{ .Description }} <br>
+                {{ .Price }} <br>
+                {{ .Quantity }} <br>
+            </li>
+        {{ end }}
+    </ol>
+
+    <h1>Popok Dewasa</h1>
+    <ol>
+        {{ range .adultDiapers }}
+            <li>
+                {{ .Name }} <br>
+                {{ .Description }} <br>
+                {{ .Price }} <br>
+                {{ .Quantity }} <br>
+            </li>
+        {{ end }}
+    </ol>
+
+</body>
+</html>

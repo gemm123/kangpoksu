@@ -19,6 +19,9 @@ type ProductRepository interface {
 	UpdateProduct(product model.Product) error
 	GetAllProductsBabyDiaper() ([]model.Product, error)
 	GetAllProductsAdultDiaper() ([]model.Product, error)
+	GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error)
+	GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error)
+	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
 }
 
 func NewProductRepository(DB *gorm.DB) *productRepository {
@@ -33,15 +36,33 @@ func (r *productRepository) GetAllProductsFormulaMilk() ([]model.Product, error)
 	return products, err
 }
 
+func (r *productRepository) GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error) {
+	var products []model.Product
+	err := r.DB.Limit(limit).Where("category_id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'").Find(&products).Error
+	return products, err
+}
+
 func (r *productRepository) GetAllProductsBabyDiaper() ([]model.Product, error) {
 	var products []model.Product
 	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
 	return products, err
 }
 
+func (r *productRepository) GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error) {
+	var products []model.Product
+	err := r.DB.Limit(limit).Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
+	return products, err
+}
+
 func (r *productRepository) GetAllProductsAdultDiaper() ([]model.Product, error) {
 	var products []model.Product
 	err := r.DB.Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'").Find(&products).Error
+	return products, err
+}
+
+func (r *productRepository) GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error) {
+	var products []model.Product
+	err := r.DB.Limit(limit).Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'").Find(&products).Error
 	return products, err
 }
 

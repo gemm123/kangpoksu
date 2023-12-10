@@ -24,6 +24,9 @@ type ProductService interface {
 	SaveProductBabyDiaper(babyDiaper model.Product) error
 	GetAllProductsAdultDiaper() ([]model.Product, error)
 	SaveProductAdultDiaper(adultDiaper model.Product) error
+	GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error)
+	GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error)
+	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -34,6 +37,16 @@ func NewProductService(productRepository repository.ProductRepository) *productS
 
 func (s *productService) GetAllProductsFormulaMilk() ([]model.Product, error) {
 	return s.productRepository.GetAllProductsFormulaMilk()
+}
+
+func (s *productService) GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error) {
+	products, err := s.productRepository.GetAllProductsFormulaMilkLimit(limit)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return products, err
+	}
+
+	return products, nil
 }
 
 func (s *productService) SaveProductFormulaMilk(formulaMilk model.Product) error {
@@ -47,6 +60,16 @@ func (s *productService) SaveProductFormulaMilk(formulaMilk model.Product) error
 
 func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
 	diapers, err := s.productRepository.GetAllProductsBabyDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return diapers, err
+	}
+
+	return diapers, nil
+}
+
+func (s *productService) GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error) {
+	diapers, err := s.productRepository.GetAllProductsBabyDiaperLimit(limit)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return diapers, err
@@ -71,6 +94,16 @@ func (s *productService) SaveProductBabyDiaper(babyDiaper model.Product) error {
 
 func (s *productService) GetAllProductsAdultDiaper() ([]model.Product, error) {
 	diapers, err := s.productRepository.GetAllProductsAdultDiaper()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return diapers, err
+	}
+
+	return diapers, nil
+}
+
+func (s *productService) GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error) {
+	diapers, err := s.productRepository.GetAllProductsAdultDiaperLimit(limit)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return diapers, err
