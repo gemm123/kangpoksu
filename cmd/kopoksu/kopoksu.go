@@ -44,15 +44,22 @@ func main() {
 
 	router.Static("/static", "./web/static")
 
-	store := cookie.NewStore([]byte("kopoksu"))
-	store.Options(sessions.Options{
+	authStore := cookie.NewStore([]byte("auth-secret"))
+	authStore.Options(sessions.Options{
 		MaxAge:   7 * 24 * 60 * 60,
+		Path:     "/dashboard",
+		HttpOnly: true,
+	})
+
+	cartStore := cookie.NewStore([]byte("cart-secret"))
+	cartStore.Options(sessions.Options{
+		MaxAge:   3 * 24 * 60 * 60,
 		Path:     "/",
 		HttpOnly: true,
 	})
-	router.Use(sessions.Sessions("mysession", store))
 
 	dashboard := router.Group("/dashboard")
+	dashboard.Use(sessions.Sessions("auth-session", authStore))
 	dashboard.GET("/login", dashboardHandler.Login)
 	dashboard.POST("/login", dashboardHandler.PostLogin)
 	dashboard.POST("/logout", dashboardHandler.Logout)
@@ -80,6 +87,7 @@ func main() {
 	dashboard.GET("/products/adult-diapers/edit/:id", dashboardHandler.EditProductAdultDiaper)
 	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
 
+	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)
 	router.GET("/formula-milks", homeHandler.GetAllFormulaMilks)
 	router.GET("/formula-milks/:id", homeHandler.GetFormulaMilksById)
@@ -89,6 +97,9 @@ func main() {
 
 	router.GET("/adult-diapers", homeHandler.GetAllAdultDiapers)
 	router.GET("/adult-diapers/:id", homeHandler.GetAdultDiaperById)
+
+	router.POST("/add-cart", homeHandler.SaveCartProduct)
+	router.GET("/cart", homeHandler.GetCartProduct)
 
 	router.Run()
 }

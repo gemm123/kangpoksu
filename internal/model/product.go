@@ -17,3 +17,11 @@ type Product struct {
 	CreatedAt   time.Time `gorm:"column:created_at"`
 	UpdatedAt   time.Time `gorm:"column:updated_at"`
 }
+
+type Cart struct {
+	Id     uuid.UUID `form:"id" json:"id"`
+	Name   string    `json:"name"`
+	Amount int       `form:"amount" json:"amount"`
+	Total  int       `json:"total"`
+	Image  string    `json:"image"`
+}

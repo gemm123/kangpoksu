@@ -11,5 +11,11 @@
     {{ .formulaMilk.Quantity }} <br>
     {{ .formulaMilk.Description }} <br>
     <img src="{{ .formulaMilk.Image }}" alt="formula-milk"> <br>
+
+    <form action="/add-cart" method="post">
+        <input type="number" name="amount" id="amount" min="1">
+        <input type="hidden" name="id" value="{{ .formulaMilk.Id }}">
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
