@@ -15,6 +15,10 @@
                 {{ .Amount }} <br>
                 {{ .Total }} <br>
                 <img src="{{ .Image }}" alt="cart"> <br>
+                <form action="/cart-delete" method="post">
+                    <input type="hidden" name="id" value="{{ .Id }}">
+                    <button type="submit">Delete</button>
+                </form>
             </li>
         {{ end }}
     </ol>

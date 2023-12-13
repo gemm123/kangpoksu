@@ -11,16 +11,25 @@ import (
 	"strconv"
 )
 
+func GetSessionCart(session sessions.Session, cart []model.Cart) ([]model.Cart, error) {
+	cartJson := session.Get("Cart")
+	if cartJson != nil {
+		if err := json.Unmarshal(cartJson.([]byte), &cart); err != nil {
+			return cart, err
+		}
+	}
+
+	return cart, nil
+}
+
 func (h *homeHandler) SaveCartProduct(ctx *gin.Context) {
 	var cart []model.Cart
 	session := sessions.Default(ctx)
 
-	cartJson := session.Get("Cart")
-	if cartJson != nil {
-		if err := json.Unmarshal(cartJson.([]byte), &cart); err != nil {
-			log.Println("error: " + err.Error())
-			return
-		}
+	cart, err := GetSessionCart(session, cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
 	}
 
 	idString := ctx.PostForm("id")
@@ -55,8 +64,8 @@ func (h *homeHandler) GetCartProduct(ctx *gin.Context) {
 	var cart []model.Cart
 	var totalOrder int
 
-	cartJson := session.Get("Cart")
-	if err := json.Unmarshal(cartJson.([]byte), &cart); err != nil {
+	cart, err := GetSessionCart(session, cart)
+	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
@@ -77,4 +86,39 @@ func (h *homeHandler) GetCartProduct(ctx *gin.Context) {
 		"cart":       cart,
 		"totalOrder": totalOrder,
 	})
+}
+
+func (h *homeHandler) DeleteProductAtCart(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	var cart []model.Cart
+	var updatedCart []model.Cart
+
+	cart, err := GetSessionCart(session, cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	idString := ctx.PostForm("id")
+	id := uuid.MustParse(idString)
+
+	for _, c := range cart {
+		if c.Id != id {
+			updatedCart = append(updatedCart, c)
+		}
+	}
+
+	updatedCartJson, err := json.Marshal(updatedCart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	session.Set("Cart", updatedCartJson)
+	if err := session.Save(); err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/cart")
 }
