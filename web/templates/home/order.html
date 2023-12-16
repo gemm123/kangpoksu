@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pengisian Form</h1>
+    <label>
+        <input type="radio" id="onlineRadio" name="connectionStatus" checked onchange="updateForm()"> Kirim
+    </label>
+
+    <label>
+        <input type="radio" id="offlineRadio" name="connectionStatus" onchange="updateForm()"> Ambil ke toko
+    </label>
+
+    <div id="onlineForm">
+        <form action="/order/online" method="post">
+
+            <label for="name">Nama:</label><br>
+            <input type="text" id="name" name="name"> <br>
+
+            <label for="address">Alamat:</label> <br>
+            <input type="text" id="address" name="address"> <br>
+
+            <label for="city">Kota/Kabupaten:</label> <br>
+            <input type="text" id="city" name="city"> <br>
+
+            <label for="province">Provinsi:</label> <br>
+            <input type="text" id="province" name="province"> <br>
+
+            <label for="number">No HP:</label> <br>
+            <input type="text" id="number" name="number"> <br>
+
+            <label for="post-code">Kode Pos:</label> <br>
+            <input type="text" id="post-code" name="post-code"> <br>
+
+            <button type="button">Batal</button>
+            <button type="submit">Lanjut Pembayaran</button>
+        </form>
+    </div>
+
+    <div id="offlineForm" class="hidden">
+        <form action="/order/offline" method="post">
+
+            <label for="name">Nama:</label><br>
+            <input type="text" id="name" name="name"> <br>
+
+            <label for="number">No HP:</label> <br>
+            <input type="text" id="number" name="number"> <br>
+
+            <button type="button">Batal</button>
+            <button type="submit">Lanjut Pembayaran</button>
+        </form>
+    </div>
+
+    <script>
+        function updateForm() {
+            var onlineForm = document.getElementById("onlineForm");
+            var offlineForm = document.getElementById("offlineForm");
+
+            // Show the selected form
+            if (document.getElementById("onlineRadio").checked) {
+                onlineForm.classList.remove("hidden");
+                offlineForm.classList.add("hidden");
+            } else {
+                onlineForm.classList.add("hidden");
+                offlineForm.classList.remove("hidden");
+            }
+        }
+    </script>
+
+</body>
+</html>

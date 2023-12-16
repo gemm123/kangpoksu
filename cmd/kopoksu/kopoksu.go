@@ -101,6 +101,9 @@ func main() {
 	router.POST("/add-cart", homeHandler.SaveCartProduct)
 	router.GET("/cart", homeHandler.GetCartProduct)
 	router.POST("/cart-delete", homeHandler.DeleteProductAtCart)
+	router.GET("/order", homeHandler.FormOrder)
+	router.POST("/order/offline", homeHandler.PostOfflineOrder)
+	router.POST("/order/online", homeHandler.PostOnlineOrder)
 
 	router.Run()
 }
