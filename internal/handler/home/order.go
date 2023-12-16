@@ -2,7 +2,9 @@ package handler
 
 import (
 	"fmt"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"kopoksu/helper"
 	"kopoksu/internal/model"
 	"log"
 	"net/http"
@@ -19,7 +21,24 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 		return
 	}
 
+	session := sessions.Default(ctx)
+	var cart []model.Cart
+
+	cart, err := helper.GetSessionCart(session, cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	totalOrder, err := h.cartService.GetAccumulationTotalCart(cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
 	fmt.Println(offlineOrder)
+	fmt.Println(cart)
+	fmt.Println(totalOrder)
 }
 
 func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {

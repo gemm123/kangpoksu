@@ -10,11 +10,13 @@ import (
 
 type homeHandler struct {
 	productService service.ProductService
+	cartService    service.CartService
 }
 
-func NewHomeHandler(productService service.ProductService) *homeHandler {
+func NewHomeHandler(productService service.ProductService, cartService service.CartService) *homeHandler {
 	return &homeHandler{
 		productService: productService,
+		cartService:    cartService,
 	}
 }
 

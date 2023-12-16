@@ -33,10 +33,11 @@ func main() {
 	//Service
 	adminService := service.NewAdminService()
 	productService := service.NewProductService(productRepository)
+	cartService := service.NewCartService(productRepository)
 
 	//Handler
 	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService)
-	homeHandler := homeHandler.NewHomeHandler(productService)
+	homeHandler := homeHandler.NewHomeHandler(productService, cartService)
 
 	router := gin.Default()
 
