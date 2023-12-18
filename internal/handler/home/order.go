@@ -7,7 +7,9 @@ import (
 	"kopoksu/helper"
 	"kopoksu/internal/model"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func (h *homeHandler) FormOrder(ctx *gin.Context) {
@@ -36,9 +38,21 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println(offlineOrder)
-	fmt.Println(cart)
-	fmt.Println(totalOrder)
+	rand.Seed(time.Now().UnixNano())
+	randNumber := rand.Intn(90) + 10
+	totalOrder = totalOrder / 100
+	totalOrder = totalOrder*100 + randNumber
+
+	offlineOrder.Total = totalOrder
+
+	if err := h.orderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "payment.html", gin.H{
+		"total": totalOrder,
+	})
 }
 
 func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {

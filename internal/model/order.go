@@ -5,13 +5,13 @@ import (
 	"time"
 )
 
-type DetailOrder struct {
-	Id        uuid.UUID `gorm:"column:"`
-	OrderId   uuid.UUID `gorm:"column:order_id"`
-	ProductId uuid.UUID `gorm:"column:product_id"`
-	Amount    int       `gorm:"column:amount"`
-	CreatedAt time.Time `gorm:"column:created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at"`
+type DetailOfflineOrder struct {
+	Id             uuid.UUID `gorm:"column:"`
+	OfflineOrderId uuid.UUID `gorm:"column:offline_order_id"`
+	ProductId      uuid.UUID `gorm:"column:product_id"`
+	Amount         int       `gorm:"column:amount"`
+	CreatedAt      time.Time `gorm:"column:created_at"`
+	UpdatedAt      time.Time `gorm:"column:updated_at"`
 }
 
 type OfflineOrder struct {
