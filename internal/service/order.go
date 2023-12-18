@@ -9,16 +9,18 @@ import (
 )
 
 type orderService struct {
-	orderRepository repository.OrderRepository
+	orderRepository   repository.OrderRepository
+	productRepository repository.ProductRepository
 }
 
 type OrderService interface {
 	SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error
 }
 
-func NewOrderService(orderRepository repository.OrderRepository) *orderService {
+func NewOrderService(orderRepository repository.OrderRepository, productRepository repository.ProductRepository) *orderService {
 	return &orderService{
-		orderRepository: orderRepository,
+		orderRepository:   orderRepository,
+		productRepository: productRepository,
 	}
 }
 
@@ -47,10 +49,20 @@ func (s *orderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []
 			log.Println("error: " + err.Error())
 			return err
 		}
-	}
 
-	//reduce quantity products
-	//delete session cart
+		product, err := s.productRepository.GetProductById(c.Id)
+		if err != nil {
+			log.Println("error: " + err.Error())
+			return err
+		}
+
+		product.Quantity = product.Quantity - c.Amount
+
+		if err := s.productRepository.UpdateProduct(product); err != nil {
+			log.Println("error: " + err.Error())
+			return err
+		}
+	}
 
 	return nil
 }

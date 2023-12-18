@@ -35,7 +35,7 @@ func main() {
 	adminService := service.NewAdminService()
 	productService := service.NewProductService(productRepository)
 	cartService := service.NewCartService(productRepository)
-	orderService := service.NewOrderService(orderRepository)
+	orderService := service.NewOrderService(orderRepository, productRepository)
 
 	//Handler
 	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService)

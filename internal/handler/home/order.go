@@ -50,6 +50,9 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 		return
 	}
 
+	session.Clear()
+	session.Save()
+
 	ctx.HTML(http.StatusOK, "payment.html", gin.H{
 		"total": totalOrder,
 	})
