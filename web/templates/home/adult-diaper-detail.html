@@ -11,5 +11,11 @@
     {{ .adultDiaper.Quantity }} <br>
     {{ .adultDiaper.Description }} <br>
     <img src="{{ .adultDiaper.Image }}" alt="adult-diaper"> <br>
+
+    <form action="/add-cart" method="post">
+        <input type="number" name="amount" id="amount" min="1">
+        <input type="hidden" name="id" value="{{ .adultDiaper.Id }}">
+        <input type="submit" value="+ Keranjang">
+    </form>
 </body>
 </html>
