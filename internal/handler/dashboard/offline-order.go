@@ -47,3 +47,15 @@ func (h *dashboardHandler) UpdateOfflineOrder(ctx *gin.Context) {
 
 	ctx.Redirect(http.StatusFound, "/dashboard/orders/offline")
 }
+
+func (h *dashboardHandler) DeleteOfflineOrder(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	if err := h.orderService.DeleteOfflineOrder(id); err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/dashboard/orders/offline")
+}

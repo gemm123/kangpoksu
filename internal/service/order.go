@@ -18,6 +18,7 @@ type OrderService interface {
 	GetAllOfflineOrder() ([]model.OfflineOrder, error)
 	EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error)
 	UpdateStatusOfflineOrder(id uuid.UUID, status string) error
+	DeleteOfflineOrder(id uuid.UUID) error
 }
 
 func NewOrderService(orderRepository repository.OrderRepository, productRepository repository.ProductRepository) *orderService {
@@ -112,6 +113,34 @@ func (s *orderService) UpdateStatusOfflineOrder(id uuid.UUID, status string) err
 	}
 	err := s.orderRepository.UpdateOfflineOrder(id, data)
 	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
+}
+
+func (s *orderService) DeleteOfflineOrder(id uuid.UUID) error {
+	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	detailOfflineOrders, err := s.orderRepository.GetAllDetailOfflineOrderByOfflineOrderId(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	for _, doo := range detailOfflineOrders {
+		if err := s.orderRepository.DeleteDetailOfflineOrder(doo); err != nil {
+			log.Println("error: " + err.Error())
+			return err
+		}
+	}
+
+	if err := s.orderRepository.DeleteOfflineOrder(offlineOrder); err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}
