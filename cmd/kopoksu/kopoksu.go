@@ -29,17 +29,17 @@ func main() {
 
 	//Repository
 	productRepository := repository.NewProductRepository(db)
-	orderRepository := repository.NewOrderRepository(db)
+	offlineOrderRepository := repository.NewOfflineOrderRepository(db)
 
 	//Service
 	adminService := service.NewAdminService()
 	productService := service.NewProductService(productRepository)
 	cartService := service.NewCartService(productRepository)
-	orderService := service.NewOrderService(orderRepository, productRepository)
+	offlineOrderService := service.NewOfflineOrderService(offlineOrderRepository, productRepository)
 
 	//Handler
-	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService, orderService)
-	homeHandler := homeHandler.NewHomeHandler(productService, cartService, orderService)
+	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService, offlineOrderService)
+	homeHandler := homeHandler.NewHomeHandler(productService, cartService, offlineOrderService)
 
 	router := gin.Default()
 

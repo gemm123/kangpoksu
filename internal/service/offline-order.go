@@ -8,12 +8,12 @@ import (
 	"time"
 )
 
-type orderService struct {
-	orderRepository   repository.OrderRepository
+type offlineOrderService struct {
+	orderRepository   repository.OfflineOrderRepository
 	productRepository repository.ProductRepository
 }
 
-type OrderService interface {
+type OfflineOrderService interface {
 	SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error
 	GetAllOfflineOrder() ([]model.OfflineOrder, error)
 	EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error)
@@ -21,14 +21,14 @@ type OrderService interface {
 	DeleteOfflineOrder(id uuid.UUID) error
 }
 
-func NewOrderService(orderRepository repository.OrderRepository, productRepository repository.ProductRepository) *orderService {
-	return &orderService{
-		orderRepository:   orderRepository,
+func NewOfflineOrderService(offlineOrderRepository repository.OfflineOrderRepository, productRepository repository.ProductRepository) *offlineOrderService {
+	return &offlineOrderService{
+		orderRepository:   offlineOrderRepository,
 		productRepository: productRepository,
 	}
 }
 
-func (s *orderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error {
+func (s *offlineOrderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error {
 	offlineOrder.Id = uuid.New()
 	offlineOrder.CreatedAt = time.Now()
 	offlineOrder.UpdatedAt = time.Now()
@@ -71,7 +71,7 @@ func (s *orderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []
 	return nil
 }
 
-func (s *orderService) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
+func (s *offlineOrderService) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
 	offlineOrders, err := s.orderRepository.GetAllOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -81,7 +81,7 @@ func (s *orderService) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
 	return offlineOrders, nil
 }
 
-func (s *orderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error) {
+func (s *offlineOrderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error) {
 	var editOfflineOrderResponse model.EditOfflineOrderResponse
 
 	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
@@ -106,7 +106,7 @@ func (s *orderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderRes
 	return editOfflineOrderResponse, nil
 }
 
-func (s *orderService) UpdateStatusOfflineOrder(id uuid.UUID, status string) error {
+func (s *offlineOrderService) UpdateStatusOfflineOrder(id uuid.UUID, status string) error {
 	data := map[string]interface{}{
 		"status":     status,
 		"updated_at": time.Now(),
@@ -120,7 +120,7 @@ func (s *orderService) UpdateStatusOfflineOrder(id uuid.UUID, status string) err
 	return nil
 }
 
-func (s *orderService) DeleteOfflineOrder(id uuid.UUID) error {
+func (s *offlineOrderService) DeleteOfflineOrder(id uuid.UUID) error {
 	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
 	if err != nil {
 		log.Println("error: " + err.Error())

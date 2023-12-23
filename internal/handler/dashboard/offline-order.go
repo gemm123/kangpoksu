@@ -8,7 +8,7 @@ import (
 )
 
 func (h *dashboardHandler) GetAllOfflineOrder(ctx *gin.Context) {
-	offlineOrders, err := h.orderService.GetAllOfflineOrder()
+	offlineOrders, err := h.offlineOrderService.GetAllOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
@@ -23,7 +23,7 @@ func (h *dashboardHandler) EditOfflineOrder(ctx *gin.Context) {
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
-	editOfflineOrderResponse, err := h.orderService.EditOfflineOrder(id)
+	editOfflineOrderResponse, err := h.offlineOrderService.EditOfflineOrder(id)
 	if err != nil {
 		log.Println("An error occurred: ", err.Error())
 		return
@@ -40,7 +40,7 @@ func (h *dashboardHandler) UpdateOfflineOrder(ctx *gin.Context) {
 
 	status := ctx.PostForm("status")
 
-	if err := h.orderService.UpdateStatusOfflineOrder(id, status); err != nil {
+	if err := h.offlineOrderService.UpdateStatusOfflineOrder(id, status); err != nil {
 		log.Println("An error occurred: ", err.Error())
 		return
 	}
@@ -52,7 +52,7 @@ func (h *dashboardHandler) DeleteOfflineOrder(ctx *gin.Context) {
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
-	if err := h.orderService.DeleteOfflineOrder(id); err != nil {
+	if err := h.offlineOrderService.DeleteOfflineOrder(id); err != nil {
 		log.Println("An error occurred: ", err.Error())
 		return
 	}

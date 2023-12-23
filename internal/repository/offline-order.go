@@ -6,11 +6,11 @@ import (
 	"kopoksu/internal/model"
 )
 
-type orderRepository struct {
+type offlineOrderRepository struct {
 	DB *gorm.DB
 }
 
-type OrderRepository interface {
+type OfflineOrderRepository interface {
 	SaveOfflineOrder(offlineOrder model.OfflineOrder) error
 	SaveDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error
 	GetAllOfflineOrder() ([]model.OfflineOrder, error)
@@ -22,35 +22,35 @@ type OrderRepository interface {
 	DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error
 }
 
-func NewOrderRepository(DB *gorm.DB) *orderRepository {
-	return &orderRepository{
+func NewOfflineOrderRepository(DB *gorm.DB) *offlineOrderRepository {
+	return &offlineOrderRepository{
 		DB: DB,
 	}
 }
 
-func (r *orderRepository) SaveOfflineOrder(offlineOrder model.OfflineOrder) error {
+func (r *offlineOrderRepository) SaveOfflineOrder(offlineOrder model.OfflineOrder) error {
 	err := r.DB.Create(&offlineOrder).Error
 	return err
 }
 
-func (r *orderRepository) SaveDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
+func (r *offlineOrderRepository) SaveDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
 	err := r.DB.Create(&detailOfflineOrder).Error
 	return err
 }
 
-func (r *orderRepository) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
+func (r *offlineOrderRepository) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
 	var offlineOrders []model.OfflineOrder
 	err := r.DB.Find(&offlineOrders).Error
 	return offlineOrders, err
 }
 
-func (r *orderRepository) GetOfflineOrderById(id uuid.UUID) (model.OfflineOrder, error) {
+func (r *offlineOrderRepository) GetOfflineOrderById(id uuid.UUID) (model.OfflineOrder, error) {
 	var offlineOrder model.OfflineOrder
 	err := r.DB.First(&offlineOrder, "id = ?", id).Error
 	return offlineOrder, err
 }
 
-func (r *orderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrderResponse, error) {
+func (r *offlineOrderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrderResponse, error) {
 	var detailOfflineOrdersResponse []model.DetailOfflineOrderResponse
 	err := r.DB.Table("detail_offline_orders").
 		Select("products.name, detail_offline_orders.amount, detail_offline_orders.amount * products.price as price").
@@ -61,21 +61,21 @@ func (r *orderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([
 	return detailOfflineOrdersResponse, err
 }
 
-func (r *orderRepository) GetAllDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrder, error) {
+func (r *offlineOrderRepository) GetAllDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrder, error) {
 	var detailOfflineOrders []model.DetailOfflineOrder
 	err := r.DB.Table("detail_offline_orders").Where("offline_order_id = ?", id).Find(&detailOfflineOrders).Error
 	return detailOfflineOrders, err
 }
 
-func (r *orderRepository) UpdateOfflineOrder(id uuid.UUID, data map[string]interface{}) error {
+func (r *offlineOrderRepository) UpdateOfflineOrder(id uuid.UUID, data map[string]interface{}) error {
 	err := r.DB.Table("offline_orders").Where("id = ?", id).Updates(data).Error
 	return err
 }
 
-func (r *orderRepository) DeleteOfflineOrder(offlineOrder model.OfflineOrder) error {
+func (r *offlineOrderRepository) DeleteOfflineOrder(offlineOrder model.OfflineOrder) error {
 	return r.DB.Delete(&offlineOrder).Error
 }
 
-func (r *orderRepository) DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
+func (r *offlineOrderRepository) DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
 	return r.DB.Delete(&detailOfflineOrder).Error
 }
