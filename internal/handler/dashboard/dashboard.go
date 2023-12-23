@@ -16,12 +16,14 @@ import (
 type dashboardHandler struct {
 	adminService   service.AdminService
 	productService service.ProductService
+	orderService   service.OrderService
 }
 
-func NewDashboardHandler(adminService service.AdminService, productService service.ProductService) *dashboardHandler {
+func NewDashboardHandler(adminService service.AdminService, productService service.ProductService, orderService service.OrderService) *dashboardHandler {
 	return &dashboardHandler{
 		adminService:   adminService,
 		productService: productService,
+		orderService:   orderService,
 	}
 }
 

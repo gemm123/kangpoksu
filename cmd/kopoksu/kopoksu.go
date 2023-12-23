@@ -38,7 +38,7 @@ func main() {
 	orderService := service.NewOrderService(orderRepository, productRepository)
 
 	//Handler
-	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService)
+	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService, orderService)
 	homeHandler := homeHandler.NewHomeHandler(productService, cartService, orderService)
 
 	router := gin.Default()
@@ -89,6 +89,9 @@ func main() {
 	dashboard.POST("/products/adult-diapers/delete/:id", dashboardHandler.DeleteProductAdultDiaper)
 	dashboard.GET("/products/adult-diapers/edit/:id", dashboardHandler.EditProductAdultDiaper)
 	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
+
+	dashboard.GET("/orders/offline", dashboardHandler.GetAllOfflineOrder)
+	dashboard.GET("/orders/offline/edit/:id", dashboardHandler.EditOfflineOrder)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)

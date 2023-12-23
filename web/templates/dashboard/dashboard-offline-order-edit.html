@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit Offline Order</h1>
+
+    <form action="/dashboard/orders/offline/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
+        <label for="name">Nama:</label>
+        <input type="text" id="name" name="name" value="{{ .data.Name }}" disabled>
+        <br>
+
+        <label for="phone-number">No Hp:</label>
+        <input name="phone-number" id="phone-number" value="{{ .data.PhoneNumber }}" disabled>
+        <br>
+
+        <ol>
+            {{ range .data.DetailOfflineOrderResponse }}
+                <li>
+                    {{ .Name }} {{ .Amount }} {{ .Price }}
+                </li>
+            {{ end }}
+        </ol>
+
+        <label for="total">Total:</label>
+        <input type="number" name="total" id="total" value="{{ .data.Total }}" disabled>
+        <br>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="{{ .data.Status }}"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
+            <option value="{{ .data.Status }}"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
+        </select>
+        <br>
+
+        <input type="submit" value="Selesai">
+    </form>
+</body>
+</html>

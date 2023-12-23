@@ -15,6 +15,8 @@ type orderService struct {
 
 type OrderService interface {
 	SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error
+	GetAllOfflineOrder() ([]model.OfflineOrder, error)
+	EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error)
 }
 
 func NewOrderService(orderRepository repository.OrderRepository, productRepository repository.ProductRepository) *orderService {
@@ -65,4 +67,39 @@ func (s *orderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []
 	}
 
 	return nil
+}
+
+func (s *orderService) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
+	offlineOrders, err := s.orderRepository.GetAllOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return offlineOrders, err
+	}
+
+	return offlineOrders, nil
+}
+
+func (s *orderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error) {
+	var editOfflineOrderResponse model.EditOfflineOrderResponse
+
+	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return editOfflineOrderResponse, err
+	}
+
+	detailOfflineOrderResponse, err := s.orderRepository.GetDetailOfflineOrderByOfflineOrderId(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return editOfflineOrderResponse, err
+	}
+
+	editOfflineOrderResponse.Id = id
+	editOfflineOrderResponse.Name = offlineOrder.Name
+	editOfflineOrderResponse.PhoneNumber = offlineOrder.PhoneNumber
+	editOfflineOrderResponse.Total = offlineOrder.Total
+	editOfflineOrderResponse.Status = offlineOrder.Status
+	editOfflineOrderResponse.DetailOfflineOrderResponse = detailOfflineOrderResponse
+
+	return editOfflineOrderResponse, nil
 }

@@ -1,0 +1,35 @@
+package handler
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"log"
+	"net/http"
+)
+
+func (h *dashboardHandler) GetAllOfflineOrder(ctx *gin.Context) {
+	offlineOrders, err := h.orderService.GetAllOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "dashboard-offline-order.html", gin.H{
+		"data": offlineOrders,
+	})
+}
+
+func (h *dashboardHandler) EditOfflineOrder(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	editOfflineOrderResponse, err := h.orderService.EditOfflineOrder(id)
+	if err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "dashboard-offline-order-edit.html", gin.H{
+		"data": editOfflineOrderResponse,
+	})
+}
