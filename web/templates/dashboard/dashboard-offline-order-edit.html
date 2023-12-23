@@ -33,8 +33,8 @@
 
         <label for="status">Status:</label>
         <select id="status" name="status">
-            <option value="{{ .data.Status }}"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
-            <option value="{{ .data.Status }}"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
+            <option value="Menunggu konfirmasi pembayaran"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
+            <option value="Selesai"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
         </select>
         <br>
 

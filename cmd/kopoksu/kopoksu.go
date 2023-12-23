@@ -92,6 +92,7 @@ func main() {
 
 	dashboard.GET("/orders/offline", dashboardHandler.GetAllOfflineOrder)
 	dashboard.GET("/orders/offline/edit/:id", dashboardHandler.EditOfflineOrder)
+	dashboard.POST("/orders/offline/edit/:id", dashboardHandler.UpdateOfflineOrder)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)

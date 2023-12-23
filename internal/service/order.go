@@ -17,6 +17,7 @@ type OrderService interface {
 	SaveOfflineOrder(offlineOrder model.OfflineOrder, cart []model.Cart) error
 	GetAllOfflineOrder() ([]model.OfflineOrder, error)
 	EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error)
+	UpdateStatusOfflineOrder(id uuid.UUID, status string) error
 }
 
 func NewOrderService(orderRepository repository.OrderRepository, productRepository repository.ProductRepository) *orderService {
@@ -102,4 +103,18 @@ func (s *orderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderRes
 	editOfflineOrderResponse.DetailOfflineOrderResponse = detailOfflineOrderResponse
 
 	return editOfflineOrderResponse, nil
+}
+
+func (s *orderService) UpdateStatusOfflineOrder(id uuid.UUID, status string) error {
+	data := map[string]interface{}{
+		"status":     status,
+		"updated_at": time.Now(),
+	}
+	err := s.orderRepository.UpdateOfflineOrder(id, data)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
 }

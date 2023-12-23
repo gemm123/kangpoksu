@@ -16,6 +16,7 @@ type OrderRepository interface {
 	GetAllOfflineOrder() ([]model.OfflineOrder, error)
 	GetOfflineOrderById(id uuid.UUID) (model.OfflineOrder, error)
 	GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrderResponse, error)
+	UpdateOfflineOrder(id uuid.UUID, data map[string]interface{}) error
 }
 
 func NewOrderRepository(DB *gorm.DB) *orderRepository {
@@ -55,4 +56,9 @@ func (r *orderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([
 		Scan(&detailOfflineOrdersResponse).
 		Error
 	return detailOfflineOrdersResponse, err
+}
+
+func (r *orderRepository) UpdateOfflineOrder(id uuid.UUID, data map[string]interface{}) error {
+	err := r.DB.Table("offline_orders").Where("id = ?", id).Updates(data).Error
+	return err
 }

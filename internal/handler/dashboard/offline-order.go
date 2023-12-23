@@ -33,3 +33,17 @@ func (h *dashboardHandler) EditOfflineOrder(ctx *gin.Context) {
 		"data": editOfflineOrderResponse,
 	})
 }
+
+func (h *dashboardHandler) UpdateOfflineOrder(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	id := uuid.MustParse(idString)
+
+	status := ctx.PostForm("status")
+
+	if err := h.orderService.UpdateStatusOfflineOrder(id, status); err != nil {
+		log.Println("An error occurred: ", err.Error())
+		return
+	}
+
+	ctx.Redirect(http.StatusFound, "/dashboard/orders/offline")
+}
