@@ -17,13 +17,20 @@ type dashboardHandler struct {
 	adminService        service.AdminService
 	productService      service.ProductService
 	offlineOrderService service.OfflineOrderService
+	onlineOrderService  service.OnlineOrderService
 }
 
-func NewDashboardHandler(adminService service.AdminService, productService service.ProductService, offlineOrderService service.OfflineOrderService) *dashboardHandler {
+func NewDashboardHandler(
+	adminService service.AdminService,
+	productService service.ProductService,
+	offlineOrderService service.OfflineOrderService,
+	onlineOrderService service.OnlineOrderService,
+) *dashboardHandler {
 	return &dashboardHandler{
 		adminService:        adminService,
 		productService:      productService,
 		offlineOrderService: offlineOrderService,
+		onlineOrderService:  onlineOrderService,
 	}
 }
 

@@ -30,16 +30,28 @@ func main() {
 	//Repository
 	productRepository := repository.NewProductRepository(db)
 	offlineOrderRepository := repository.NewOfflineOrderRepository(db)
+	onlineOrderRepository := repository.NewOnlineOrderRepository(db)
 
 	//Service
 	adminService := service.NewAdminService()
 	productService := service.NewProductService(productRepository)
 	cartService := service.NewCartService(productRepository)
 	offlineOrderService := service.NewOfflineOrderService(offlineOrderRepository, productRepository)
+	onlineOrderService := service.NewOnlineOrderService(onlineOrderRepository, productRepository)
 
 	//Handler
-	dashboardHandler := dashboardHandler.NewDashboardHandler(adminService, productService, offlineOrderService)
-	homeHandler := homeHandler.NewHomeHandler(productService, cartService, offlineOrderService)
+	dashboardHandler := dashboardHandler.NewDashboardHandler(
+		adminService,
+		productService,
+		offlineOrderService,
+		onlineOrderService,
+	)
+	homeHandler := homeHandler.NewHomeHandler(
+		productService,
+		cartService,
+		offlineOrderService,
+		onlineOrderService,
+	)
 
 	router := gin.Default()
 
@@ -94,6 +106,8 @@ func main() {
 	dashboard.GET("/orders/offline/edit/:id", dashboardHandler.EditOfflineOrder)
 	dashboard.POST("/orders/offline/edit/:id", dashboardHandler.UpdateOfflineOrder)
 	dashboard.POST("/orders/offline/delete/:id", dashboardHandler.DeleteOfflineOrder)
+
+	dashboard.GET("/orders/online", dashboardHandler.GetAllOnlineOrder)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)

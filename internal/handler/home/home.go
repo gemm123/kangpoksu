@@ -9,16 +9,23 @@ import (
 )
 
 type homeHandler struct {
-	productService service.ProductService
-	cartService    service.CartService
-	orderService   service.OfflineOrderService
+	productService      service.ProductService
+	cartService         service.CartService
+	offlineOrderService service.OfflineOrderService
+	onlineOrderService  service.OnlineOrderService
 }
 
-func NewHomeHandler(productService service.ProductService, cartService service.CartService, orderService service.OfflineOrderService) *homeHandler {
+func NewHomeHandler(
+	productService service.ProductService,
+	cartService service.CartService,
+	offlineOrderService service.OfflineOrderService,
+	onlineOrderService service.OnlineOrderService,
+) *homeHandler {
 	return &homeHandler{
-		productService: productService,
-		cartService:    cartService,
-		orderService:   orderService,
+		productService:      productService,
+		cartService:         cartService,
+		offlineOrderService: offlineOrderService,
+		onlineOrderService:  onlineOrderService,
 	}
 }
 

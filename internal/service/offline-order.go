@@ -9,8 +9,8 @@ import (
 )
 
 type offlineOrderService struct {
-	orderRepository   repository.OfflineOrderRepository
-	productRepository repository.ProductRepository
+	offlineOrderRepository repository.OfflineOrderRepository
+	productRepository      repository.ProductRepository
 }
 
 type OfflineOrderService interface {
@@ -23,8 +23,8 @@ type OfflineOrderService interface {
 
 func NewOfflineOrderService(offlineOrderRepository repository.OfflineOrderRepository, productRepository repository.ProductRepository) *offlineOrderService {
 	return &offlineOrderService{
-		orderRepository:   offlineOrderRepository,
-		productRepository: productRepository,
+		offlineOrderRepository: offlineOrderRepository,
+		productRepository:      productRepository,
 	}
 }
 
@@ -34,7 +34,7 @@ func (s *offlineOrderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, 
 	offlineOrder.UpdatedAt = time.Now()
 	offlineOrder.Status = "Menunggu konfirmasi pembayaran"
 
-	if err := s.orderRepository.SaveOfflineOrder(offlineOrder); err != nil {
+	if err := s.offlineOrderRepository.SaveOfflineOrder(offlineOrder); err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}
@@ -49,7 +49,7 @@ func (s *offlineOrderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, 
 			UpdatedAt:      time.Now(),
 		}
 
-		if err := s.orderRepository.SaveDetailOfflineOrder(detailOrder); err != nil {
+		if err := s.offlineOrderRepository.SaveDetailOfflineOrder(detailOrder); err != nil {
 			log.Println("error: " + err.Error())
 			return err
 		}
@@ -72,7 +72,7 @@ func (s *offlineOrderService) SaveOfflineOrder(offlineOrder model.OfflineOrder, 
 }
 
 func (s *offlineOrderService) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
-	offlineOrders, err := s.orderRepository.GetAllOfflineOrder()
+	offlineOrders, err := s.offlineOrderRepository.GetAllOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return offlineOrders, err
@@ -84,13 +84,13 @@ func (s *offlineOrderService) GetAllOfflineOrder() ([]model.OfflineOrder, error)
 func (s *offlineOrderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error) {
 	var editOfflineOrderResponse model.EditOfflineOrderResponse
 
-	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
+	offlineOrder, err := s.offlineOrderRepository.GetOfflineOrderById(id)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return editOfflineOrderResponse, err
 	}
 
-	detailOfflineOrderResponse, err := s.orderRepository.GetDetailOfflineOrderByOfflineOrderId(id)
+	detailOfflineOrderResponse, err := s.offlineOrderRepository.GetDetailOfflineOrderByOfflineOrderId(id)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return editOfflineOrderResponse, err
@@ -111,7 +111,7 @@ func (s *offlineOrderService) UpdateStatusOfflineOrder(id uuid.UUID, status stri
 		"status":     status,
 		"updated_at": time.Now(),
 	}
-	err := s.orderRepository.UpdateOfflineOrder(id, data)
+	err := s.offlineOrderRepository.UpdateOfflineOrder(id, data)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return err
@@ -121,26 +121,26 @@ func (s *offlineOrderService) UpdateStatusOfflineOrder(id uuid.UUID, status stri
 }
 
 func (s *offlineOrderService) DeleteOfflineOrder(id uuid.UUID) error {
-	offlineOrder, err := s.orderRepository.GetOfflineOrderById(id)
+	offlineOrder, err := s.offlineOrderRepository.GetOfflineOrderById(id)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}
 
-	detailOfflineOrders, err := s.orderRepository.GetAllDetailOfflineOrderByOfflineOrderId(id)
+	detailOfflineOrders, err := s.offlineOrderRepository.GetAllDetailOfflineOrderByOfflineOrderId(id)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}
 
 	for _, doo := range detailOfflineOrders {
-		if err := s.orderRepository.DeleteDetailOfflineOrder(doo); err != nil {
+		if err := s.offlineOrderRepository.DeleteDetailOfflineOrder(doo); err != nil {
 			log.Println("error: " + err.Error())
 			return err
 		}
 	}
 
-	if err := s.orderRepository.DeleteOfflineOrder(offlineOrder); err != nil {
+	if err := s.offlineOrderRepository.DeleteOfflineOrder(offlineOrder); err != nil {
 		log.Println("error: " + err.Error())
 		return err
 	}

@@ -1,15 +1,12 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"kopoksu/helper"
 	"kopoksu/internal/model"
 	"log"
-	"math/rand"
 	"net/http"
-	"time"
 )
 
 func (h *homeHandler) FormOrder(ctx *gin.Context) {
@@ -38,14 +35,10 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 		return
 	}
 
-	rand.Seed(time.Now().UnixNano())
-	randNumber := rand.Intn(90) + 10
-	totalOrder = totalOrder / 100
-	totalOrder = totalOrder*100 + randNumber
-
+	totalOrder = helper.RandomNumberOrder(totalOrder)
 	offlineOrder.Total = totalOrder
 
-	if err := h.orderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
+	if err := h.offlineOrderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
@@ -65,5 +58,34 @@ func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println(onlineOrder)
+	session := sessions.Default(ctx)
+	var cart []model.Cart
+
+	cart, err := helper.GetSessionCart(session, cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	totalOrder, err := h.cartService.GetAccumulationTotalCart(cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	totalOrder = helper.RandomNumberOrder(totalOrder)
+	onlineOrder.Cost = 20000
+	onlineOrder.Total = totalOrder + onlineOrder.Cost
+
+	if err := h.onlineOrderService.SaveOnlineOrder(onlineOrder, cart); err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	session.Clear()
+	session.Save()
+
+	ctx.HTML(http.StatusOK, "payment.html", gin.H{
+		"total": onlineOrder.Total,
+	})
 }
