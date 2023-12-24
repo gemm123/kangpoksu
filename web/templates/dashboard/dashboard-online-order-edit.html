@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit Offline Order</h1>
+
+    <form action="/dashboard/orders/offline/edit/{{.data.Id}}" method="post">
+
+        <label for="name">Nama:</label><br>
+        <input type="text" id="name" name="name" value="{{ .data.Name }}" disabled> <br>
+
+        <label for="address">Alamat:</label> <br>
+        <input type="text" id="address" name="address" value="{{ .data.Address }}" disabled> <br>
+
+        <label for="city">Kota/Kabupaten:</label> <br>
+        <input type="text" id="city" name="city" value="{{ .data.City }}" disabled> <br>
+
+        <label for="province">Provinsi:</label> <br>
+        <input type="text" id="province" name="province" value="{{ .data.Province }}" disabled> <br>
+
+        <label for="phone-number">No HP:</label> <br>
+        <input type="text" id="phone-number" name="phone-number" value="{{ .data.PhoneNumber }}" disabled> <br>
+
+        <label for="post-code">Kode Pos:</label> <br>
+        <input type="text" id="post-code" name="post-code" value="{{ .data.PostCode }}" disabled> <br>
+
+        <ol>
+            {{ range .data.DetailOnlineOrderResponse }}
+            <li>
+                {{ .Name }} {{ .Amount }} {{ .Price }}
+            </li>
+            {{ end }}
+        </ol>
+
+        <label for="total">Total:</label>
+        <input type="number" name="total" id="total" value="{{ .data.Total }}" disabled>
+        <br>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="Menunggu konfirmasi pembayaran"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
+            <option value="Selesai"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
+        </select>
+        <br>
+
+        <button type="submit">Lanjut Pembayaran</button>
+    </form>
+</body>
+</html>

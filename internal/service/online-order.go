@@ -16,6 +16,7 @@ type onlineOrderService struct {
 type OnlineOrderService interface {
 	SaveOnlineOrder(onlineOrder model.OnlineOrder, cart []model.Cart) error
 	GetAllOnlineOrder() ([]model.OnlineOrder, error)
+	EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrderResponse, error)
 }
 
 func NewOnlineOrderService(onlineOrderRepository repository.OnlineOrderRepository, productRepository repository.ProductRepository) *onlineOrderService {
@@ -76,4 +77,33 @@ func (s *onlineOrderService) GetAllOnlineOrder() ([]model.OnlineOrder, error) {
 	}
 
 	return onlineOrders, nil
+}
+
+func (s *onlineOrderService) EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrderResponse, error) {
+	var editOnlineOrderResponse model.EditOnlineOrderResponse
+
+	onlineOrder, err := s.onlineOrderRepository.GetOnlineOrderById(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return editOnlineOrderResponse, err
+	}
+
+	detailOnlineOrderResponse, err := s.onlineOrderRepository.GetDetailOnlineOrderByOnlineOrderId(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return editOnlineOrderResponse, err
+	}
+
+	editOnlineOrderResponse.Id = id
+	editOnlineOrderResponse.Name = onlineOrder.Name
+	editOnlineOrderResponse.Address = onlineOrder.Address
+	editOnlineOrderResponse.City = onlineOrder.City
+	editOnlineOrderResponse.Province = onlineOrder.Province
+	editOnlineOrderResponse.PhoneNumber = onlineOrder.PhoneNumber
+	editOnlineOrderResponse.PostCode = onlineOrder.PostCode
+	editOnlineOrderResponse.Total = onlineOrder.Total
+	editOnlineOrderResponse.Status = onlineOrder.Status
+	editOnlineOrderResponse.DetailOnlineOrderResponse = detailOnlineOrderResponse
+
+	return editOnlineOrderResponse, nil
 }

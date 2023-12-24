@@ -28,3 +28,22 @@ type DetailOnlineOrder struct {
 	CreatedAt     time.Time `gorm:"column:created_at"`
 	UpdatedAt     time.Time `gorm:"column:updated_at"`
 }
+
+type DetailOnlineOrderResponse struct {
+	Name   string
+	Amount int
+	Price  int
+}
+
+type EditOnlineOrderResponse struct {
+	Id                        uuid.UUID
+	Name                      string
+	Address                   string
+	City                      string
+	Province                  string
+	PhoneNumber               string
+	PostCode                  int
+	Total                     int
+	Status                    string
+	DetailOnlineOrderResponse []DetailOnlineOrderResponse
+}

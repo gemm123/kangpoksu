@@ -108,6 +108,7 @@ func main() {
 	dashboard.POST("/orders/offline/delete/:id", dashboardHandler.DeleteOfflineOrder)
 
 	dashboard.GET("/orders/online", dashboardHandler.GetAllOnlineOrder)
+	dashboard.GET("/orders/online/edit/:id", dashboardHandler.EditOnlineOrder)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)
