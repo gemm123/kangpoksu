@@ -16,6 +16,10 @@ type OnlineOrderRepository interface {
 	GetAllOnlineOrder() ([]model.OnlineOrder, error)
 	GetOnlineOrderById(id uuid.UUID) (model.OnlineOrder, error)
 	GetDetailOnlineOrderByOnlineOrderId(id uuid.UUID) ([]model.DetailOnlineOrderResponse, error)
+	GetAllDetailOnlineOrderByOnlineOrderId(id uuid.UUID) ([]model.DetailOnlineOrder, error)
+	UpdateOnlineOrder(id uuid.UUID, data map[string]interface{}) error
+	DeleteOnlineOrder(onlineOrder model.OnlineOrder) error
+	DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error
 }
 
 func NewOnlineOrderRepository(DB *gorm.DB) *onlineOrderRepository {
@@ -55,4 +59,23 @@ func (r *onlineOrderRepository) GetDetailOnlineOrderByOnlineOrderId(id uuid.UUID
 		Scan(&detailOnlineOrdersResponse).
 		Error
 	return detailOnlineOrdersResponse, err
+}
+
+func (r *onlineOrderRepository) GetAllDetailOnlineOrderByOnlineOrderId(id uuid.UUID) ([]model.DetailOnlineOrder, error) {
+	var detailOnlineOrders []model.DetailOnlineOrder
+	err := r.DB.Table("detail_online_orders").Where("online_order_id = ?", id).Find(&detailOnlineOrders).Error
+	return detailOnlineOrders, err
+}
+
+func (r *onlineOrderRepository) UpdateOnlineOrder(id uuid.UUID, data map[string]interface{}) error {
+	err := r.DB.Table("online_orders").Where("id = ?", id).Updates(data).Error
+	return err
+}
+
+func (r *onlineOrderRepository) DeleteOnlineOrder(onlineOrder model.OnlineOrder) error {
+	return r.DB.Delete(&onlineOrder).Error
+}
+
+func (r *onlineOrderRepository) DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error {
+	return r.DB.Delete(&detailOnlineOrder).Error
 }

@@ -17,6 +17,8 @@ type OnlineOrderService interface {
 	SaveOnlineOrder(onlineOrder model.OnlineOrder, cart []model.Cart) error
 	GetAllOnlineOrder() ([]model.OnlineOrder, error)
 	EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrderResponse, error)
+	UpdateStatusOnlineOrder(id uuid.UUID, status string) error
+	DeleteOnlineOrder(id uuid.UUID) error
 }
 
 func NewOnlineOrderService(onlineOrderRepository repository.OnlineOrderRepository, productRepository repository.ProductRepository) *onlineOrderService {
@@ -106,4 +108,46 @@ func (s *onlineOrderService) EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrde
 	editOnlineOrderResponse.DetailOnlineOrderResponse = detailOnlineOrderResponse
 
 	return editOnlineOrderResponse, nil
+}
+
+func (s *onlineOrderService) UpdateStatusOnlineOrder(id uuid.UUID, status string) error {
+	data := map[string]interface{}{
+		"status":     status,
+		"updated_at": time.Now(),
+	}
+	err := s.onlineOrderRepository.UpdateOnlineOrder(id, data)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
+}
+
+func (s *onlineOrderService) DeleteOnlineOrder(id uuid.UUID) error {
+	onlineOrder, err := s.onlineOrderRepository.GetOnlineOrderById(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	detailOnlineOrders, err := s.onlineOrderRepository.GetAllDetailOnlineOrderByOnlineOrderId(id)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	for _, doo := range detailOnlineOrders {
+		if err := s.onlineOrderRepository.DeleteDetailOnlineOrder(doo); err != nil {
+			log.Println("error: " + err.Error())
+			return err
+		}
+	}
+
+	if err := s.onlineOrderRepository.DeleteOnlineOrder(onlineOrder); err != nil {
+		log.Println("error: " + err.Error())
+		return err
+	}
+
+	return nil
 }
