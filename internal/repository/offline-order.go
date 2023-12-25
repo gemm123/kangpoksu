@@ -20,6 +20,7 @@ type OfflineOrderRepository interface {
 	DeleteOfflineOrder(offlineOrder model.OfflineOrder) error
 	GetAllDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrder, error)
 	DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error
+	CountOfflineOrderByStatus(status string) (int, error)
 }
 
 func NewOfflineOrderRepository(DB *gorm.DB) *offlineOrderRepository {
@@ -78,4 +79,10 @@ func (r *offlineOrderRepository) DeleteOfflineOrder(offlineOrder model.OfflineOr
 
 func (r *offlineOrderRepository) DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
 	return r.DB.Delete(&detailOfflineOrder).Error
+}
+
+func (r *offlineOrderRepository) CountOfflineOrderByStatus(status string) (int, error) {
+	var count int64
+	err := r.DB.Table("offline_orders").Where("status = ?", status).Count(&count).Error
+	return int(count), err
 }

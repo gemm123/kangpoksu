@@ -20,6 +20,7 @@ type OnlineOrderRepository interface {
 	UpdateOnlineOrder(id uuid.UUID, data map[string]interface{}) error
 	DeleteOnlineOrder(onlineOrder model.OnlineOrder) error
 	DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error
+	CountOnlineOrderByStatus(status string) (int, error)
 }
 
 func NewOnlineOrderRepository(DB *gorm.DB) *onlineOrderRepository {
@@ -78,4 +79,10 @@ func (r *onlineOrderRepository) DeleteOnlineOrder(onlineOrder model.OnlineOrder)
 
 func (r *onlineOrderRepository) DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error {
 	return r.DB.Delete(&detailOnlineOrder).Error
+}
+
+func (r *onlineOrderRepository) CountOnlineOrderByStatus(status string) (int, error) {
+	var count int64
+	err := r.DB.Table("online_orders").Where("status = ?", status).Count(&count).Error
+	return int(count), err
 }

@@ -19,6 +19,7 @@ type OfflineOrderService interface {
 	EditOfflineOrder(id uuid.UUID) (model.EditOfflineOrderResponse, error)
 	UpdateStatusOfflineOrder(id uuid.UUID, status string) error
 	DeleteOfflineOrder(id uuid.UUID) error
+	CountOfflineOrderByStatus(status string) (int, error)
 }
 
 func NewOfflineOrderService(offlineOrderRepository repository.OfflineOrderRepository, productRepository repository.ProductRepository) *offlineOrderService {
@@ -146,4 +147,14 @@ func (s *offlineOrderService) DeleteOfflineOrder(id uuid.UUID) error {
 	}
 
 	return nil
+}
+
+func (s *offlineOrderService) CountOfflineOrderByStatus(status string) (int, error) {
+	count, err := s.offlineOrderRepository.CountOfflineOrderByStatus(status)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return count, err
+	}
+
+	return count, nil
 }

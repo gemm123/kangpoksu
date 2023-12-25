@@ -84,5 +84,35 @@ func (h *dashboardHandler) Logout(ctx *gin.Context) {
 }
 
 func (h *dashboardHandler) Home(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "dashboard-home.html", gin.H{})
+	countOfflineOrderConfirmationPayment, err := h.offlineOrderService.CountOfflineOrderByStatus("Menunggu konfirmasi pembayaran")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	countOfflineOrderDone, err := h.offlineOrderService.CountOfflineOrderByStatus("Selesai")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	countOnlineOrderConfirmationPayment, err := h.onlineOrderService.CountOnlineOrderByStatus("Menunggu konfirmasi pembayaran")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	countOnlineOrderDone, err := h.onlineOrderService.CountOnlineOrderByStatus("Selesai")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	totalCountConfirmationPayment := countOfflineOrderConfirmationPayment + countOnlineOrderConfirmationPayment
+	totalCountDone := countOfflineOrderDone + countOnlineOrderDone
+
+	ctx.HTML(http.StatusOK, "dashboard-home.html", gin.H{
+		"confirmationPayment": totalCountConfirmationPayment,
+		"countDone":           totalCountDone,
+	})
 }

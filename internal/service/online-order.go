@@ -19,6 +19,7 @@ type OnlineOrderService interface {
 	EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrderResponse, error)
 	UpdateStatusOnlineOrder(id uuid.UUID, status string) error
 	DeleteOnlineOrder(id uuid.UUID) error
+	CountOnlineOrderByStatus(status string) (int, error)
 }
 
 func NewOnlineOrderService(onlineOrderRepository repository.OnlineOrderRepository, productRepository repository.ProductRepository) *onlineOrderService {
@@ -150,4 +151,14 @@ func (s *onlineOrderService) DeleteOnlineOrder(id uuid.UUID) error {
 	}
 
 	return nil
+}
+
+func (s *onlineOrderService) CountOnlineOrderByStatus(status string) (int, error) {
+	count, err := s.onlineOrderRepository.CountOnlineOrderByStatus(status)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return count, err
+	}
+
+	return count, nil
 }
