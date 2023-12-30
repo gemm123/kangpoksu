@@ -1,11 +1,11 @@
 package handler
 
 import (
+	"fmt"
+	"github.com/gin-gonic/gin"
 	"kopoksu/internal/service"
 	"log"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
 type homeHandler struct {
@@ -53,4 +53,31 @@ func (h *homeHandler) Home(ctx *gin.Context) {
 		"babyDiapers":  babyDiapers,
 		"adultDiapers": adultDiapers,
 	})
+}
+
+type SearchResult struct {
+	Results string `json:"results"`
+}
+
+func (h *homeHandler) Search(ctx *gin.Context) {
+	search := ctx.Query("term")
+
+	//searchResults := ""
+	//if strings.Contains("apple,banana,orange", search) {
+	//	searchResults = "Found: " + search
+	//} else {
+	//	searchResults = "Not Found: " + search
+	//}
+	//
+	//response := SearchResult{Results: searchResults}
+
+	searchResult, err := h.productService.SearchProductsByName(search)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	fmt.Println(searchResult)
+
+	ctx.JSON(http.StatusOK, searchResult)
 }

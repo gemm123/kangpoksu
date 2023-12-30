@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"kopoksu/internal/model"
 
 	"github.com/google/uuid"
@@ -22,6 +23,7 @@ type ProductRepository interface {
 	GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error)
 	GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error)
 	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
+	SearchProductsByName(name string) ([]model.SearchResult, error)
 }
 
 func NewProductRepository(DB *gorm.DB) *productRepository {
@@ -83,4 +85,14 @@ func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) 
 
 func (r *productRepository) UpdateProduct(product model.Product) error {
 	return r.DB.Save(&product).Error
+}
+
+func (r *productRepository) SearchProductsByName(name string) ([]model.SearchResult, error) {
+	var searchResult []model.SearchResult
+	err := r.DB.Table("products").
+		Joins("left join categories on products.category_id = categories.id").
+		Select("products.id, products.\"name\", categories.\"name\" as category").
+		Where("LOWER(products.\"name\") LIKE ?", fmt.Sprintf("%%%s%%", name)).
+		Limit(3).Find(&searchResult).Error
+	return searchResult, err
 }

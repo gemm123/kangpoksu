@@ -25,3 +25,9 @@ type Cart struct {
 	Total  int       `json:"total"`
 	Image  string    `json:"image"`
 }
+
+type SearchResult struct {
+	Id       uuid.UUID `json:"id" gorm:"id"`
+	Name     string    `json:"name" gorm:"name"`
+	Category string    `json:"category" gorm:"category"`
+}

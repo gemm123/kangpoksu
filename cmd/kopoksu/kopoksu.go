@@ -114,6 +114,8 @@ func main() {
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)
+	router.GET("/search", homeHandler.Search)
+
 	router.GET("/formula-milks", homeHandler.GetAllFormulaMilks)
 	router.GET("/formula-milks/:id", homeHandler.GetFormulaMilksById)
 

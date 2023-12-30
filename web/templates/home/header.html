@@ -11,5 +11,9 @@
 </head>
 <body>
 
-<h1> Navbar </h1>
+<nav>
+    <input type="text" id="searchInput" placeholder="Search..." onkeydown="handleEnter(event)">
+    <button onclick="search()">Search</button>
+    <div id="searchResults"></div>
+</nav>
 {{ end }}

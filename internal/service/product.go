@@ -28,6 +28,7 @@ type ProductService interface {
 	GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error)
 	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
 	GetProductById(id uuid.UUID) (model.Product, error)
+	SearchProductsByName(name string) ([]model.SearchResult, error)
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -206,4 +207,14 @@ func (s *productService) UpdateProduct(newProduct model.Product, id uuid.UUID) e
 	}
 
 	return nil
+}
+
+func (s *productService) SearchProductsByName(name string) ([]model.SearchResult, error) {
+	searchResult, err := s.productRepository.SearchProductsByName(name)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return searchResult, err
+	}
+
+	return searchResult, nil
 }
