@@ -24,17 +24,20 @@
         resultsContainer.innerHTML = ""; // Clear previous results
 
         results.forEach(result => {
-            var resultItem = document.createElement('a');
+            var resultItem = document.createElement('p');
+
+            var link = document.createElement('a');
             if (result.category === "Susu Formula") {
-                resultItem.href = `/formula-milks/${result.id}`
+                link.href = `/formula-milks/${result.id}`
             } else if (result.category === "Popok Bayi") {
-                resultItem.href = `/baby-diapers/${result.id}`
+                link.href = `/baby-diapers/${result.id}`
             } else if (result.category === "Popok Dewasa") {
-                resultItem.href = `/adult-diapers/${result.id}`
+                link.href = `/adult-diapers/${result.id}`
             }
-            resultItem.textContent = `${result.name}`;
+            link.textContent = `${result.name}`;
+
+            resultItem.appendChild(link)
             resultsContainer.appendChild(resultItem);
-            resultsContainer.appendChild(document.createElement('br'));
         });
     }
 </script>

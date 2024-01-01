@@ -1,18 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
-<body>
+{{ template "header.html" }}
+
     <h1>Pengisian Form</h1>
     <label>
         <input type="radio" id="onlineRadio" name="connectionStatus" checked onchange="updateForm()"> Kirim
@@ -80,5 +67,4 @@
         }
     </script>
 
-</body>
-</html>
+{{ template "footer.html" }}
