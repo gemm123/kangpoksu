@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="container mt-3">
+<div class="container my-3">
     <div class="row">
         <div class="col">
             <h2><span class="underlined">Susu </span>Formula</h2>
@@ -39,38 +39,80 @@
     </div>
 </div>
 
-    <ol>
+<div class="container px-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
         {{ range .formulaMilks }}
-            <li>
-                <a href="/formula-milks/{{ .Id }}">{{ .Name }}</a> <br>
-                {{ .Price }} <br>
-                <img src="{{ .Image }}" alt="formula-milk"> <br>
-            </li>
+        <div class="col">
+            <a class="text-decoration-none" href="/formula-milks/{{ .Id }}">
+                <div class="card">
+                    <img src="{{ .Image }}" class="card-img-top" alt="formula-milk">
+                    <div class="card-body">
+                        <p class="card-title">{{ .Name }}</p>
+                        <p class="card-text"><strong>{{ .PriceFormatted }}</strong></p>
+                    </div>
+                </div>
+            </a>
+        </div>
         {{ end }}
-    </ol>
+    </div>
+</div>
 
-    <h1>Popok Bayi</h1>
-    <a href="/baby-diapers">Lihat semua</a>
-    <ol>
+<div class="container my-3">
+    <div class="row">
+        <div class="col">
+            <h2><span class="underlined">Popok </span>Bayi</h2>
+        </div>
+        <div class="col">
+            <p class="text-end mb-0 mt-3"><a class="text-decoration-none text-secondary" href="/baby-diapers">Lihat semua</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
         {{ range .babyDiapers }}
-            <li>
-                <a href="/baby-diapers/{{ .Id }}">{{ .Name }}</a> <br>
-                {{ .Price }} <br>
-                <img src="{{ .Image }}" alt="baby-diaper"> <br>
-            </li>
+        <div class="col">
+            <a class="text-decoration-none" href="/baby-diapers/{{ .Id }}">
+                <div class="card">
+                    <img src="{{ .Image }}" class="card-img-top" alt="baby-diaper">
+                    <div class="card-body">
+                        <p class="card-title">{{ .Name }}</p>
+                        <p class="card-text"><strong>{{ .PriceFormatted }}</strong></p>
+                    </div>
+                </div>
+            </a>
+        </div>
         {{ end }}
-    </ol>
+    </div>
+</div>
 
-    <h1>Popok Dewasa</h1>
-    <a href="/adult-diapers">Lihat semua</a>
-    <ol>
+<div class="container my-3">
+    <div class="row">
+        <div class="col">
+            <h2><span class="underlined">Popok </span>Dewasa</h2>
+        </div>
+        <div class="col">
+            <p class="text-end mb-0 mt-3"><a class="text-decoration-none text-secondary" href="/adult-diapers">Lihat semua</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 mb-5">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
         {{ range .adultDiapers }}
-            <li>
-                <a href="/adult-diapers/{{ .Id }}">{{ .Name }}</a> <br>
-                {{ .Price }} <br>
-                <img src="{{ .Image }}" alt="adult-diaper"> <br>
-            </li>
+        <div class="col">
+            <a class="text-decoration-none" href="/adult-diapers/{{ .Id }}">
+                <div class="card">
+                    <img src="{{ .Image }}" class="card-img-top" alt="adult-diaper">
+                    <div class="card-body">
+                        <p class="card-title">{{ .Name }}</p>
+                        <p class="card-text"><strong>{{ .PriceFormatted }}</strong></p>
+                    </div>
+                </div>
+            </a>
+        </div>
         {{ end }}
-    </ol>
+    </div>
+</div>
 
 {{ template "footer.html" }}

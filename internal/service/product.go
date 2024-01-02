@@ -1,6 +1,7 @@
 package service
 
 import (
+	"kopoksu/helper"
 	"kopoksu/internal/model"
 	"kopoksu/internal/repository"
 	"log"
@@ -54,6 +55,10 @@ func (s *productService) GetAllProductsFormulaMilkLimit(limit int) ([]model.Prod
 		return products, err
 	}
 
+	for i := 0; i < len(products); i++ {
+		products[i].PriceFormatted = helper.FormatRupiah(float64(products[i].Price))
+	}
+
 	return products, nil
 }
 
@@ -81,6 +86,10 @@ func (s *productService) GetAllProductsBabyDiaperLimit(limit int) ([]model.Produ
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return diapers, err
+	}
+
+	for i := 0; i < len(diapers); i++ {
+		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
 	}
 
 	return diapers, nil
@@ -115,6 +124,10 @@ func (s *productService) GetAllProductsAdultDiaperLimit(limit int) ([]model.Prod
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return diapers, err
+	}
+
+	for i := 0; i < len(diapers); i++ {
+		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
 	}
 
 	return diapers, nil

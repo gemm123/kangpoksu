@@ -30,19 +30,19 @@ func NewHomeHandler(
 }
 
 func (h *homeHandler) Home(ctx *gin.Context) {
-	formulaMilks, err := h.productService.GetAllProductsFormulaMilkLimit(5)
+	formulaMilks, err := h.productService.GetAllProductsFormulaMilkLimit(4)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
 
-	babyDiapers, err := h.productService.GetAllProductsBabyDiaperLimit(5)
+	babyDiapers, err := h.productService.GetAllProductsBabyDiaperLimit(4)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
 
-	adultDiapers, err := h.productService.GetAllProductsAdultDiaperLimit(5)
+	adultDiapers, err := h.productService.GetAllProductsAdultDiaperLimit(4)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
