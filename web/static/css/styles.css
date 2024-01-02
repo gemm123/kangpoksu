@@ -1,3 +1,11 @@
+.kopoksu-color {
+    color: #FC924A;
+}
+
+.underlined {
+    border-bottom: 2px solid #FC924A;
+}
+
 .navbar-center {
     display: flex;
     align-items: center;
