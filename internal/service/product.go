@@ -139,6 +139,8 @@ func (s *productService) GetProductById(id uuid.UUID) (model.Product, error) {
 		return product, err
 	}
 
+	product.PriceFormatted = helper.FormatRupiah(float64(product.Price))
+
 	return product, nil
 }
 
