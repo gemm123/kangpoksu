@@ -1,12 +1,28 @@
 {{ template "header.html" }}
-    <h1>Susu Formula</h1>
-    <ol>
-        {{ range .formulaMilks }}
-            <li>
-                <a href="/formula-milks/{{ .Id }}">{{ .Name }}</a> <br>
-                {{ .Price }} <br>
-                <img src="{{ .Image }}" alt="formula-milk"> <br>
-            </li>
-        {{ end }}
-    </ol>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col">
+                <h2><span class="underlined">Susu </span>Formula</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-4">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {{ range .formulaMilks }}
+            <div class="col">
+                <a class="text-decoration-none" href="/formula-milks/{{ .Id }}">
+                    <div class="card">
+                        <img src="{{ .Image }}" class="card-img-top" alt="formula-milk">
+                        <div class="card-body">
+                            <p class="card-title">{{ .Name }}</p>
+                            <p class="card-text"><strong>{{ .PriceFormatted }}</strong></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
 {{ template "footer.html" }}

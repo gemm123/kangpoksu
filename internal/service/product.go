@@ -45,6 +45,10 @@ func (s *productService) GetAllProductsFormulaMilk() ([]model.Product, error) {
 		return products, err
 	}
 
+	for i := 0; i < len(products); i++ {
+		products[i].PriceFormatted = helper.FormatRupiah(float64(products[i].Price))
+	}
+
 	return products, nil
 }
 
