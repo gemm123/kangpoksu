@@ -1,22 +1,46 @@
 {{ template "header.html" }}
 
-    <ol>
-        {{ range .cart }}
-            <li>
-                {{ .Name }} <br>
-                {{ .Amount }} <br>
-                {{ .Total }} <br>
-                <img src="{{ .Image }}" alt="cart"> <br>
-                <form action="/cart-delete" method="post">
-                    <input type="hidden" name="id" value="{{ .Id }}">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        {{ end }}
-    </ol>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col">
+                <h2><span class="underlined">Keranjang </span>anda</h2>
+            </div>
+        </div>
+    </div>
 
-    <h1>Total Order: {{ .totalOrder }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                {{ range .cart }}
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ .Image }}" alt="cart" class="rounded" width="200" height="200">
+                        </div>
+                        <div class="col-8">
+                            <p style="font-size: 25px">{{ .Name }}</p>
+                            <p style="font-size: 20px">Jumlah: {{ .Amount }}</p>
+                            <p>
+                                <form action="/cart-delete" method="post">
+                                    <b>{{ .PriceFormatted }}</b>
+                                    <input type="hidden" name="id" value="{{ .Id }}">
+                                    <button type="submit" class="btn btn-link p-0">
+                                        <img class="mb-1 ms-2" src="/static/images/icon-trash.png" alt="Delete" width="20" height="20">
+                                    </button>
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                {{ end }}
+            </div>
+            <div class="col-4">
+                <h1>
+                    Total order: <br>
+                    {{ .totalOrderFormatted }}
+                </h1>
 
-    <a href="/order">Checkout</a>
+                <a class="btn btn-primary mt-3" href="/order">Checkout</a>
+            </div>
+        </div>
+    </div>
 
 {{ template "footer.html" }}

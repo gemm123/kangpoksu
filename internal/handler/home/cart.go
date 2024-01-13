@@ -59,15 +59,15 @@ func (h *homeHandler) GetCartProduct(ctx *gin.Context) {
 		return
 	}
 
-	totalOrder, err := h.cartService.GetAccumulationTotalCart(cart)
+	totalOrderFormatted, err := h.cartService.GetAccumulationTotalCartFormatted(cart)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
 
 	ctx.HTML(http.StatusOK, "cart.html", gin.H{
-		"cart":       cart,
-		"totalOrder": totalOrder,
+		"cart":                cart,
+		"totalOrderFormatted": totalOrderFormatted,
 	})
 }
 

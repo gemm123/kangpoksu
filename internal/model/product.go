@@ -20,11 +20,12 @@ type Product struct {
 }
 
 type Cart struct {
-	Id     uuid.UUID `form:"id" json:"id"`
-	Name   string    `json:"name"`
-	Amount int       `form:"amount" json:"amount"`
-	Total  int       `json:"total"`
-	Image  string    `json:"image"`
+	Id             uuid.UUID `form:"id" json:"id"`
+	Name           string    `json:"name"`
+	Amount         int       `form:"amount" json:"amount"`
+	Total          int       `json:"total"`
+	Image          string    `json:"image"`
+	PriceFormatted string
 }
 
 type SearchResult struct {
