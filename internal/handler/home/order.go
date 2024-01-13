@@ -37,6 +37,7 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 
 	totalOrder = helper.RandomNumberOrder(totalOrder)
 	offlineOrder.Total = totalOrder
+	totalFormatted := helper.FormatRupiah(float64(offlineOrder.Total))
 
 	if err := h.offlineOrderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
 		log.Println("error: " + err.Error())
@@ -47,7 +48,8 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 	session.Save()
 
 	ctx.HTML(http.StatusOK, "payment.html", gin.H{
-		"total": totalOrder,
+		"total":          totalOrder,
+		"totalFormatted": totalFormatted,
 	})
 }
 
@@ -76,6 +78,7 @@ func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {
 	totalOrder = helper.RandomNumberOrder(totalOrder)
 	onlineOrder.Cost = 20000
 	onlineOrder.Total = totalOrder + onlineOrder.Cost
+	totalFormatted := helper.FormatRupiah(float64(onlineOrder.Total))
 
 	if err := h.onlineOrderService.SaveOnlineOrder(onlineOrder, cart); err != nil {
 		log.Println("error: " + err.Error())
@@ -86,6 +89,7 @@ func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {
 	session.Save()
 
 	ctx.HTML(http.StatusOK, "payment.html", gin.H{
-		"total": onlineOrder.Total,
+		"total":          onlineOrder.Total,
+		"totalFormatted": totalFormatted,
 	})
 }

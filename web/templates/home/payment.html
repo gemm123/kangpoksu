@@ -1,7 +1,26 @@
 {{ template "header.html" }}
 
-    <h1>Pembayaran</h1>
-    <p><b>BCA:</b> 1234 5678 10</p>
-    <p><b>Total:</b> {{ .total }}</p>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col">
+                <h2><span class="underlined">Pembay</span>aran</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p style="font-size: 25px"><b>BCA:</b> 1234 5678 10</p>
+                <p style="font-size: 25px"><b>Total:</b> {{ .totalFormatted }}</p>
+
+                <p style="font-size: 20px">Harap <b>menyertakan 2 digit terakhir</b> dari kode order di dalam nominal transaksi anda.</p>
+
+                <p style="font-size: 20px">Verifikasi pembayaran akan dapat dilakukan dengan cepat dan tepat apabila jumlah dana yang ditransfer
+                    sesuai dengan jumlah tagihan yang tertera. Pembayaran membutuhkan verifikasi manual yang membutuhkan waktu.
+                </p>
+            </div>
+        </div>
+    </div>
 
 {{ template "footer.html" }}
