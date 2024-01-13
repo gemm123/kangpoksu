@@ -1,70 +1,90 @@
 {{ template "header.html" }}
 
-    <h1>Pengisian Form</h1>
-    <label>
-        <input type="radio" id="onlineRadio" name="connectionStatus" checked onchange="updateForm()"> Kirim
-    </label>
-
-    <label>
-        <input type="radio" id="offlineRadio" name="connectionStatus" onchange="updateForm()"> Ambil ke toko
-    </label>
-
-    <div id="onlineForm">
-        <form action="/order/online" method="post">
-
-            <label for="name">Nama:</label><br>
-            <input type="text" id="name" name="name"> <br>
-
-            <label for="address">Alamat:</label> <br>
-            <input type="text" id="address" name="address"> <br>
-
-            <label for="city">Kota/Kabupaten:</label> <br>
-            <input type="text" id="city" name="city"> <br>
-
-            <label for="province">Provinsi:</label> <br>
-            <input type="text" id="province" name="province"> <br>
-
-            <label for="phone-number">No HP:</label> <br>
-            <input type="text" id="phone-number" name="phone-number"> <br>
-
-            <label for="post-code">Kode Pos:</label> <br>
-            <input type="text" id="post-code" name="post-code"> <br>
-
-            <p>Ongkos Kirim: Rp 20,000</p>
-
-            <button type="button">Batal</button>
-            <button type="submit">Lanjut Pembayaran</button>
-        </form>
+    <div class="container my-3">
+        <div class="row">
+            <div class="col">
+                <h2><span class="underlined">Pengisian </span>Form</h2>
+            </div>
+        </div>
     </div>
 
-    <div id="offlineForm" class="hidden">
-        <form action="/order/offline" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="onlineRadio" checked onchange="updateForm()">
+                    <label class="form-check-label" for="onlineRadio">
+                        Kirim
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="offlineRadio" onchange="updateForm()">
+                    <label class="form-check-label" for="offlineRadio">
+                        Ambil ke toko
+                    </label>
+                </div>
 
-            <label for="name">Nama:</label><br>
-            <input type="text" id="name" name="name"> <br>
+                <div id="onlineForm">
+                    <form action="/order/online" method="post">
 
-            <label for="number">No HP:</label> <br>
-            <input type="text" id="number" name="number"> <br>
+                        <label for="name" class="form-label">Nama:</label><br>
+                        <input type="text" id="name" name="name" class="form-control" required> <br>
 
-            <button type="button">Batal</button>
-            <button type="submit">Lanjut Pembayaran</button>
-        </form>
+                        <label for="address" class="form-label">Alamat:</label> <br>
+                        <input type="text" id="address" name="address" class="form-control" required> <br>
+
+                        <label for="city" class="form-label">Kota/Kabupaten:</label> <br>
+                        <input type="text" id="city" name="city" class="form-control" required> <br>
+
+                        <label for="province" class="form-label">Provinsi:</label> <br>
+                        <input type="text" id="province" name="province" class="form-control" required> <br>
+
+                        <label for="phone-number" class="form-label">No HP:</label> <br>
+                        <input type="text" id="phone-number" name="phone-number" class="form-control" required> <br>
+
+                        <label for="post-code" class="form-label">Kode Pos:</label> <br>
+                        <input type="text" id="post-code" name="post-code" class="form-control" required> <br>
+
+                        <p>Ongkos Kirim: Rp 20,000</p>
+
+                        <a href="/cart" class="btn btn-danger"> Batal</a>
+                        <button type="submit" class="btn btn-primary">Lanjut Pembayaran</button>
+                    </form>
+                </div>
+
+                <div id="offlineForm" style="display: none">
+                    <form action="/order/offline" method="post">
+
+                        <label for="name" class="form-label">Nama:</label><br>
+                        <input type="text" id="name" name="name" class="form-control" required> <br>
+
+                        <label for="number" class="form-label">No HP:</label> <br>
+                        <input type="text" id="number" name="number" class="form-control" required> <br>
+
+                        <a href="/cart" class="btn btn-danger"> Batal</a>
+                        <button type="submit" class="btn btn-primary">Lanjut Pembayaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        function updateForm() {
-            var onlineForm = document.getElementById("onlineForm");
-            var offlineForm = document.getElementById("offlineForm");
 
-            // Show the selected form
-            if (document.getElementById("onlineRadio").checked) {
-                onlineForm.classList.remove("hidden");
-                offlineForm.classList.add("hidden");
-            } else {
-                onlineForm.classList.add("hidden");
-                offlineForm.classList.remove("hidden");
-            }
+
+<script>
+    function updateForm() {
+        var onlineForm = document.getElementById("onlineForm");
+        var offlineForm = document.getElementById("offlineForm");
+
+        // Show the selected form
+        if (document.getElementById("onlineRadio").checked) {
+            onlineForm.style.display = "block";
+            offlineForm.style.display = "none";
+        } else {
+            onlineForm.style.display = "none";
+            offlineForm.style.display = "block";
         }
-    </script>
+    }
+</script>
 
 {{ template "footer.html" }}

@@ -16,7 +16,7 @@ type Product struct {
 	Image          string    `gorm:"column:image"`
 	CreatedAt      time.Time `gorm:"column:created_at"`
 	UpdatedAt      time.Time `gorm:"column:updated_at"`
-	PriceFormatted string
+	PriceFormatted string    `gorm:"-"`
 }
 
 type Cart struct {
