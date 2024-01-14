@@ -82,6 +82,10 @@ func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
 		return diapers, err
 	}
 
+	for i := 0; i < len(diapers); i++ {
+		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
+	}
+
 	return diapers, nil
 }
 
@@ -118,6 +122,10 @@ func (s *productService) GetAllProductsAdultDiaper() ([]model.Product, error) {
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return diapers, err
+	}
+
+	for i := 0; i < len(diapers); i++ {
+		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
 	}
 
 	return diapers, nil
