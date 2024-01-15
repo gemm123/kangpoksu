@@ -2,6 +2,10 @@
     color: #FC924A;
 }
 
+.bg-kopoksu-color {
+    background-color: #FC924A;
+}
+
 .underlined {
     border-bottom: 2px solid #FC924A;
 }
@@ -27,4 +31,20 @@ footer {
     height: 2.5rem;
     background-color: #FC924A;
     color: white;
+}
+
+/* Set a minimum height for the sidebar to cover the full height of the viewport */
+.sidebar {
+    min-height: 100vh;
+}
+
+.navbar {
+    text-align: end !important;
+}
+
+.bottom-button {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 25px;
 }

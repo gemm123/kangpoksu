@@ -1,27 +1,24 @@
 {{ template "dashboard-header.html" }}
 
-<h1>Dashboard Home</h1>
-
-<p>Konfirmasi Pembayaran: {{ .confirmationPayment }}</p>
-<p>Transaksi Berhasil: {{ .countDone }}</p>
-
-<a href="/dashboard/products/formula-milks">Susu Formula</a>
-<br>
-
-<a href="/dashboard/products/baby-diapers">Popok Bayi</a>
-<br>
-
-<a href="/dashboard/products/adult-diapers">Popok Dewasa</a>
-<br>
-
-<a href="/dashboard/orders/offline">Order Offline</a>
-<br>
-
-<a href="/dashboard/orders/online">Order Online</a>
-<br>
-
-<form action="/dashboard/logout" method="post">
-    <button type="submit">Logout</button>
-</form>
+<div class="container ms-3">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center p-0">
+                    <h5 class="card-title bg-kopoksu-color m-0 p-2 text-light">Konfirmasi Pembayaran</h5>
+                    <p class="card-text p-3">{{ .confirmationPayment }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pe-0">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center p-0">
+                    <h5 class="card-title bg-kopoksu-color m-0 p-2 text-light">Transaksi Berhasil</h5>
+                    <p class="card-text p-3">{{ .countDone }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{ template "dashboard-footer.html" }}

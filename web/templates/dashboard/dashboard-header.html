@@ -8,9 +8,70 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard Kopoksu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
 
-<h1>Navbar Dashboard</h1>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block sidebar" style="background-color: #FC924A">
+            <div class="sidebar-sticky mt-3">
+                <!-- Sidebar content goes here -->
+                <ul class="nav flex-column  mt-auto">
+                    <img src="/static/images/logo-kopoksu-white.png" alt="logo-kopoksu" width="150px" height="50px">
+                    <li class="nav-item text-light">
+                        <a class="text-light nav-link active" href="/dashboard/home">
+                            Beranda
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/dashboard/products/formula-milks">
+                            Susu Formula
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/dashboard/products/baby-diapers">
+                            Popok Bayi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/dashboard/products/adult-diapers">
+                            Popok Dewasa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/dashboard/orders/offline">
+                            Order Offline
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/dashboard/orders/online">
+                            Order Online
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-button">
+                        <form action="/dashboard/logout" method="post">
+                            <button class="btn btn-link text-decoration-none text-light" type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <!-- Add more sidebar items as needed -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main role="main" class="col-md-10 ml-sm-auto px-0">
+
+            <nav class="navbar navbar-expand-lg mb-4" style="background-color: #FC924A">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        </ul>
+                        <h5 class="text-light">Hello, Admin</h5>
+                    </div>
+                </div>
+            </nav>
+
 
 {{ end }}
