@@ -43,3 +43,7 @@ func FormatRupiah(angka float64) string {
 
 	return "Rp. " + rupiah
 }
+
+func AddOne(i int) int {
+	return i + 1
+}

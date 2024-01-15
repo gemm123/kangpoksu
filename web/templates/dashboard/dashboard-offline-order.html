@@ -1,26 +1,40 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<ol>
-    {{ range .data }}
-    <li>
-        {{ .Name }} <br>
-        {{ .Status }} <br>
-        <form action="/dashboard/orders/offline/edit/{{.Id}}" method="get">
-            <button type="submit">Edit</button>
-        </form>
-        <form action="/dashboard/orders/offline/delete/{{.Id}}" method="post">
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-    {{ end }}
-</ol>
-</body>
-</html>
+{{ template "dashboard-header.html" }}
+
+    <div class="container">
+        <div class="row ms-2">
+            <h3>Order Offline</h3>
+        </div>
+        <div class="row ms-2">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $index, $data := .data }}
+                    <tr>
+                        <td>{{ add $index }}</td>
+                        <td>{{ $data.Name }}</td>
+                        <td>{{ $data.Status }}</td>
+                        <td>
+                            <form action="/dashboard/orders/offline/edit/{{ $data.Id }}" method="get" style="display: inline">
+                                <button class="btn btn-outline-primary text-decoration-none btn-sm" type="submit">Edit</button>
+                            </form>
+                            <form action="/dashboard/orders/offline/delete/{{ $data.Id }}" method="post" style="display: inline">
+                                <button class="text-decoration-none btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{ end }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{{ template "dashboard-footer.html" }}

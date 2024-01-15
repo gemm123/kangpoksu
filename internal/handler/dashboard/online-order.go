@@ -57,5 +57,5 @@ func (h *dashboardHandler) DeleteOnlineOrder(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Redirect(http.StatusFound, "/dashboard/orders/offline")
+	ctx.Redirect(http.StatusFound, "/dashboard/orders/online")
 }

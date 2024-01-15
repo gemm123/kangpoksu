@@ -1,7 +1,9 @@
 package main
 
 import (
+	"html/template"
 	"kopoksu/config"
+	"kopoksu/helper"
 	dashboardHandler "kopoksu/internal/handler/dashboard"
 	homeHandler "kopoksu/internal/handler/home"
 	"kopoksu/internal/repository"
@@ -55,6 +57,9 @@ func main() {
 
 	router := gin.Default()
 
+	router.SetFuncMap(template.FuncMap{
+		"add": helper.AddOne,
+	})
 	router.LoadHTMLGlob("web/templates/**/*")
 
 	router.Static("/static", "./web/static")
