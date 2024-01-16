@@ -1,36 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Edit Popok Bayi</h1>
+{{ template "dashboard-header.html" }}
 
-    <form action="/dashboard/products/baby-diapers/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
-        <label for="nama-produk">Nama Produk:</label>
-        <input type="text" id="product-name" name="product-name" value="{{ .data.Name }}" required>
-        <br>
+    <div class="container mb-4">
+        <div class="row ms-2">
+            <h3> Edit Popok Bayi</h3>
+        </div>
+        <div class="row ms-2">
+            <div class="col">
+                <form action="/dashboard/products/baby-diapers/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
+                    <label for="product-name" class="form-label">Nama Produk:</label>
+                    <input type="text" id="product-name" name="product-name" class="form-control" value="{{ .data.Name }}" required>
 
-        <label for="description">Deskripsi:</label>
-        <textarea name="description" id="description" required>{{ .data.Description }}</textarea>
-        <br>
+                    <label for="description" class="form-label">Deskripsi:</label>
+                    <textarea name="description" id="description" class="form-control">{{ .data.Description }}</textarea>
 
-        <label for="price">Harga:</label>
-        <input type="number" id="price" name="price" value="{{ .data.Price }}" required>
-        <br>
+                    <label for="price" class="form-label">Harga:</label>
+                    <input type="number" id="price" name="price" class="form-control" value="{{ .data.Price }}" required>
 
-        <label for="quantity">Jumlah:</label>
-        <input type="number" id="quantity" name="quantity" value="{{ .data.Quantity }}" required>
-        <br>
+                    <label for="quantity" class="form-label">Jumlah:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="{{ .data.Quantity }}" required>
 
-        <label for="image">Select an image:</label>
-        <input type="file" id="image" name="image" accept=".png, .jpeg, .jpg">
-        <br>
+                    <label for="image" class="form-label">Select an image:</label>
+                    <input type="file" id="image" name="image" accept=".png, .jpeg, .jpg" class="form-control">
+                    <br>
 
-        <input type="submit" value="Submit">
-    </form>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+{{ template "dashboard-footer.html" }}
