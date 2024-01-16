@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/google/uuid"
+	"kopoksu/helper"
 	"kopoksu/internal/model"
 	"kopoksu/internal/repository"
 	"log"
@@ -97,6 +98,10 @@ func (s *onlineOrderService) EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrde
 		return editOnlineOrderResponse, err
 	}
 
+	for i, detailOfflineOrder := range detailOnlineOrderResponse {
+		detailOnlineOrderResponse[i].PriceFormatted = helper.FormatRupiah(float64(detailOfflineOrder.Price))
+	}
+
 	editOnlineOrderResponse.Id = id
 	editOnlineOrderResponse.Name = onlineOrder.Name
 	editOnlineOrderResponse.Address = onlineOrder.Address
@@ -105,6 +110,7 @@ func (s *onlineOrderService) EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrde
 	editOnlineOrderResponse.PhoneNumber = onlineOrder.PhoneNumber
 	editOnlineOrderResponse.PostCode = onlineOrder.PostCode
 	editOnlineOrderResponse.Total = onlineOrder.Total
+	editOnlineOrderResponse.TotalFormatted = helper.FormatRupiah(float64(editOnlineOrderResponse.Total))
 	editOnlineOrderResponse.Status = onlineOrder.Status
 	editOnlineOrderResponse.DetailOnlineOrderResponse = detailOnlineOrderResponse
 

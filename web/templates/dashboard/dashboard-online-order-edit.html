@@ -1,55 +1,85 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Edit Offline Order</h1>
+{{ template "dashboard-header.html" }}
 
-    <form action="/dashboard/orders/online/edit/{{.data.Id}}" method="post">
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col">
+                <h3>Edit Order Online</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form class="row g-3" action="/dashboard/orders/online/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
+                    <div class="col-12">
+                        <label class="form-label" for="name">Nama:</label>
+                        <input class="form-control" type="text" id="name" name="name" value="{{ .data.Name }}" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="address">Alamat:</label>
+                        <input class="form-control" type="text" id="address" name="address" value="{{ .data.Address }}" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="city">Kota/Kabupaten:</label>
+                        <input class="form-control" type="text" id="city" name="city" value="{{ .data.City }}" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="province">Provinsi:</label>
+                        <input class="form-control" type="text" id="province" name="province" value="{{ .data.Province }}" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="phone-number">No Hp:</label>
+                        <input class="form-control" name="phone-number" id="phone-number" value="{{ .data.PhoneNumber }}" disabled>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="post-code">Kode Pos:</label>
+                        <input class="form-control" type="text" id="post-code" name="post-code" value="{{ .data.PostCode }}" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Produk:</label>
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Jumlah:</label>
+                    </div>
+                    <div class="col-3">
+                        <label class="form-label">Harga:</label>
+                    </div>
+                    {{ range .data.DetailOnlineOrderResponse }}
+                    <div class="col-6">
+                        <input class="form-control" type="text" value="{{ .Name }}" disabled>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="number" value="{{ .Amount }}" disabled>
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" type="text" value="{{ .PriceFormatted }}" disabled>
+                    </div>
+                    {{ end }}
 
-        <label for="name">Nama:</label><br>
-        <input type="text" id="name" name="name" value="{{ .data.Name }}" disabled> <br>
+                    <div class="col-6">
+                        <div class="row mb-3">
+                            <label for="total" class="col-sm-2 col-form-label">Total:</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="total" id="total" value="{{ .data.TotalFormatted }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row mb-3">
+                            <label for="status" class="col-sm-2 col-form-label">Status:</label>
+                            <div class="col-sm-10">
+                                <select id="status" name="status" class="form-select">
+                                    <option value="Menunggu konfirmasi pembayaran"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
+                                    <option value="Selesai"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-        <label for="address">Alamat:</label> <br>
-        <input type="text" id="address" name="address" value="{{ .data.Address }}" disabled> <br>
+                    <div class="col-6">
+                        <input type="submit" value="Selesai" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-        <label for="city">Kota/Kabupaten:</label> <br>
-        <input type="text" id="city" name="city" value="{{ .data.City }}" disabled> <br>
-
-        <label for="province">Provinsi:</label> <br>
-        <input type="text" id="province" name="province" value="{{ .data.Province }}" disabled> <br>
-
-        <label for="phone-number">No HP:</label> <br>
-        <input type="text" id="phone-number" name="phone-number" value="{{ .data.PhoneNumber }}" disabled> <br>
-
-        <label for="post-code">Kode Pos:</label> <br>
-        <input type="text" id="post-code" name="post-code" value="{{ .data.PostCode }}" disabled> <br>
-
-        <ol>
-            {{ range .data.DetailOnlineOrderResponse }}
-            <li>
-                {{ .Name }} {{ .Amount }} {{ .Price }}
-            </li>
-            {{ end }}
-        </ol>
-
-        <label for="total">Total:</label>
-        <input type="number" name="total" id="total" value="{{ .data.Total }}" disabled>
-        <br>
-
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-            <option value="Menunggu konfirmasi pembayaran"{{if eq "Menunggu konfirmasi pembayaran" .data.Status}} selected{{end}}>Menunggu konfirmasi pembayaran</option>
-            <option value="Selesai"{{if eq "Selesai" .data.Status}} selected{{end}}>Selesai</option>
-        </select>
-        <br>
-
-        <button type="submit">Lanjut Pembayaran</button>
-    </form>
-</body>
-</html>
+{{ template "dashboard-footer.html" }}

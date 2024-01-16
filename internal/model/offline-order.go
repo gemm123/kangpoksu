@@ -15,9 +15,10 @@ type DetailOfflineOrder struct {
 }
 
 type DetailOfflineOrderResponse struct {
-	Name   string
-	Amount int
-	Price  int
+	Name           string
+	Amount         int
+	Price          int
+	PriceFormatted string
 }
 
 type OfflineOrder struct {
@@ -35,6 +36,7 @@ type EditOfflineOrderResponse struct {
 	Name                       string
 	PhoneNumber                string
 	Total                      int
+	TotalFormatted             string
 	Status                     string
 	DetailOfflineOrderResponse []DetailOfflineOrderResponse
 }
