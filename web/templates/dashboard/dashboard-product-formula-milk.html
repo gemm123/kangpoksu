@@ -1,22 +1,47 @@
 {{ template "dashboard-header.html" }}
 
-    <a href="/dashboard/products/formula-milks/create">Tambah</a>
-
-    <ol>
-        {{ range .data }}
-            <li>
-                {{ .Name }} <br>
-                {{ .Description }} <br>
-                {{ .Price }} <br>
-                {{ .Quantity }} <br>
-                <form action="/dashboard/products/formula-milks/edit/{{.Id}}" method="get">
-                    <button type="submit">Edit</button>
-                </form>
-                <form action="/dashboard/products/formula-milks/delete/{{.Id}}" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        {{ end }}
-    </ol>
+    <div class="container">
+        <div class="row ms-2">
+            <h3>Susu Formula</h3>
+        </div>
+        <div class="row ms-2">
+            <div class="col">
+                <a class="btn btn-primary" href="/dashboard/products/formula-milks/create">Tambah</a>
+            </div>
+        </div>
+        <div class="row ms-2">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Produk</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Jumlah</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $index, $data := .data }}
+                    <tr>
+                        <td>{{ add $index }}</td>
+                        <td>{{ $data.Name }}</td>
+                        <td>{{ $data.PriceFormatted }}</td>
+                        <td>{{ $data.Quantity }}</td>
+                        <td>
+                            <form action="/dashboard/products/formula-milks/edit/{{$data.Id}}" method="get" style="display: inline">
+                                <button class="btn btn-outline-primary text-decoration-none btn-sm" type="submit">Edit</button>
+                            </form>
+                            <form action="/dashboard/products/formula-milks/delete/{{$data.Id}}" method="post" style="display: inline">
+                                <button class="text-decoration-none btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{ end }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {{ template "dashboard-footer.html" }}
