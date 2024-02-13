@@ -16,7 +16,8 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Produk</th>
-                        <th scope="col">Harga</th>
+                        <th scope="col">Harga Beli</th>
+                        <th scope="col">Harga Jual</th>
                         <th scope="col">Jumlah</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -26,6 +27,7 @@
                     <tr>
                         <td>{{ add $index }}</td>
                         <td>{{ $data.Name }}</td>
+                        <td>{{ $data.BuyPriceFormatted }}</td>
                         <td>{{ $data.PriceFormatted }}</td>
                         <td>{{ $data.Quantity }}</td>
                         <td>

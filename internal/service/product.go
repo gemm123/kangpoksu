@@ -47,6 +47,7 @@ func (s *productService) GetAllProductsFormulaMilk() ([]model.Product, error) {
 
 	for i := 0; i < len(products); i++ {
 		products[i].PriceFormatted = helper.FormatRupiah(float64(products[i].Price))
+		products[i].BuyPriceFormatted = helper.FormatRupiah(float64(products[i].BuyPrice))
 	}
 
 	return products, nil
@@ -84,6 +85,7 @@ func (s *productService) GetAllProductsBabyDiaper() ([]model.Product, error) {
 
 	for i := 0; i < len(diapers); i++ {
 		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
+		diapers[i].BuyPriceFormatted = helper.FormatRupiah(float64(diapers[i].BuyPrice))
 	}
 
 	return diapers, nil
@@ -126,6 +128,7 @@ func (s *productService) GetAllProductsAdultDiaper() ([]model.Product, error) {
 
 	for i := 0; i < len(diapers); i++ {
 		diapers[i].PriceFormatted = helper.FormatRupiah(float64(diapers[i].Price))
+		diapers[i].BuyPriceFormatted = helper.FormatRupiah(float64(diapers[i].BuyPrice))
 	}
 
 	return diapers, nil
@@ -225,6 +228,7 @@ func (s *productService) UpdateProduct(newProduct model.Product, id uuid.UUID) e
 	product.Name = newProduct.Name
 	product.Description = newProduct.Description
 	product.Quantity = newProduct.Quantity
+	product.BuyPrice = newProduct.BuyPrice
 	product.Price = newProduct.Price
 	product.UpdatedAt = time.Now()
 
