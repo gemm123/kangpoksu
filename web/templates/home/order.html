@@ -24,7 +24,7 @@
                     </label>
                 </div>
 
-                <div id="onlineForm">
+                <div id="onlineForm" class="mb-5">
                     <form action="/order/online" method="post">
 
                         <label for="name" class="form-label">Nama:</label><br>
@@ -33,11 +33,12 @@
                         <label for="address" class="form-label">Alamat:</label> <br>
                         <input type="text" id="address" name="address" class="form-control" required> <br>
 
-                        <label for="city" class="form-label">Kota/Kabupaten:</label> <br>
-                        <input type="text" id="city" name="city" class="form-control" required> <br>
-
                         <label for="province" class="form-label">Provinsi:</label> <br>
                         <input type="text" id="province" name="province" class="form-control" required> <br>
+
+                        <label for="citySelect" class="form-label">Kota/Kabupaten:</label> <br>
+                        <select id="citySelect" class="form-control" name="city">
+                        </select> <br>
 
                         <label for="phone-number" class="form-label">No HP:</label> <br>
                         <input type="text" id="phone-number" name="phone-number" class="form-control" required> <br>
@@ -45,14 +46,15 @@
                         <label for="post-code" class="form-label">Kode Pos:</label> <br>
                         <input type="text" id="post-code" name="post-code" class="form-control" required> <br>
 
-                        <p>Ongkos Kirim: Rp 20,000</p>
+                        <label for="cost" class="form-label">Ongkir:</label> <br>
+                        <input type="text" id="cost" class="form-control" name="cost" readonly> <br>
 
                         <a href="/cart" class="btn btn-danger"> Batal</a>
                         <button type="submit" class="btn btn-primary">Lanjut Pembayaran</button>
                     </form>
                 </div>
 
-                <div id="offlineForm" style="display: none">
+                <div id="offlineForm" style="display: none" class="mb-5">
                     <form action="/order/offline" method="post">
 
                         <label for="name" class="form-label">Nama:</label><br>
@@ -69,8 +71,7 @@
         </div>
     </div>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function updateForm() {
         var onlineForm = document.getElementById("onlineForm");
@@ -85,6 +86,70 @@
             offlineForm.style.display = "block";
         }
     }
+
+    document.getElementById("citySelect").addEventListener("change", function() {
+        const selectedValue = this.value;
+        const parts = selectedValue.split(":");
+        const id = parts[0];
+
+        getCost(id, {{ .totalWeight }})
+            .then(cost => {
+                document.getElementById("cost").value = cost;
+            })
+            .catch(error => {
+                console.error("Error while fetching cost:", error);
+            })
+    })
+
+    function getCost(destination, weight) {
+        return new Promise((resolve, reject) => {
+            fetch('http://localhost:8080/api/cost?destination='+destination+"&weight="+weight)
+                .then(response => {
+                    // Check if the response is successful
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Parse the response as JSON
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data.value)
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the fetch operation
+                    reject(error);
+                });
+        })
+    }
+
+    fetch('http://localhost:8080/api/city')
+        .then(response => {
+            // Check if the response is successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response as JSON
+            return response.json();
+        })
+        .then(data => {
+            // Get the select element by its ID
+            const selectElement = document.getElementById('citySelect');
+
+            // Iterate over the data and create an option element for each city
+            data.data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.city_id + ":" + city.city_name ;// Set the value attribute to the city ID or any other unique identifier
+                option.textContent = city.city_type + " " + city.city_name; // Set the text content to the city name
+                selectElement.appendChild(option); // Append the option to the select element
+            });
+        })
+        .catch(error => {
+            // Handle any errors that occur during the fetch operation
+            console.error('Fetch error:', error);
+        });
+
+    // Run the fetchData function when the page is loaded
+    window.onload = fetchData;
 </script>
 
 {{ template "footer.html" }}

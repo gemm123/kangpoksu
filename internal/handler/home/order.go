@@ -10,7 +10,24 @@ import (
 )
 
 func (h *homeHandler) FormOrder(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "order.html", gin.H{})
+	session := sessions.Default(ctx)
+	var cart []model.Cart
+
+	cart, err := helper.GetSessionCart(session, cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	totalWeight, err := h.cartService.GetAccumulationTotalWeight(cart)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	ctx.HTML(http.StatusOK, "order.html", gin.H{
+		"totalWeight": totalWeight,
+	})
 }
 
 func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
@@ -76,7 +93,6 @@ func (h *homeHandler) PostOnlineOrder(ctx *gin.Context) {
 	}
 
 	totalOrder = helper.RandomNumberOrder(totalOrder)
-	onlineOrder.Cost = 20000
 	onlineOrder.Total = totalOrder + onlineOrder.Cost
 	totalFormatted := helper.FormatRupiah(float64(onlineOrder.Total))
 

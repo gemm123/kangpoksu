@@ -14,6 +14,7 @@ type cartService struct {
 type CartService interface {
 	GetAccumulationTotalCart(cart []model.Cart) (int, error)
 	GetAccumulationTotalCartFormatted(cart []model.Cart) (string, error)
+	GetAccumulationTotalWeight(cart []model.Cart) (int, error)
 }
 
 func NewCartService(productRepository repository.ProductRepository) *cartService {
@@ -61,4 +62,24 @@ func (s *cartService) GetAccumulationTotalCartFormatted(cart []model.Cart) (stri
 	totalOrderFormatted := helper.FormatRupiah(float64(totalOrder))
 
 	return totalOrderFormatted, nil
+}
+
+func (s *cartService) GetAccumulationTotalWeight(cart []model.Cart) (int, error) {
+	var totalWeight int
+
+	for i := 0; i < len(cart); i++ {
+		product, err := s.productRepository.GetProductById(cart[i].Id)
+		if err != nil {
+			log.Println("error: " + err.Error())
+			return 0, err
+		}
+
+		cart[i].Name = product.Name
+		cart[i].Image = product.Image
+		cart[i].Total = product.Price * cart[i].Amount
+		cart[i].PriceFormatted = helper.FormatRupiah(float64(cart[i].Total))
+		totalWeight = totalWeight + product.Weight*cart[i].Amount
+	}
+
+	return totalWeight, nil
 }

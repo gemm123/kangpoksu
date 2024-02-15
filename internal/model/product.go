@@ -12,6 +12,7 @@ type Product struct {
 	Name              string    `gorm:"column:name" form:"product-name"`
 	Description       string    `gorm:"column:description" form:"description"`
 	Quantity          int       `gorm:"column:quantity" form:"quantity"`
+	Weight            int       `gorm:"column:weight" form:"weight"`
 	Price             int       `gorm:"column:price" form:"price"`
 	BuyPrice          int       `gorm:"column:buy_price" form:"buy-price"`
 	Image             string    `gorm:"column:image"`

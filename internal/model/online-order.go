@@ -14,7 +14,7 @@ type OnlineOrder struct {
 	PhoneNumber string    `gorm:"column:phone_number" form:"phone-number"`
 	PostCode    int       `gorm:"column:post_code" form:"post-code"`
 	Total       int       `gorm:"column:total"`
-	Cost        int       `gorm:"column:cost"`
+	Cost        int       `gorm:"column:cost" form:"cost"`
 	Status      string    `gorm:"column:status"`
 	CreatedAt   time.Time `gorm:"column:created_at"`
 	UpdatedAt   time.Time `gorm:"column:updated_at"`
@@ -44,6 +44,8 @@ type EditOnlineOrderResponse struct {
 	Province                  string
 	PhoneNumber               string
 	PostCode                  int
+	Cost                      int
+	CostFormatted             string
 	Total                     int
 	TotalFormatted            string
 	Status                    string

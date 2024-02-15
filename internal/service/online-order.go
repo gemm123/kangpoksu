@@ -6,6 +6,7 @@ import (
 	"kopoksu/internal/model"
 	"kopoksu/internal/repository"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -35,6 +36,9 @@ func (s *onlineOrderService) SaveOnlineOrder(onlineOrder model.OnlineOrder, cart
 	onlineOrder.CreatedAt = time.Now()
 	onlineOrder.UpdatedAt = time.Now()
 	onlineOrder.Status = "Menunggu konfirmasi pembayaran"
+
+	city := strings.Split(onlineOrder.City, ":")
+	onlineOrder.City = city[1]
 
 	if err := s.onlineOrderRepository.SaveOnlineOrder(onlineOrder); err != nil {
 		log.Println("error: " + err.Error())
@@ -109,6 +113,8 @@ func (s *onlineOrderService) EditOnlineOrder(id uuid.UUID) (model.EditOnlineOrde
 	editOnlineOrderResponse.Province = onlineOrder.Province
 	editOnlineOrderResponse.PhoneNumber = onlineOrder.PhoneNumber
 	editOnlineOrderResponse.PostCode = onlineOrder.PostCode
+	editOnlineOrderResponse.Cost = onlineOrder.Cost
+	editOnlineOrderResponse.CostFormatted = helper.FormatRupiah(float64(editOnlineOrderResponse.Cost))
 	editOnlineOrderResponse.Total = onlineOrder.Total
 	editOnlineOrderResponse.TotalFormatted = helper.FormatRupiah(float64(editOnlineOrderResponse.Total))
 	editOnlineOrderResponse.Status = onlineOrder.Status

@@ -19,6 +19,7 @@
                         <th scope="col">Harga Beli</th>
                         <th scope="col">Harga Jual</th>
                         <th scope="col">Jumlah</th>
+                        <th scope="col">Berat(gram)</th>
                         <th scope="col">Aksi</th>
                     </tr>
                     </thead>
@@ -30,6 +31,7 @@
                         <td>{{ $data.BuyPriceFormatted }}</td>
                         <td>{{ $data.PriceFormatted }}</td>
                         <td>{{ $data.Quantity }}</td>
+                        <td>{{ $data.Weight }}</td>
                         <td>
                             <form action="/dashboard/products/baby-diapers/edit/{{$data.Id}}" method="get" style="display: inline">
                                 <button class="btn btn-outline-primary text-decoration-none btn-sm" type="submit">Edit</button>

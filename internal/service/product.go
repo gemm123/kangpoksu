@@ -230,6 +230,7 @@ func (s *productService) UpdateProduct(newProduct model.Product, id uuid.UUID) e
 	product.Quantity = newProduct.Quantity
 	product.BuyPrice = newProduct.BuyPrice
 	product.Price = newProduct.Price
+	product.Weight = newProduct.Weight
 	product.UpdatedAt = time.Now()
 
 	if err := s.productRepository.UpdateProduct(product); err != nil {

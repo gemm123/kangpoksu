@@ -1,20 +1,21 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"html/template"
 	"kopoksu/config"
 	"kopoksu/helper"
 	dashboardHandler "kopoksu/internal/handler/dashboard"
 	homeHandler "kopoksu/internal/handler/home"
+	"kopoksu/internal/handler/shipping"
 	"kopoksu/internal/repository"
 	"kopoksu/internal/service"
 	"kopoksu/middleware"
 	"log"
-
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -54,6 +55,7 @@ func main() {
 		offlineOrderService,
 		onlineOrderService,
 	)
+	shippingHandler := shipping.NewShippingHandler()
 
 	router := gin.Default()
 
@@ -77,6 +79,8 @@ func main() {
 		Path:     "/",
 		HttpOnly: true,
 	})
+
+	router.Use(cors.Default())
 
 	dashboard := router.Group("/dashboard")
 	dashboard.Use(sessions.Sessions("auth-session", authStore))
@@ -136,6 +140,10 @@ func main() {
 	router.GET("/order", homeHandler.FormOrder)
 	router.POST("/order/offline", homeHandler.PostOfflineOrder)
 	router.POST("/order/online", homeHandler.PostOnlineOrder)
+
+	router.GET("/api/city", shippingHandler.GetCity)
+
+	router.GET("/api/cost", shippingHandler.GetCost)
 
 	router.Run()
 }
