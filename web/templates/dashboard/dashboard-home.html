@@ -13,6 +13,27 @@
         <div class="col pe-0">
             <div class="card" style="width: 18rem;">
                 <div class="card-body text-center p-0">
+                    <h5 class="card-title bg-kopoksu-color m-0 p-2 text-light">Pengiriman</h5>
+                    <p class="card-text p-3">{{ .countDelivery }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row ms-4 mt-5">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center p-0">
+                    <h5 class="card-title bg-kopoksu-color m-0 p-2 text-light">Menunggu pengambilan</h5>
+                    <p class="card-text p-3">{{ .countTake }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pe-0">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center p-0">
                     <h5 class="card-title bg-kopoksu-color m-0 p-2 text-light">Transaksi Berhasil</h5>
                     <p class="card-text p-3">{{ .countDone }}</p>
                 </div>

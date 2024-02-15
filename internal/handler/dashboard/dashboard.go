@@ -90,6 +90,12 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 		return
 	}
 
+	countOfflineOrderTake, err := h.offlineOrderService.CountOfflineOrderByStatus("Menunggu pengambilan")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
 	countOfflineOrderDone, err := h.offlineOrderService.CountOfflineOrderByStatus("Selesai")
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -102,6 +108,12 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 		return
 	}
 
+	countOnlineOrderDelivery, err := h.onlineOrderService.CountOnlineOrderByStatus("Pengiriman")
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
 	countOnlineOrderDone, err := h.onlineOrderService.CountOnlineOrderByStatus("Selesai")
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -109,10 +121,14 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 	}
 
 	totalCountConfirmationPayment := countOfflineOrderConfirmationPayment + countOnlineOrderConfirmationPayment
+	totalCountDelivery := countOnlineOrderDelivery
+	totalCountTake := countOfflineOrderTake
 	totalCountDone := countOfflineOrderDone + countOnlineOrderDone
 
 	ctx.HTML(http.StatusOK, "dashboard-home.html", gin.H{
 		"confirmationPayment": totalCountConfirmationPayment,
 		"countDone":           totalCountDone,
+		"countDelivery":       totalCountDelivery,
+		"countTake":           totalCountTake,
 	})
 }
