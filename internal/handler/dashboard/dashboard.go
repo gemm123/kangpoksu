@@ -7,6 +7,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -69,6 +70,13 @@ func (h *dashboardHandler) PostLogin(ctx *gin.Context) {
 
 	log.Println("success login")
 	session.Set("login", true)
+
+	if strings.Contains(admin.Email, "master") {
+		session.Set("user", "master")
+	} else if strings.Contains(admin.Email, "admin") {
+		session.Set("user", "admin")
+	}
+
 	session.Save()
 
 	ctx.Redirect(http.StatusFound, "/dashboard/home")
@@ -84,6 +92,9 @@ func (h *dashboardHandler) Logout(ctx *gin.Context) {
 }
 
 func (h *dashboardHandler) Home(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	countOfflineOrderConfirmationPayment, err := h.offlineOrderService.CountOfflineOrderByStatus("Menunggu konfirmasi pembayaran")
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -130,5 +141,6 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 		"countDone":           totalCountDone,
 		"countDelivery":       totalCountDelivery,
 		"countTake":           totalCountTake,
+		"status":              status,
 	})
 }

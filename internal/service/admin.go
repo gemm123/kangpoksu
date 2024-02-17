@@ -19,11 +19,16 @@ func NewAdminService() *adminService {
 func (s *adminService) CheckCredentials(email, password string) bool {
 	adminEmail := config.AdminEmail()
 	adminPassword := config.AdminPassword()
+	masterEmail := config.MasterEmail()
+	masterPassword := config.MasterPassword()
 
-	if email != adminEmail || password != adminPassword {
-		log.Println("wrong credentials")
-		return false
+	if email == adminEmail && password == adminPassword {
+		return true
+	} else if email == masterEmail && password == masterPassword {
+		return true
 	}
 
-	return true
+	log.Println("wrong credentials")
+
+	return false
 }

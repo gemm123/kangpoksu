@@ -9,3 +9,11 @@ func AdminEmail() string {
 func AdminPassword() string {
 	return os.Getenv("ADMIN_PASSWORD")
 }
+
+func MasterEmail() string {
+	return os.Getenv("MASTER_EMAIL")
+}
+
+func MasterPassword() string {
+	return os.Getenv("MASTER_PASSWORD")
+}

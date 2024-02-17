@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"log"
@@ -8,6 +9,9 @@ import (
 )
 
 func (h *dashboardHandler) GetAllOfflineOrder(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	offlineOrders, err := h.offlineOrderService.GetAllOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -15,11 +19,15 @@ func (h *dashboardHandler) GetAllOfflineOrder(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-offline-order.html", gin.H{
-		"data": offlineOrders,
+		"data":   offlineOrders,
+		"status": status,
 	})
 }
 
 func (h *dashboardHandler) EditOfflineOrder(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
@@ -30,7 +38,8 @@ func (h *dashboardHandler) EditOfflineOrder(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-offline-order-edit.html", gin.H{
-		"data": editOfflineOrderResponse,
+		"data":   editOfflineOrderResponse,
+		"status": status,
 	})
 }
 

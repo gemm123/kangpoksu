@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/gin-contrib/sessions"
 	"kopoksu/internal/model"
 	"log"
 	"net/http"
@@ -10,6 +11,9 @@ import (
 )
 
 func (h *dashboardHandler) GetAllProductAdultDiaper(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	diapers, err := h.productService.GetAllProductsAdultDiaper()
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -17,12 +21,18 @@ func (h *dashboardHandler) GetAllProductAdultDiaper(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-product-adult-diaper.html", gin.H{
-		"data": diapers,
+		"data":   diapers,
+		"status": status,
 	})
 }
 
 func (h *dashboardHandler) CreateProductAdultDiaper(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "dashboard-product-adult-diaper-create.html", gin.H{})
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
+	ctx.HTML(http.StatusOK, "dashboard-product-adult-diaper-create.html", gin.H{
+		"status": status,
+	})
 }
 
 func (h *dashboardHandler) PostCreateProductAdultDiaper(ctx *gin.Context) {
@@ -68,6 +78,9 @@ func (h *dashboardHandler) DeleteProductAdultDiaper(ctx *gin.Context) {
 }
 
 func (h *dashboardHandler) EditProductAdultDiaper(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
@@ -78,7 +91,8 @@ func (h *dashboardHandler) EditProductAdultDiaper(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-product-adult-diaper-edit.html", gin.H{
-		"data": product,
+		"data":   product,
+		"status": status,
 	})
 }
 

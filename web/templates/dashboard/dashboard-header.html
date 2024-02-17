@@ -50,6 +50,13 @@
                             Order Online
                         </a>
                     </li>
+                    {{ if eq .status "master" }}
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">
+                            Rekapitulasi Penjualan
+                        </a>
+                    </li>
+                    {{ end }}
                     <li class="nav-item bottom-button">
                         <form action="/dashboard/logout" method="post">
                             <button class="btn btn-link text-decoration-none text-light" type="submit">Logout</button>

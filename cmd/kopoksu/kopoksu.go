@@ -57,6 +57,7 @@ func main() {
 	)
 	shippingHandler := shipping.NewShippingHandler()
 
+	gin.SetMode(gin.DebugMode)
 	router := gin.Default()
 
 	router.SetFuncMap(template.FuncMap{

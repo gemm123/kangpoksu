@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/gin-contrib/sessions"
 	"kopoksu/internal/model"
 	"log"
 	"net/http"
@@ -11,6 +12,9 @@ import (
 )
 
 func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	formulaMilks, err := h.productService.GetAllProductsFormulaMilk()
 	if err != nil {
 		log.Println("error: " + err.Error())
@@ -18,12 +22,18 @@ func (h *dashboardHandler) GetAllProductFormulaMilk(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-milk.html", gin.H{
-		"data": formulaMilks,
+		"data":   formulaMilks,
+		"status": status,
 	})
 }
 
 func (h *dashboardHandler) CreateProductFormulaMilk(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "dashboard-product-formula-mlik-create.html", gin.H{})
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
+	ctx.HTML(http.StatusOK, "dashboard-product-formula-mlik-create.html", gin.H{
+		"status": status,
+	})
 }
 
 func (h *dashboardHandler) PostCreateProductFormulaMilk(ctx *gin.Context) {
@@ -69,6 +79,9 @@ func (h *dashboardHandler) DeleteProductFormulaMilk(ctx *gin.Context) {
 }
 
 func (h *dashboardHandler) EditProductFormulaMilk(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	status := session.Get("user")
+
 	idString := ctx.Param("id")
 	id := uuid.MustParse(idString)
 
@@ -79,7 +92,8 @@ func (h *dashboardHandler) EditProductFormulaMilk(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "dashboard-product-formula-milk-edit.html", gin.H{
-		"data": product,
+		"data":   product,
+		"status": status,
 	})
 }
 
