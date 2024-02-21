@@ -19,6 +19,7 @@ type dashboardHandler struct {
 	productService      service.ProductService
 	offlineOrderService service.OfflineOrderService
 	onlineOrderService  service.OnlineOrderService
+	recapService        service.RecapService
 }
 
 func NewDashboardHandler(
@@ -26,12 +27,14 @@ func NewDashboardHandler(
 	productService service.ProductService,
 	offlineOrderService service.OfflineOrderService,
 	onlineOrderService service.OnlineOrderService,
+	recapService service.RecapService,
 ) *dashboardHandler {
 	return &dashboardHandler{
 		adminService:        adminService,
 		productService:      productService,
 		offlineOrderService: offlineOrderService,
 		onlineOrderService:  onlineOrderService,
+		recapService:        recapService,
 	}
 }
 

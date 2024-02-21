@@ -1,0 +1,82 @@
+{{ template "dashboard-header.html" . }}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Rekapitulasi Penjualan</h1>
+
+            <div class="row row-cols-auto">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="milkRadio" checked onchange="updateForm()">
+                        <label class="form-check-label" for="milkRadio">
+                            Susu Formula
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="babyRadio" onchange="updateForm()">
+                        <label class="form-check-label" for="babyRadio">
+                            Popok Bayi
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="adultRadio" onchange="updateForm()">
+                        <label class="form-check-label" for="adultRadio">
+                            Popok Dewasa
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="milkGraphic">
+                <h2>Grafik susu</h2>
+                <p><strong>Keuntungan kotor susu formula: {{ .grossProfitFormulaMilk }}</strong></p>
+                <p><strong>Keuntungan bersih susu formula:</strong></p>
+            </div>
+            <div id="babyGraphic" style="display: none">
+                <h2>Grafik popok bayi</h2>
+                <p><strong>Keuntungan kotor popok bayi: {{ .grossProfitBabyDiaper }}</strong></p>
+                <p><strong>Keuntungan bersih popok bayi:</strong></p>
+            </div>
+            <div id="adultGraphic" style="display: none">
+                <h2>Grafik popok dewasa</h2>
+                <p><strong>Keuntungan kotor popok dewasa: {{ .grossProfitAdultDiaper }}</strong></p>
+                <p><strong>Keuntungan bersih popok dewasa:</strong></p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function updateForm() {
+        var milkRecap = document.getElementById("milkGraphic");
+        var babyRecap = document.getElementById("babyGraphic");
+        var adultRecap = document.getElementById("adultGraphic");
+
+        // Show the selected form
+        if (document.getElementById("milkRadio").checked) {
+            milkRecap.style.display = "block";
+            babyRecap.style.display = "none";
+            adultRecap.style.display = "none";
+        } else if (document.getElementById("babyRadio").checked) {
+            milkRecap.style.display = "none";
+            babyRecap.style.display = "block";
+            adultRecap.style.display = "none";
+        } else {
+            milkRecap.style.display = "none";
+            babyRecap.style.display = "none";
+            adultRecap.style.display = "block";
+        }
+    }
+
+
+</script>
+
+{{ template "dashboard-footer.html" }}

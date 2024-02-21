@@ -41,6 +41,7 @@ func main() {
 	cartService := service.NewCartService(productRepository)
 	offlineOrderService := service.NewOfflineOrderService(offlineOrderRepository, productRepository)
 	onlineOrderService := service.NewOnlineOrderService(onlineOrderRepository, productRepository)
+	recapService := service.NewRecapService(offlineOrderRepository, onlineOrderRepository)
 
 	//Handler
 	dashboardHandler := dashboardHandler.NewDashboardHandler(
@@ -48,6 +49,7 @@ func main() {
 		productService,
 		offlineOrderService,
 		onlineOrderService,
+		recapService,
 	)
 	homeHandler := homeHandler.NewHomeHandler(
 		productService,
@@ -121,6 +123,8 @@ func main() {
 	dashboard.GET("/orders/online/edit/:id", dashboardHandler.EditOnlineOrder)
 	dashboard.POST("/orders/online/edit/:id", dashboardHandler.UpdateOnlineOrder)
 	dashboard.POST("/orders/online/delete/:id", dashboardHandler.DeleteOnlineOrder)
+
+	dashboard.GET("/recapitulation", dashboardHandler.GetRecapitulation)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)

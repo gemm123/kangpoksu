@@ -21,6 +21,9 @@ type OnlineOrderRepository interface {
 	DeleteOnlineOrder(onlineOrder model.OnlineOrder) error
 	DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error
 	CountOnlineOrderByStatus(status string) (int, error)
+	RecapGrossProfitFormulaMilkOnlineOrder() (int, error)
+	RecapGrossProfitBabyDiaperOnlineOrder() (int, error)
+	RecapGrossProfitAdultDiaperOnlineOrder() (int, error)
 }
 
 func NewOnlineOrderRepository(DB *gorm.DB) *onlineOrderRepository {
@@ -85,4 +88,55 @@ func (r *onlineOrderRepository) CountOnlineOrderByStatus(status string) (int, er
 	var count int64
 	err := r.DB.Table("online_orders").Where("status = ?", status).Count(&count).Error
 	return int(count), err
+}
+
+func (r *onlineOrderRepository) RecapGrossProfitFormulaMilkOnlineOrder() (int, error) {
+	var GrossProfit int
+
+	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order  
+		from (
+			SELECT p.price * doo.amount AS gross_profit_online_order
+    		FROM detail_online_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
+		) as gross_profit_online_order;`
+
+	err := r.DB.Raw(query).First(&GrossProfit).Error
+
+	return GrossProfit, err
+}
+
+func (r *onlineOrderRepository) RecapGrossProfitBabyDiaperOnlineOrder() (int, error) {
+	var GrossProfit int
+
+	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order  
+		from (
+			SELECT p.price * doo.amount AS gross_profit_online_order
+    		FROM detail_online_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
+		) as gross_profit_online_order;`
+
+	err := r.DB.Raw(query).First(&GrossProfit).Error
+
+	return GrossProfit, err
+}
+
+func (r *onlineOrderRepository) RecapGrossProfitAdultDiaperOnlineOrder() (int, error) {
+	var GrossProfit int
+
+	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order  
+		from (
+			SELECT p.price * doo.amount AS gross_profit_online_order
+    		FROM detail_online_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
+		) as gross_profit_online_order;`
+
+	err := r.DB.Raw(query).First(&GrossProfit).Error
+
+	return GrossProfit, err
 }
