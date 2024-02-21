@@ -48,14 +48,57 @@ func (h *dashboardHandler) GetRecapitulation(ctx *gin.Context) {
 		return
 	}
 
+	netProfitFormulaMilkOfflineOrder, err := h.recapService.NetProfitRecapFormulaMilkOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	netProfitBabyDiaperOfflineOrder, err := h.recapService.NetProfitRecapBabyDiaperOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	netProfitAdultDiaperOfflineOrder, err := h.recapService.NetProfitRecapAdultDiaperOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	netProfitFormulaMilkOnlineOrder, err := h.recapService.NetProfitRecapFormulaMilkOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	netProfitBabyDiaperOnlineOrder, err := h.recapService.NetProfitRecapBabyDiaperOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	netProfitAdultDiaperOnlineOrder, err := h.recapService.NetProfitRecapAdultDiaperOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
 	grossProfitFormulaMilk := helper.FormatRupiah(float64(grossProfitFormulaMilkOfflineOrder + grossProfitFormulaMilkOnlineOrder))
 	grossProfitBabyDiaper := helper.FormatRupiah(float64(grossProfitBabyDiaperOfflineOrder + grossProfitBabyDiaperOnlineOrder))
 	grossProfitAdultDiaper := helper.FormatRupiah(float64(grossProfitAdultDiaperOfflineOrder + grossProfitAdultDiaperOnlineOrder))
+
+	netProfitFormulaMilk := helper.FormatRupiah(float64(netProfitFormulaMilkOfflineOrder + netProfitFormulaMilkOnlineOrder))
+	netProfitBabyDiaper := helper.FormatRupiah(float64(netProfitBabyDiaperOfflineOrder + netProfitBabyDiaperOnlineOrder))
+	netProfitAdultDiaper := helper.FormatRupiah(float64(netProfitAdultDiaperOfflineOrder + netProfitAdultDiaperOnlineOrder))
 
 	ctx.HTML(http.StatusOK, "dashboard-recapitulation.html", gin.H{
 		"status":                 status,
 		"grossProfitFormulaMilk": grossProfitFormulaMilk,
 		"grossProfitBabyDiaper":  grossProfitBabyDiaper,
 		"grossProfitAdultDiaper": grossProfitAdultDiaper,
+		"netProfitFormulaMilk":   netProfitFormulaMilk,
+		"netProfitBabyDiaper":    netProfitBabyDiaper,
+		"netProfitAdultDiaper":   netProfitAdultDiaper,
 	})
 }

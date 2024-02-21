@@ -24,6 +24,9 @@ type OfflineOrderRepository interface {
 	RecapGrossProfitFormulaMilkOfflineOrder() (int, error)
 	RecapGrossProfitBabyDiaperOfflineOrder() (int, error)
 	RecapGrossProfitAdultDiaperOfflineOrder() (int, error)
+	RecapNetProfitFormulaMilkOfflineOrder() (int, error)
+	RecapNetProfitBabyDiaperOfflineOrder() (int, error)
+	RecapNetProfitAdultDiaperOfflineOrder() (int, error)
 }
 
 func NewOfflineOrderRepository(DB *gorm.DB) *offlineOrderRepository {
@@ -139,4 +142,55 @@ func (r *offlineOrderRepository) RecapGrossProfitAdultDiaperOfflineOrder() (int,
 	err := r.DB.Raw(query).First(&GrossProfit).Error
 
 	return GrossProfit, err
+}
+
+func (r *offlineOrderRepository) RecapNetProfitFormulaMilkOfflineOrder() (int, error) {
+	var NetProfit int
+
+	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
+		from (
+			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
+    		FROM detail_offline_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
+		) as net_profit_offline_order;`
+
+	err := r.DB.Raw(query).First(&NetProfit).Error
+
+	return NetProfit, err
+}
+
+func (r *offlineOrderRepository) RecapNetProfitBabyDiaperOfflineOrder() (int, error) {
+	var NetProfit int
+
+	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
+		from (
+			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
+    		FROM detail_offline_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
+		) as net_profit_offline_order;`
+
+	err := r.DB.Raw(query).First(&NetProfit).Error
+
+	return NetProfit, err
+}
+
+func (r *offlineOrderRepository) RecapNetProfitAdultDiaperOfflineOrder() (int, error) {
+	var NetProfit int
+
+	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
+		from (
+			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
+    		FROM detail_offline_orders doo
+    		INNER JOIN products p ON doo.product_id = p.id
+    		inner join categories c on p.category_id = c.id
+    		where c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
+		) as net_profit_offline_order;`
+
+	err := r.DB.Raw(query).First(&NetProfit).Error
+
+	return NetProfit, err
 }
