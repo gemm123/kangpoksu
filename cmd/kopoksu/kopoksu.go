@@ -143,8 +143,7 @@ func main() {
 	router.POST("/order/online", homeHandler.PostOnlineOrder)
 
 	router.GET("/api/city", shippingHandler.GetCity)
-
-	router.GET("/api/cost", shippingHandler.GetCost)
+	router.GET("/api/type", shippingHandler.GetType)
 
 	router.Run()
 }

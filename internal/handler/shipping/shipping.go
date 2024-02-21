@@ -67,7 +67,7 @@ func (h *shippingHandler) GetCity(ctx *gin.Context) {
 	})
 }
 
-func (h *shippingHandler) GetCost(ctx *gin.Context) {
+func (h *shippingHandler) GetType(ctx *gin.Context) {
 	destination := ctx.Query("destination")
 	weight := ctx.Query("weight")
 
@@ -100,5 +100,5 @@ func (h *shippingHandler) GetCost(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(response.StatusCode, resp.RajaOngkir.Result[0].Costs[0].Cost[0])
+	ctx.JSON(response.StatusCode, resp.RajaOngkir.Result[0].Costs)
 }
