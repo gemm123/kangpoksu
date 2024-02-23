@@ -1,8 +1,10 @@
 package service
 
 import (
+	"kopoksu/internal/model"
 	"kopoksu/internal/repository"
 	"log"
+	"time"
 )
 
 type recapService struct {
@@ -23,6 +25,9 @@ type RecapService interface {
 	NetProfitRecapFormulaMilkOnlineOrder() (int, error)
 	NetProfitRecapBabyDiaperOnlineOrder() (int, error)
 	NetProfitRecapAdultDiaperOnlineOrder() (int, error)
+	RecapSalesFormulaMilkByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
+	RecapSalesBabyDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
+	RecapSalesAdultDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
 }
 
 func NewRecapService(offlineOrderRepository repository.OfflineOrderRepository, onlineOrderRepository repository.OnlineOrderRepository) *recapService {
@@ -150,4 +155,109 @@ func (s *recapService) NetProfitRecapAdultDiaperOnlineOrder() (int, error) {
 	}
 
 	return netProfitAdultDiaperOnlineOrder, nil
+}
+
+func (s *recapService) RecapSalesFormulaMilkByMonthOnlineOrder() ([]model.RecapSalesByMonth, error) {
+	recapSales, err := s.onlineOrderRepository.RecapSalesFormulaMilkByMonthOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return recapSales, err
+	}
+
+	now := time.Now()
+	var sixMonthsBack []int
+
+	for i := 0; i < 6; i++ {
+		month := now.AddDate(0, -i, 0).Month()
+		sixMonthsBack = append(sixMonthsBack, int(month))
+	}
+
+	for i := 0; i < len(sixMonthsBack)/2; i++ {
+		j := len(sixMonthsBack) - i - 1
+		sixMonthsBack[i], sixMonthsBack[j] = sixMonthsBack[j], sixMonthsBack[i]
+	}
+
+	var salesByMonths []model.RecapSalesByMonth
+	for _, smb := range sixMonthsBack {
+		var salesByMonth model.RecapSalesByMonth
+		salesByMonth.Month = smb
+		for _, recapSale := range recapSales {
+			if smb == recapSale.Month {
+				salesByMonth.Sold = recapSale.Sold
+			}
+		}
+		salesByMonths = append(salesByMonths, salesByMonth)
+	}
+
+	return salesByMonths, nil
+}
+
+func (s *recapService) RecapSalesBabyDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error) {
+	recapSales, err := s.onlineOrderRepository.RecapSalesBabyDiaperByMonthOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return recapSales, err
+	}
+
+	now := time.Now()
+	var sixMonthsBack []int
+
+	for i := 0; i < 6; i++ {
+		month := now.AddDate(0, -i, 0).Month()
+		sixMonthsBack = append(sixMonthsBack, int(month))
+	}
+
+	for i := 0; i < len(sixMonthsBack)/2; i++ {
+		j := len(sixMonthsBack) - i - 1
+		sixMonthsBack[i], sixMonthsBack[j] = sixMonthsBack[j], sixMonthsBack[i]
+	}
+
+	var salesByMonths []model.RecapSalesByMonth
+	for _, smb := range sixMonthsBack {
+		var salesByMonth model.RecapSalesByMonth
+		salesByMonth.Month = smb
+		for _, recapSale := range recapSales {
+			if smb == recapSale.Month {
+				salesByMonth.Sold = recapSale.Sold
+			}
+		}
+		salesByMonths = append(salesByMonths, salesByMonth)
+	}
+
+	return salesByMonths, nil
+}
+
+func (s *recapService) RecapSalesAdultDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error) {
+	recapSales, err := s.onlineOrderRepository.RecapSalesAdultDiaperByMonthOnlineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return recapSales, err
+	}
+
+	now := time.Now()
+	var sixMonthsBack []int
+
+	for i := 0; i < 6; i++ {
+		month := now.AddDate(0, -i, 0).Month()
+		sixMonthsBack = append(sixMonthsBack, int(month))
+	}
+
+	for i := 0; i < len(sixMonthsBack)/2; i++ {
+		j := len(sixMonthsBack) - i - 1
+		sixMonthsBack[i], sixMonthsBack[j] = sixMonthsBack[j], sixMonthsBack[i]
+	}
+
+	var salesByMonths []model.RecapSalesByMonth
+	for _, smb := range sixMonthsBack {
+		var salesByMonth model.RecapSalesByMonth
+		salesByMonth.Month = smb
+		for _, recapSale := range recapSales {
+			if smb == recapSale.Month {
+				salesByMonth.Sold = recapSale.Sold
+			}
+		}
+		salesByMonths = append(salesByMonths, salesByMonth)
+	}
+
+	return salesByMonths, nil
 }

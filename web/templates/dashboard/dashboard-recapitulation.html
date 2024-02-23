@@ -34,17 +34,20 @@
 
 
             <div id="milkGraphic">
-                <h2>Grafik susu</h2>
+                <h2>Total penjualan susu formula order online</h2>
+                <canvas id="chartFormulaMilkOnlineOrder"></canvas>
                 <p><strong>Keuntungan kotor susu formula: {{ .grossProfitFormulaMilk }}</strong></p>
                 <p><strong>Keuntungan bersih susu formula: {{ .netProfitFormulaMilk }}</strong></p>
             </div>
             <div id="babyGraphic" style="display: none">
-                <h2>Grafik popok bayi</h2>
+                <h2>Total penjualan popok bayi order online</h2>
+                <canvas id="chartBabyDiaperOnlineOrder"></canvas>
                 <p><strong>Keuntungan kotor popok bayi: {{ .grossProfitBabyDiaper }}</strong></p>
                 <p><strong>Keuntungan bersih popok bayi: {{ .netProfitBabyDiaper }}</strong></p>
             </div>
             <div id="adultGraphic" style="display: none">
-                <h2>Grafik popok dewasa</h2>
+                <h2>Total penjualan popok dewasa order online</h2>
+                <canvas id="chartAdultDiaperOnlineOrder"></canvas>
                 <p><strong>Keuntungan kotor popok dewasa: {{ .grossProfitAdultDiaper }}</strong></p>
                 <p><strong>Keuntungan bersih popok dewasa: {{ .netProfitAdultDiaper }}</strong></p>
             </div>
@@ -53,6 +56,103 @@
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const months = [];
+
+    const sold = [];
+    const recapSales = {{.recapSalesFormulaMilkByMonthOnlineOrder}};
+    recapSales.forEach(recapSale => {
+        months.push(recapSale.Month);
+        sold.push(recapSale.Sold);
+    })
+
+    const soldBabyDiaperOnlineOrder = [];
+    const recapSalesBabyDiaperOnlineOrder = {{.recapSalesBabyDiaperByMonthOnlineOrder}}
+    recapSalesBabyDiaperOnlineOrder.forEach(recapSale => {
+        soldBabyDiaperOnlineOrder.push(recapSale.Sold);
+    })
+
+    const soldAdultDiaperOnlineOrder = [];
+    const recapSalesAdultDiaperByMonthOnlineOrder = {{.recapSalesAdultDiaperByMonthOnlineOrder}}
+    recapSalesAdultDiaperByMonthOnlineOrder.forEach(recapSale => {
+        soldAdultDiaperOnlineOrder.push(recapSale.Sold);
+    })
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const sixMonthsBackMonths = [];
+    months.forEach(month => {
+        sixMonthsBackMonths.push(monthNames[month-1])
+    })
+
+    const chartFormulaMilkOnlineOrder = document.getElementById('chartFormulaMilkOnlineOrder');
+
+    new Chart(chartFormulaMilkOnlineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan susu formula order offline',
+                data: sold,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const chartBabyDiaperOnlineOrder = document.getElementById('chartBabyDiaperOnlineOrder');
+
+    new Chart(chartBabyDiaperOnlineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan susu formula order offline',
+                data: soldBabyDiaperOnlineOrder,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const chartAdultDiaperOnlineOrder = document.getElementById('chartAdultDiaperOnlineOrder');
+
+    new Chart(chartAdultDiaperOnlineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan susu formula order offline',
+                data: soldAdultDiaperOnlineOrder,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 <script>
     function updateForm() {
