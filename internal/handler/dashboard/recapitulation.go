@@ -102,6 +102,24 @@ func (h *dashboardHandler) GetRecapitulation(ctx *gin.Context) {
 		return
 	}
 
+	recapSalesFormulaMilkByMonthOfflineOrder, err := h.recapService.RecapSalesFormulaMilkByMonthOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	recapSalesBabyDiaperByMonthOfflineOrder, err := h.recapService.RecapSalesBabyDiaperByMonthOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
+	recapSalesAdultDiaperByMonthOfflineOrder, err := h.recapService.RecapSalesAdultDiaperByMonthOfflineOrder()
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return
+	}
+
 	grossProfitFormulaMilk := helper.FormatRupiah(float64(grossProfitFormulaMilkOfflineOrder + grossProfitFormulaMilkOnlineOrder))
 	grossProfitBabyDiaper := helper.FormatRupiah(float64(grossProfitBabyDiaperOfflineOrder + grossProfitBabyDiaperOnlineOrder))
 	grossProfitAdultDiaper := helper.FormatRupiah(float64(grossProfitAdultDiaperOfflineOrder + grossProfitAdultDiaperOnlineOrder))
@@ -111,15 +129,18 @@ func (h *dashboardHandler) GetRecapitulation(ctx *gin.Context) {
 	netProfitAdultDiaper := helper.FormatRupiah(float64(netProfitAdultDiaperOfflineOrder + netProfitAdultDiaperOnlineOrder))
 
 	ctx.HTML(http.StatusOK, "dashboard-recapitulation.html", gin.H{
-		"status":                                  status,
-		"grossProfitFormulaMilk":                  grossProfitFormulaMilk,
-		"grossProfitBabyDiaper":                   grossProfitBabyDiaper,
-		"grossProfitAdultDiaper":                  grossProfitAdultDiaper,
-		"netProfitFormulaMilk":                    netProfitFormulaMilk,
-		"netProfitBabyDiaper":                     netProfitBabyDiaper,
-		"netProfitAdultDiaper":                    netProfitAdultDiaper,
-		"recapSalesFormulaMilkByMonthOnlineOrder": recapSalesFormulaMilkByMonthOnlineOrder,
-		"recapSalesBabyDiaperByMonthOnlineOrder":  recapSalesBabyDiaperByMonthOnlineOrder,
-		"recapSalesAdultDiaperByMonthOnlineOrder": recapSalesAdultDiaperByMonthOnlineOrder,
+		"status":                                   status,
+		"grossProfitFormulaMilk":                   grossProfitFormulaMilk,
+		"grossProfitBabyDiaper":                    grossProfitBabyDiaper,
+		"grossProfitAdultDiaper":                   grossProfitAdultDiaper,
+		"netProfitFormulaMilk":                     netProfitFormulaMilk,
+		"netProfitBabyDiaper":                      netProfitBabyDiaper,
+		"netProfitAdultDiaper":                     netProfitAdultDiaper,
+		"recapSalesFormulaMilkByMonthOnlineOrder":  recapSalesFormulaMilkByMonthOnlineOrder,
+		"recapSalesBabyDiaperByMonthOnlineOrder":   recapSalesBabyDiaperByMonthOnlineOrder,
+		"recapSalesAdultDiaperByMonthOnlineOrder":  recapSalesAdultDiaperByMonthOnlineOrder,
+		"recapSalesFormulaMilkByMonthOfflineOrder": recapSalesFormulaMilkByMonthOfflineOrder,
+		"recapSalesBabyDiaperByMonthOfflineOrder":  recapSalesBabyDiaperByMonthOfflineOrder,
+		"recapSalesAdultDiaperByMonthOfflineOrder": recapSalesAdultDiaperByMonthOfflineOrder,
 	})
 }

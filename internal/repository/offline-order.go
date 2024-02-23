@@ -27,6 +27,9 @@ type OfflineOrderRepository interface {
 	RecapNetProfitFormulaMilkOfflineOrder() (int, error)
 	RecapNetProfitBabyDiaperOfflineOrder() (int, error)
 	RecapNetProfitAdultDiaperOfflineOrder() (int, error)
+	RecapSalesFormulaMilkByMonthOfflineOrder() ([]model.RecapSalesByMonth, error)
+	RecapSalesBabyDiaperByMonthOfflineOrder() ([]model.RecapSalesByMonth, error)
+	RecapSalesAdultDiaperByMonthOfflineOrder() ([]model.RecapSalesByMonth, error)
 }
 
 func NewOfflineOrderRepository(DB *gorm.DB) *offlineOrderRepository {
@@ -193,4 +196,58 @@ func (r *offlineOrderRepository) RecapNetProfitAdultDiaperOfflineOrder() (int, e
 	err := r.DB.Raw(query).First(&NetProfit).Error
 
 	return NetProfit, err
+}
+
+func (r *offlineOrderRepository) RecapSalesFormulaMilkByMonthOfflineOrder() ([]model.RecapSalesByMonth, error) {
+	var RecapSalesByMonth []model.RecapSalesByMonth
+
+	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
+		FROM detail_offline_orders doo  
+			left join products p on doo.product_id = p.id 
+			left join categories c on p.category_id = c.id 
+		WHERE doo.created_at >= current_date - interval '6 months' 
+			AND doo.created_at <= current_date 
+		    and c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
+		group by date_trunc('month', doo.created_at)
+		order by bulan;`
+
+	err := r.DB.Raw(query).Scan(&RecapSalesByMonth).Error
+
+	return RecapSalesByMonth, err
+}
+
+func (r *offlineOrderRepository) RecapSalesBabyDiaperByMonthOfflineOrder() ([]model.RecapSalesByMonth, error) {
+	var RecapSalesByMonth []model.RecapSalesByMonth
+
+	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
+		FROM detail_offline_orders doo  
+			left join products p on doo.product_id = p.id 
+			left join categories c on p.category_id = c.id 
+		WHERE doo.created_at >= current_date - interval '6 months' 
+			AND doo.created_at <= current_date 
+		    and c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
+		group by date_trunc('month', doo.created_at)
+		order by bulan;`
+
+	err := r.DB.Raw(query).Scan(&RecapSalesByMonth).Error
+
+	return RecapSalesByMonth, err
+}
+
+func (r *offlineOrderRepository) RecapSalesAdultDiaperByMonthOfflineOrder() ([]model.RecapSalesByMonth, error) {
+	var RecapSalesByMonth []model.RecapSalesByMonth
+
+	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
+		FROM detail_offline_orders doo  
+			left join products p on doo.product_id = p.id 
+			left join categories c on p.category_id = c.id 
+		WHERE doo.created_at >= current_date - interval '6 months' 
+			AND doo.created_at <= current_date 
+		    and c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
+		group by date_trunc('month', doo.created_at)
+		order by bulan;`
+
+	err := r.DB.Raw(query).Scan(&RecapSalesByMonth).Error
+
+	return RecapSalesByMonth, err
 }

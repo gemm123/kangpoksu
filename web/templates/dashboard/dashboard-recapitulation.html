@@ -36,18 +36,24 @@
             <div id="milkGraphic">
                 <h2>Total penjualan susu formula order online</h2>
                 <canvas id="chartFormulaMilkOnlineOrder"></canvas>
+                <h2>Total penjualan susu formula order offline</h2>
+                <canvas id="chartFormulaMilkOfflineOrder"></canvas>
                 <p><strong>Keuntungan kotor susu formula: {{ .grossProfitFormulaMilk }}</strong></p>
                 <p><strong>Keuntungan bersih susu formula: {{ .netProfitFormulaMilk }}</strong></p>
             </div>
             <div id="babyGraphic" style="display: none">
                 <h2>Total penjualan popok bayi order online</h2>
                 <canvas id="chartBabyDiaperOnlineOrder"></canvas>
+                <h2>Total penjualan popok bayi order offline</h2>
+                <canvas id="chartBabyDiaperOfflineOrder"></canvas>
                 <p><strong>Keuntungan kotor popok bayi: {{ .grossProfitBabyDiaper }}</strong></p>
                 <p><strong>Keuntungan bersih popok bayi: {{ .netProfitBabyDiaper }}</strong></p>
             </div>
             <div id="adultGraphic" style="display: none">
                 <h2>Total penjualan popok dewasa order online</h2>
                 <canvas id="chartAdultDiaperOnlineOrder"></canvas>
+                <h2>Total penjualan popok dewasa order offline</h2>
+                <canvas id="chartAdultDiaperOfflineOrder"></canvas>
                 <p><strong>Keuntungan kotor popok dewasa: {{ .grossProfitAdultDiaper }}</strong></p>
                 <p><strong>Keuntungan bersih popok dewasa: {{ .netProfitAdultDiaper }}</strong></p>
             </div>
@@ -80,6 +86,24 @@
         soldAdultDiaperOnlineOrder.push(recapSale.Sold);
     })
 
+    const soldFormulaMilkOfflineOrder = [];
+    const recapSalesFormulaMilkByMonthOfflineOrder = {{.recapSalesFormulaMilkByMonthOfflineOrder}}
+    recapSalesFormulaMilkByMonthOfflineOrder.forEach(recapSale => {
+        soldFormulaMilkOfflineOrder.push(recapSale.Sold);
+    })
+
+    const soldBabyDiaperOfflineOrder = [];
+    const recapSalesBabyDiaperByMonthOfflineOrder = {{.recapSalesBabyDiaperByMonthOfflineOrder}}
+    recapSalesBabyDiaperByMonthOfflineOrder.forEach(recapSale => {
+        soldBabyDiaperOfflineOrder.push(recapSale.Sold);
+    })
+
+    const soldAdultDiaperOfflineOrder = [];
+    const recapSalesAdultDiaperByMonthOfflineOrder = {{.recapSalesAdultDiaperByMonthOfflineOrder}}
+    recapSalesAdultDiaperByMonthOfflineOrder.forEach(recapSale => {
+        soldAdultDiaperOfflineOrder.push(recapSale.Sold);
+    })
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -97,7 +121,7 @@
         data: {
             labels: sixMonthsBackMonths,
             datasets: [{
-                label: 'Total penjualan susu formula order offline',
+                label: 'Total penjualan susu formula order online',
                 data: sold,
                 borderWidth: 1
             }]
@@ -118,7 +142,7 @@
         data: {
             labels: sixMonthsBackMonths,
             datasets: [{
-                label: 'Total penjualan susu formula order offline',
+                label: 'Total penjualan popok bayi order online',
                 data: soldBabyDiaperOnlineOrder,
                 borderWidth: 1
             }]
@@ -139,8 +163,71 @@
         data: {
             labels: sixMonthsBackMonths,
             datasets: [{
-                label: 'Total penjualan susu formula order offline',
+                label: 'Total penjualan popok dewasa order online',
                 data: soldAdultDiaperOnlineOrder,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const chartFormulaMilkOfflineOrder = document.getElementById('chartFormulaMilkOfflineOrder');
+
+    new Chart(chartFormulaMilkOfflineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan susu formula order offline',
+                data: soldFormulaMilkOfflineOrder,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const chartBabyDiaperOfflineOrder = document.getElementById('chartBabyDiaperOfflineOrder');
+
+    new Chart(chartBabyDiaperOfflineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan popok bayi order offline',
+                data: soldBabyDiaperOfflineOrder,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const chartAdultDiaperOfflineOrder = document.getElementById('chartAdultDiaperOfflineOrder');
+
+    new Chart(chartAdultDiaperOfflineOrder, {
+        type: 'line',
+        data: {
+            labels: sixMonthsBackMonths,
+            datasets: [{
+                label: 'Total penjualan popok dewasa order offline',
+                data: soldAdultDiaperOfflineOrder,
                 borderWidth: 1
             }]
         },
