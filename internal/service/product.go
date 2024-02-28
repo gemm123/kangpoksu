@@ -30,6 +30,9 @@ type ProductService interface {
 	GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error)
 	GetProductById(id uuid.UUID) (model.Product, error)
 	SearchProductsByName(name string) ([]model.SearchResult, error)
+	ReportSalesFormulaMilkByMonthYear(month, year int) ([]model.ProductSales, error)
+	ReportSalesBabyDiaperByMonthYear(month, year int) ([]model.ProductSales, error)
+	ReportSalesAdultDiaperByMonthYear(month, year int) ([]model.ProductSales, error)
 }
 
 func NewProductService(productRepository repository.ProductRepository) *productService {
@@ -249,4 +252,73 @@ func (s *productService) SearchProductsByName(name string) ([]model.SearchResult
 	}
 
 	return searchResult, nil
+}
+
+func (s *productService) ReportSalesFormulaMilkByMonthYear(month, year int) ([]model.ProductSales, error) {
+	productSales, err := s.productRepository.ReportSalesFormulaMilkByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+
+	for i, productSale := range productSales {
+		product, err := s.productRepository.GetProductById(productSale.Id)
+		if err != nil {
+			log.Println("error: " + err.Error())
+			return productSales, err
+		}
+
+		productSales[i].Price = product.Price
+		productSales[i].PriceFormatted = helper.FormatRupiah(float64(productSales[i].Price))
+		productSales[i].TotalPrice = productSales[i].Sold * product.Price
+		productSales[i].TotalPriceFormatted = helper.FormatRupiah(float64(productSales[i].TotalPrice))
+	}
+
+	return productSales, nil
+}
+
+func (s *productService) ReportSalesBabyDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
+	productSales, err := s.productRepository.ReportSalesBabyDiaperByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+
+	for i, productSale := range productSales {
+		product, err := s.productRepository.GetProductById(productSale.Id)
+		if err != nil {
+			log.Println("error: " + err.Error())
+			return productSales, err
+		}
+
+		productSales[i].Price = product.Price
+		productSales[i].PriceFormatted = helper.FormatRupiah(float64(productSales[i].Price))
+		productSales[i].TotalPrice = productSales[i].Sold * product.Price
+		productSales[i].TotalPriceFormatted = helper.FormatRupiah(float64(productSales[i].TotalPrice))
+	}
+
+	return productSales, nil
+}
+
+func (s *productService) ReportSalesAdultDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
+	productSales, err := s.productRepository.ReportSalesAdultDiaperByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+
+	for i, productSale := range productSales {
+		product, err := s.productRepository.GetProductById(productSale.Id)
+		if err != nil {
+			log.Println("error: " + err.Error())
+			return productSales, err
+		}
+
+		productSales[i].Price = product.Price
+		productSales[i].PriceFormatted = helper.FormatRupiah(float64(productSales[i].Price))
+		productSales[i].TotalPrice = productSales[i].Sold * product.Price
+		productSales[i].TotalPriceFormatted = helper.FormatRupiah(float64(productSales[i].TotalPrice))
+	}
+
+	return productSales, nil
 }

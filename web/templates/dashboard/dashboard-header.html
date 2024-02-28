@@ -57,6 +57,19 @@
                         </a>
                     </li>
                     {{ end }}
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle text-decoration-none ps-3 text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Laporan Penjualan
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/dashboard/report/sales/formula-milk">Susu Formula</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/report/sales/baby-diaper">Popok Bayi</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/report/sales/adult-diaper">Popok Dewasa</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
                     <li class="nav-item bottom-button">
                         <form action="/dashboard/logout" method="post">
                             <button class="btn btn-link text-decoration-none text-light" type="submit">Logout</button>

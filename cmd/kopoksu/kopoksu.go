@@ -126,6 +126,15 @@ func main() {
 
 	dashboard.GET("/recapitulation", dashboardHandler.GetRecapitulation)
 
+	dashboard.GET("/report/sales/formula-milk", dashboardHandler.FormReportSalesFormulaMilk)
+	dashboard.POST("/report/sales/formula-milk", dashboardHandler.PostFormReportSalesFormulaMilk)
+
+	dashboard.GET("/report/sales/baby-diaper", dashboardHandler.FormReportSalesBabyDiaper)
+	dashboard.POST("/report/sales/baby-diaper", dashboardHandler.PostFormReportSalesBabyDiaper)
+
+	dashboard.GET("/report/sales/adult-diaper", dashboardHandler.FormReportSalesAdultDiaper)
+	dashboard.POST("/report/sales/adult-diaper", dashboardHandler.PostFormReportSalesAdultDiaper)
+
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)
 	router.GET("/search", homeHandler.Search)

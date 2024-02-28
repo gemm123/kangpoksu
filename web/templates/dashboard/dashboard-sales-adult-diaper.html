@@ -1,0 +1,35 @@
+{{ template "dashboard-header.html" . }}
+
+<div class="container">
+    <div class="row ms-2">
+        <h3>Laporan Penjualan Popok Dewasa</h3>
+    </div>
+    <div class="row ms-2">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Produk</th>
+                    <th scope="col">Jumlah</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Total Harga</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range $index, $data := .productSales }}
+                <tr>
+                    <td>{{ add $index }}</td>
+                    <td>{{ $data.Name }}</td>
+                    <td>{{ $data.Sold }}</td>
+                    <td>{{ $data.PriceFormatted }}</td>
+                    <td>{{ $data.TotalPriceFormatted }}</td>
+                </tr>
+                {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{ template "dashboard-footer.html" }}

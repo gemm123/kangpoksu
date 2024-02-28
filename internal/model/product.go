@@ -36,3 +36,13 @@ type SearchResult struct {
 	Name     string    `json:"name" gorm:"name"`
 	Category string    `json:"category" gorm:"category"`
 }
+
+type ProductSales struct {
+	Id                  uuid.UUID `gorm:"id"`
+	Name                string    `gorm:"name"`
+	Sold                int       `gorm:"sold"`
+	Price               int
+	TotalPrice          int
+	PriceFormatted      string
+	TotalPriceFormatted string
+}
