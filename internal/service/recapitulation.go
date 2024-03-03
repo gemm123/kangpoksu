@@ -13,18 +13,18 @@ type recapService struct {
 }
 
 type RecapService interface {
-	GrossProfitRecapFormulaMilkOfflineOrder() (int, error)
-	GrossProfitRecapBabyDiaperOfflineOrder() (int, error)
-	GrossProfitRecapAdultDiaperOfflineOrder() (int, error)
-	GrossProfitRecapFormulaMilkOnlineOrder() (int, error)
-	GrossProfitRecapBabyDiaperOnlineOrder() (int, error)
-	GrossProfitRecapAdultDiaperOnlineOrder() (int, error)
-	NetProfitRecapFormulaMilkOfflineOrder() (int, error)
-	NetProfitRecapBabyDiaperOfflineOrder() (int, error)
-	NetProfitRecapAdultDiaperOfflineOrder() (int, error)
-	NetProfitRecapFormulaMilkOnlineOrder() (int, error)
-	NetProfitRecapBabyDiaperOnlineOrder() (int, error)
-	NetProfitRecapAdultDiaperOnlineOrder() (int, error)
+	//GrossProfitRecapFormulaMilkOfflineOrder() (int, error)
+	//GrossProfitRecapBabyDiaperOfflineOrder() (int, error)
+	//GrossProfitRecapAdultDiaperOfflineOrder() (int, error)
+	//GrossProfitRecapFormulaMilkOnlineOrder() (int, error)
+	//GrossProfitRecapBabyDiaperOnlineOrder() (int, error)
+	//GrossProfitRecapAdultDiaperOnlineOrder() (int, error)
+	ProfitRecapFormulaMilkOfflineOrder() (int, error)
+	ProfitRecapBabyDiaperOfflineOrder() (int, error)
+	ProfitRecapAdultDiaperOfflineOrder() (int, error)
+	ProfitRecapFormulaMilkOnlineOrder() (int, error)
+	ProfitRecapBabyDiaperOnlineOrder() (int, error)
+	ProfitRecapAdultDiaperOnlineOrder() (int, error)
 	RecapSalesFormulaMilkByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
 	RecapSalesBabyDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
 	RecapSalesAdultDiaperByMonthOnlineOrder() ([]model.RecapSalesByMonth, error)
@@ -40,124 +40,124 @@ func NewRecapService(offlineOrderRepository repository.OfflineOrderRepository, o
 	}
 }
 
-func (s *recapService) GrossProfitRecapFormulaMilkOfflineOrder() (int, error) {
-	grossProfitFormulaMilkOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitFormulaMilkOfflineOrder()
+//func (s *recapService) GrossProfitRecapFormulaMilkOfflineOrder() (int, error) {
+//	grossProfitFormulaMilkOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitFormulaMilkOfflineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitFormulaMilkOfflineOrder, err
+//	}
+//
+//	return grossProfitFormulaMilkOfflineOrder, nil
+//}
+//
+//func (s *recapService) GrossProfitRecapBabyDiaperOfflineOrder() (int, error) {
+//	grossProfitBabyDiaperOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitBabyDiaperOfflineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitBabyDiaperOfflineOrder, err
+//	}
+//
+//	return grossProfitBabyDiaperOfflineOrder, nil
+//}
+//
+//func (s *recapService) GrossProfitRecapAdultDiaperOfflineOrder() (int, error) {
+//	grossProfitAdultDiaperOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitAdultDiaperOfflineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitAdultDiaperOfflineOrder, err
+//	}
+//
+//	return grossProfitAdultDiaperOfflineOrder, nil
+//}
+//
+//func (s *recapService) GrossProfitRecapFormulaMilkOnlineOrder() (int, error) {
+//	grossProfitFormulaMilkOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitFormulaMilkOnlineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitFormulaMilkOnlineOrder, err
+//	}
+//
+//	return grossProfitFormulaMilkOnlineOrder, nil
+//}
+//
+//func (s *recapService) GrossProfitRecapBabyDiaperOnlineOrder() (int, error) {
+//	grossProfitBabyDiaperOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitBabyDiaperOnlineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitBabyDiaperOnlineOrder, err
+//	}
+//
+//	return grossProfitBabyDiaperOnlineOrder, nil
+//}
+//
+//func (s *recapService) GrossProfitRecapAdultDiaperOnlineOrder() (int, error) {
+//	grossProfitAdultDiaperOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitAdultDiaperOnlineOrder()
+//	if err != nil {
+//		log.Println("error: " + err.Error())
+//		return grossProfitAdultDiaperOnlineOrder, err
+//	}
+//
+//	return grossProfitAdultDiaperOnlineOrder, nil
+//}
+
+func (s *recapService) ProfitRecapFormulaMilkOfflineOrder() (int, error) {
+	ProfitFormulaMilkOfflineOrder, err := s.offlineOrderRepository.RecapProfitFormulaMilkOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitFormulaMilkOfflineOrder, err
+		return ProfitFormulaMilkOfflineOrder, err
 	}
 
-	return grossProfitFormulaMilkOfflineOrder, nil
+	return ProfitFormulaMilkOfflineOrder, nil
 }
 
-func (s *recapService) GrossProfitRecapBabyDiaperOfflineOrder() (int, error) {
-	grossProfitBabyDiaperOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitBabyDiaperOfflineOrder()
+func (s *recapService) ProfitRecapBabyDiaperOfflineOrder() (int, error) {
+	ProfitBabyDiaperOfflineOrder, err := s.offlineOrderRepository.RecapProfitBabyDiaperOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitBabyDiaperOfflineOrder, err
+		return ProfitBabyDiaperOfflineOrder, err
 	}
 
-	return grossProfitBabyDiaperOfflineOrder, nil
+	return ProfitBabyDiaperOfflineOrder, nil
 }
 
-func (s *recapService) GrossProfitRecapAdultDiaperOfflineOrder() (int, error) {
-	grossProfitAdultDiaperOfflineOrder, err := s.offlineOrderRepository.RecapGrossProfitAdultDiaperOfflineOrder()
+func (s *recapService) ProfitRecapAdultDiaperOfflineOrder() (int, error) {
+	ProfitAdultDiaperOfflineOrder, err := s.offlineOrderRepository.RecapProfitAdultDiaperOfflineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitAdultDiaperOfflineOrder, err
+		return ProfitAdultDiaperOfflineOrder, err
 	}
 
-	return grossProfitAdultDiaperOfflineOrder, nil
+	return ProfitAdultDiaperOfflineOrder, nil
 }
 
-func (s *recapService) GrossProfitRecapFormulaMilkOnlineOrder() (int, error) {
-	grossProfitFormulaMilkOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitFormulaMilkOnlineOrder()
+func (s *recapService) ProfitRecapFormulaMilkOnlineOrder() (int, error) {
+	ProfitFormulaMilkOnlineOrder, err := s.onlineOrderRepository.RecapProfitFormulaMilkOnlineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitFormulaMilkOnlineOrder, err
+		return ProfitFormulaMilkOnlineOrder, err
 	}
 
-	return grossProfitFormulaMilkOnlineOrder, nil
+	return ProfitFormulaMilkOnlineOrder, nil
 }
 
-func (s *recapService) GrossProfitRecapBabyDiaperOnlineOrder() (int, error) {
-	grossProfitBabyDiaperOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitBabyDiaperOnlineOrder()
+func (s *recapService) ProfitRecapBabyDiaperOnlineOrder() (int, error) {
+	ProfitBabyDiaperOnlineOrder, err := s.onlineOrderRepository.RecapProfitBabyDiaperOnlineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitBabyDiaperOnlineOrder, err
+		return ProfitBabyDiaperOnlineOrder, err
 	}
 
-	return grossProfitBabyDiaperOnlineOrder, nil
+	return ProfitBabyDiaperOnlineOrder, nil
 }
 
-func (s *recapService) GrossProfitRecapAdultDiaperOnlineOrder() (int, error) {
-	grossProfitAdultDiaperOnlineOrder, err := s.onlineOrderRepository.RecapGrossProfitAdultDiaperOnlineOrder()
+func (s *recapService) ProfitRecapAdultDiaperOnlineOrder() (int, error) {
+	ProfitAdultDiaperOnlineOrder, err := s.onlineOrderRepository.RecapProfitAdultDiaperOnlineOrder()
 	if err != nil {
 		log.Println("error: " + err.Error())
-		return grossProfitAdultDiaperOnlineOrder, err
+		return ProfitAdultDiaperOnlineOrder, err
 	}
 
-	return grossProfitAdultDiaperOnlineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapFormulaMilkOfflineOrder() (int, error) {
-	netProfitFormulaMilkOfflineOrder, err := s.offlineOrderRepository.RecapNetProfitFormulaMilkOfflineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitFormulaMilkOfflineOrder, err
-	}
-
-	return netProfitFormulaMilkOfflineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapBabyDiaperOfflineOrder() (int, error) {
-	netProfitBabyDiaperOfflineOrder, err := s.offlineOrderRepository.RecapNetProfitBabyDiaperOfflineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitBabyDiaperOfflineOrder, err
-	}
-
-	return netProfitBabyDiaperOfflineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapAdultDiaperOfflineOrder() (int, error) {
-	netProfitAdultDiaperOfflineOrder, err := s.offlineOrderRepository.RecapNetProfitAdultDiaperOfflineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitAdultDiaperOfflineOrder, err
-	}
-
-	return netProfitAdultDiaperOfflineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapFormulaMilkOnlineOrder() (int, error) {
-	netProfitFormulaMilkOnlineOrder, err := s.onlineOrderRepository.RecapNetProfitFormulaMilkOnlineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitFormulaMilkOnlineOrder, err
-	}
-
-	return netProfitFormulaMilkOnlineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapBabyDiaperOnlineOrder() (int, error) {
-	netProfitBabyDiaperOnlineOrder, err := s.onlineOrderRepository.RecapNetProfitBabyDiaperOnlineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitBabyDiaperOnlineOrder, err
-	}
-
-	return netProfitBabyDiaperOnlineOrder, nil
-}
-
-func (s *recapService) NetProfitRecapAdultDiaperOnlineOrder() (int, error) {
-	netProfitAdultDiaperOnlineOrder, err := s.onlineOrderRepository.RecapNetProfitAdultDiaperOnlineOrder()
-	if err != nil {
-		log.Println("error: " + err.Error())
-		return netProfitAdultDiaperOnlineOrder, err
-	}
-
-	return netProfitAdultDiaperOnlineOrder, nil
+	return ProfitAdultDiaperOnlineOrder, nil
 }
 
 func (s *recapService) RecapSalesFormulaMilkByMonthOnlineOrder() ([]model.RecapSalesByMonth, error) {

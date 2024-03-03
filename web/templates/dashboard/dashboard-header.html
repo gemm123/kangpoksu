@@ -52,12 +52,6 @@
                     </li>
                     {{ if eq .status "master" }}
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/dashboard/recapitulation">
-                            Rekapitulasi Penjualan
-                        </a>
-                    </li>
-                    {{ end }}
-                    <li class="nav-item">
                         <div class="dropdown">
                             <button class="btn btn-link dropdown-toggle text-decoration-none ps-3 text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Laporan Penjualan
@@ -66,9 +60,11 @@
                                 <li><a class="dropdown-item" href="/dashboard/report/sales/formula-milk">Susu Formula</a></li>
                                 <li><a class="dropdown-item" href="/dashboard/report/sales/baby-diaper">Popok Bayi</a></li>
                                 <li><a class="dropdown-item" href="/dashboard/report/sales/adult-diaper">Popok Dewasa</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/recapitulation">Rekapitulasi Penjualan</a></li>
                             </ul>
                         </div>
                     </li>
+                    {{ end }}
 
                     <li class="nav-item bottom-button">
                         <form action="/dashboard/logout" method="post">

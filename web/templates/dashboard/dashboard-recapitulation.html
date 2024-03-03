@@ -34,28 +34,59 @@
 
 
             <div id="milkGraphic">
-                <h2>Total penjualan susu formula order online</h2>
-                <canvas id="chartFormulaMilkOnlineOrder"></canvas>
-                <h2>Total penjualan susu formula order offline</h2>
-                <canvas id="chartFormulaMilkOfflineOrder"></canvas>
-                <p><strong>Keuntungan kotor susu formula: {{ .grossProfitFormulaMilk }}</strong></p>
-                <p><strong>Keuntungan bersih susu formula: {{ .netProfitFormulaMilk }}</strong></p>
+                <h4>Total penjualan susu formula order online</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartFormulaMilkOnlineOrder"></canvas>
+                </div>
+
+                <br>
+
+                <h4>Total penjualan susu formula order offline</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartFormulaMilkOfflineOrder"></canvas>
+                </div>
+
+                <br>
+
+<!--                <p><strong>Keuntungan kotor susu formula: {{ .grossProfitFormulaMilk }}</strong></p>-->
+                <h5><strong>Keuntungan penjualan susu formula: {{ .ProfitFormulaMilk }}</strong></h5>
             </div>
+
             <div id="babyGraphic" style="display: none">
-                <h2>Total penjualan popok bayi order online</h2>
-                <canvas id="chartBabyDiaperOnlineOrder"></canvas>
-                <h2>Total penjualan popok bayi order offline</h2>
-                <canvas id="chartBabyDiaperOfflineOrder"></canvas>
-                <p><strong>Keuntungan kotor popok bayi: {{ .grossProfitBabyDiaper }}</strong></p>
-                <p><strong>Keuntungan bersih popok bayi: {{ .netProfitBabyDiaper }}</strong></p>
+                <h4>Total penjualan popok bayi order online</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartBabyDiaperOnlineOrder"></canvas>
+                </div>
+
+                <br>
+
+                <h4>Total penjualan popok bayi order offline</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartBabyDiaperOfflineOrder"></canvas>
+                </div>
+
+                <br>
+<!--                <p><strong>Keuntungan kotor popok bayi: {{ .grossProfitBabyDiaper }}</strong></p>-->
+                <h5><strong>Keuntungan penjualan popok bayi: {{ .ProfitBabyDiaper }}</strong></h5>
             </div>
+
+
             <div id="adultGraphic" style="display: none">
-                <h2>Total penjualan popok dewasa order online</h2>
-                <canvas id="chartAdultDiaperOnlineOrder"></canvas>
-                <h2>Total penjualan popok dewasa order offline</h2>
-                <canvas id="chartAdultDiaperOfflineOrder"></canvas>
-                <p><strong>Keuntungan kotor popok dewasa: {{ .grossProfitAdultDiaper }}</strong></p>
-                <p><strong>Keuntungan bersih popok dewasa: {{ .netProfitAdultDiaper }}</strong></p>
+                <h4>Total penjualan popok dewasa order online</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartAdultDiaperOnlineOrder"></canvas>
+                </div>
+
+                <br>
+
+                <h4>Total penjualan popok dewasa order offline</h4>
+                <div class="chart-container" style="position: relative; height:60vh; width:80vw">
+                    <canvas id="chartAdultDiaperOfflineOrder"></canvas>
+                </div>
+
+                <br>
+<!--                <p><strong>Keuntungan kotor popok dewasa: {{ .grossProfitAdultDiaper }}</strong></p>-->
+                <h5><strong>Keuntungan penjualan popok dewasa: {{ .ProfitAdultDiaper }}</strong></h5>
             </div>
 
         </div>
