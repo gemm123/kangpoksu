@@ -21,14 +21,14 @@ func TestAdminService_CheckCredentials(t *testing.T) {
 	}{
 		{
 			name:         "should success account admin",
-			email:        "admin@kopoksu.com",
-			password:     "adminkopoksu",
+			email:        "admin@kangpoksu.com",
+			password:     "adminkangpoksu",
 			expectResult: true,
 		},
 		{
 			name:         "should success account master",
-			email:        "master@kopoksu.com",
-			password:     "masterkopoksu",
+			email:        "master@kangpoksu.com",
+			password:     "masterkangpoksu",
 			expectResult: true,
 		},
 		{
