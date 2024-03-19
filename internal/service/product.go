@@ -259,11 +259,20 @@ func (s *productService) SearchProductsByName(name string) ([]model.SearchResult
 }
 
 func (s *productService) ReportSalesFormulaMilkByMonthYear(month, year int) ([]model.ProductSales, error) {
-	productSales, err := s.productRepository.ReportSalesFormulaMilkByMonthYear(month, year)
+	var productSales []model.ProductSales
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesFormulaMilkOnlineOrderByMonthYear(month, year)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesFormulaMilkOfflineOrderByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
@@ -282,11 +291,21 @@ func (s *productService) ReportSalesFormulaMilkByMonthYear(month, year int) ([]m
 }
 
 func (s *productService) ReportSalesBabyDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
-	productSales, err := s.productRepository.ReportSalesBabyDiaperByMonthYear(month, year)
+	var productSales []model.ProductSales
+
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesBabyDiaperOnlineOrderByMonthYear(month, year)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesBabyDiaperOfflineOrderByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return []model.ProductSales{}, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
@@ -305,11 +324,20 @@ func (s *productService) ReportSalesBabyDiaperByMonthYear(month, year int) ([]mo
 }
 
 func (s *productService) ReportSalesAdultDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
-	productSales, err := s.productRepository.ReportSalesAdultDiaperByMonthYear(month, year)
+	var productSales []model.ProductSales
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesAdultDiaperOnlineOrderByMonthYear(month, year)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesAdultDiaperOfflineOrderByMonthYear(month, year)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
@@ -329,12 +357,21 @@ func (s *productService) ReportSalesAdultDiaperByMonthYear(month, year int) ([]m
 
 func (s *productService) ReportSalesFormulaMilkByDate(day, month, year int) ([]model.ProductSales, error) {
 	date := fmt.Sprintf("%d-%d-%d", year, month, day)
+	var productSales []model.ProductSales
 
-	productSales, err := s.productRepository.ReportSalesFormulaMilkByDate(date)
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesFormulaMilkOnlineOrderByDate(date)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesFormulaMilkOfflineOrderByDate(date)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
@@ -354,12 +391,20 @@ func (s *productService) ReportSalesFormulaMilkByDate(day, month, year int) ([]m
 
 func (s *productService) ReportSalesBabyDiaperByDate(day, month, year int) ([]model.ProductSales, error) {
 	date := fmt.Sprintf("%d-%d-%d", year, month, day)
-
-	productSales, err := s.productRepository.ReportSalesBabyDiaperByDate(date)
+	var productSales []model.ProductSales
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesBabyDiaperOnlineOrderByDate(date)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesBabyDiaperOfflineOrderByDate(date)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
@@ -379,12 +424,21 @@ func (s *productService) ReportSalesBabyDiaperByDate(day, month, year int) ([]mo
 
 func (s *productService) ReportSalesAdultDiaperByDate(day, month, year int) ([]model.ProductSales, error) {
 	date := fmt.Sprintf("%d-%d-%d", year, month, day)
+	var productSales []model.ProductSales
 
-	productSales, err := s.productRepository.ReportSalesAdultDiaperByDate(date)
+	productSalesOnlineOrder, err := s.productRepository.ReportSalesAdultDiaperOnlineOrderByDate(date)
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return productSales, err
 	}
+	productSales = append(productSales, productSalesOnlineOrder...)
+
+	productSalesOfflineOrder, err := s.productRepository.ReportSalesAdultDiaperOfflineOrderByDate(date)
+	if err != nil {
+		log.Println("error: " + err.Error())
+		return productSales, err
+	}
+	productSales = append(productSales, productSalesOfflineOrder...)
 
 	for i, productSale := range productSales {
 		product, err := s.productRepository.GetProductById(productSale.Id)
