@@ -159,94 +159,184 @@ func (mr *MockProductRepositoryMockRecorder) GetProductById(id any) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductById", reflect.TypeOf((*MockProductRepository)(nil).GetProductById), id)
 }
 
-// ReportSalesAdultDiaperByDate mocks base method.
-func (m *MockProductRepository) ReportSalesAdultDiaperByDate(date string) ([]model.ProductSales, error) {
+// ReportSalesAdultDiaperOfflineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesAdultDiaperOfflineOrderByDate(date string) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperByDate", date)
+	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperOfflineOrderByDate", date)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesAdultDiaperByDate indicates an expected call of ReportSalesAdultDiaperByDate.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperByDate(date any) *gomock.Call {
+// ReportSalesAdultDiaperOfflineOrderByDate indicates an expected call of ReportSalesAdultDiaperOfflineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperOfflineOrderByDate(date any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperByDate), date)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperOfflineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperOfflineOrderByDate), date)
 }
 
-// ReportSalesAdultDiaperByMonthYear mocks base method.
-func (m *MockProductRepository) ReportSalesAdultDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
+// ReportSalesAdultDiaperOfflineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesAdultDiaperOfflineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperByMonthYear", month, year)
+	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperOfflineOrderByMonthYear", month, year)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesAdultDiaperByMonthYear indicates an expected call of ReportSalesAdultDiaperByMonthYear.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperByMonthYear(month, year any) *gomock.Call {
+// ReportSalesAdultDiaperOfflineOrderByMonthYear indicates an expected call of ReportSalesAdultDiaperOfflineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperOfflineOrderByMonthYear(month, year any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperByMonthYear), month, year)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperOfflineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperOfflineOrderByMonthYear), month, year)
 }
 
-// ReportSalesBabyDiaperByDate mocks base method.
-func (m *MockProductRepository) ReportSalesBabyDiaperByDate(date string) ([]model.ProductSales, error) {
+// ReportSalesAdultDiaperOnlineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesAdultDiaperOnlineOrderByDate(date string) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperByDate", date)
+	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperOnlineOrderByDate", date)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesBabyDiaperByDate indicates an expected call of ReportSalesBabyDiaperByDate.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperByDate(date any) *gomock.Call {
+// ReportSalesAdultDiaperOnlineOrderByDate indicates an expected call of ReportSalesAdultDiaperOnlineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperOnlineOrderByDate(date any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperByDate), date)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperOnlineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperOnlineOrderByDate), date)
 }
 
-// ReportSalesBabyDiaperByMonthYear mocks base method.
-func (m *MockProductRepository) ReportSalesBabyDiaperByMonthYear(month, year int) ([]model.ProductSales, error) {
+// ReportSalesAdultDiaperOnlineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesAdultDiaperOnlineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperByMonthYear", month, year)
+	ret := m.ctrl.Call(m, "ReportSalesAdultDiaperOnlineOrderByMonthYear", month, year)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesBabyDiaperByMonthYear indicates an expected call of ReportSalesBabyDiaperByMonthYear.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperByMonthYear(month, year any) *gomock.Call {
+// ReportSalesAdultDiaperOnlineOrderByMonthYear indicates an expected call of ReportSalesAdultDiaperOnlineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesAdultDiaperOnlineOrderByMonthYear(month, year any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperByMonthYear), month, year)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesAdultDiaperOnlineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesAdultDiaperOnlineOrderByMonthYear), month, year)
 }
 
-// ReportSalesFormulaMilkByDate mocks base method.
-func (m *MockProductRepository) ReportSalesFormulaMilkByDate(date string) ([]model.ProductSales, error) {
+// ReportSalesBabyDiaperOfflineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesBabyDiaperOfflineOrderByDate(date string) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkByDate", date)
+	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperOfflineOrderByDate", date)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesFormulaMilkByDate indicates an expected call of ReportSalesFormulaMilkByDate.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkByDate(date any) *gomock.Call {
+// ReportSalesBabyDiaperOfflineOrderByDate indicates an expected call of ReportSalesBabyDiaperOfflineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperOfflineOrderByDate(date any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkByDate), date)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperOfflineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperOfflineOrderByDate), date)
 }
 
-// ReportSalesFormulaMilkByMonthYear mocks base method.
-func (m *MockProductRepository) ReportSalesFormulaMilkByMonthYear(month, year int) ([]model.ProductSales, error) {
+// ReportSalesBabyDiaperOfflineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesBabyDiaperOfflineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkByMonthYear", month, year)
+	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperOfflineOrderByMonthYear", month, year)
 	ret0, _ := ret[0].([]model.ProductSales)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ReportSalesFormulaMilkByMonthYear indicates an expected call of ReportSalesFormulaMilkByMonthYear.
-func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkByMonthYear(month, year any) *gomock.Call {
+// ReportSalesBabyDiaperOfflineOrderByMonthYear indicates an expected call of ReportSalesBabyDiaperOfflineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperOfflineOrderByMonthYear(month, year any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkByMonthYear), month, year)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperOfflineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperOfflineOrderByMonthYear), month, year)
+}
+
+// ReportSalesBabyDiaperOnlineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesBabyDiaperOnlineOrderByDate(date string) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperOnlineOrderByDate", date)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesBabyDiaperOnlineOrderByDate indicates an expected call of ReportSalesBabyDiaperOnlineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperOnlineOrderByDate(date any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperOnlineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperOnlineOrderByDate), date)
+}
+
+// ReportSalesBabyDiaperOnlineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesBabyDiaperOnlineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesBabyDiaperOnlineOrderByMonthYear", month, year)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesBabyDiaperOnlineOrderByMonthYear indicates an expected call of ReportSalesBabyDiaperOnlineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesBabyDiaperOnlineOrderByMonthYear(month, year any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesBabyDiaperOnlineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesBabyDiaperOnlineOrderByMonthYear), month, year)
+}
+
+// ReportSalesFormulaMilkOfflineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesFormulaMilkOfflineOrderByDate(date string) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkOfflineOrderByDate", date)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesFormulaMilkOfflineOrderByDate indicates an expected call of ReportSalesFormulaMilkOfflineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkOfflineOrderByDate(date any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkOfflineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkOfflineOrderByDate), date)
+}
+
+// ReportSalesFormulaMilkOfflineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesFormulaMilkOfflineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkOfflineOrderByMonthYear", month, year)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesFormulaMilkOfflineOrderByMonthYear indicates an expected call of ReportSalesFormulaMilkOfflineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkOfflineOrderByMonthYear(month, year any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkOfflineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkOfflineOrderByMonthYear), month, year)
+}
+
+// ReportSalesFormulaMilkOnlineOrderByDate mocks base method.
+func (m *MockProductRepository) ReportSalesFormulaMilkOnlineOrderByDate(date string) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkOnlineOrderByDate", date)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesFormulaMilkOnlineOrderByDate indicates an expected call of ReportSalesFormulaMilkOnlineOrderByDate.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkOnlineOrderByDate(date any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkOnlineOrderByDate", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkOnlineOrderByDate), date)
+}
+
+// ReportSalesFormulaMilkOnlineOrderByMonthYear mocks base method.
+func (m *MockProductRepository) ReportSalesFormulaMilkOnlineOrderByMonthYear(month, year int) ([]model.ProductSales, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReportSalesFormulaMilkOnlineOrderByMonthYear", month, year)
+	ret0, _ := ret[0].([]model.ProductSales)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReportSalesFormulaMilkOnlineOrderByMonthYear indicates an expected call of ReportSalesFormulaMilkOnlineOrderByMonthYear.
+func (mr *MockProductRepositoryMockRecorder) ReportSalesFormulaMilkOnlineOrderByMonthYear(month, year any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReportSalesFormulaMilkOnlineOrderByMonthYear", reflect.TypeOf((*MockProductRepository)(nil).ReportSalesFormulaMilkOnlineOrderByMonthYear), month, year)
 }
 
 // SaveProduct mocks base method.
