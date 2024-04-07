@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -18,7 +19,16 @@ func NewDbPool() (*gorm.DB, error) {
 		os.Getenv("DATABASE_PORT"),
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	var db *gorm.DB
+	var err error
+	for attempt := 1; attempt <= 5; attempt++ {
+		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err == nil {
+			break
+		}
+		fmt.Printf("Failed to connect to database. Retrying in 5 seconds (attempt %d)\n", attempt)
+		time.Sleep(5 * time.Second)
+	}
 
 	return db, err
 }
