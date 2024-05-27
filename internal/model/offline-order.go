@@ -22,13 +22,15 @@ type DetailOfflineOrderResponse struct {
 }
 
 type OfflineOrder struct {
-	Id          uuid.UUID `gorm:"column:id"`
-	Name        string    `gorm:"column:name" form:"name"`
-	PhoneNumber string    `gorm:"column:phone_number" form:"number"`
-	Total       int       `gorm:"column:total"`
-	Status      string    `gorm:"column:status"`
-	CreatedAt   time.Time `gorm:"column:created_at"`
-	UpdatedAt   time.Time `gorm:"column:updated_at"`
+	Id            uuid.UUID `gorm:"column:id"`
+	Name          string    `gorm:"column:name" form:"name"`
+	PhoneNumber   string    `gorm:"column:phone_number" form:"number"`
+	Total         int       `gorm:"column:total"`
+	Status        string    `gorm:"column:status"`
+	PickupDateStr string    `gorm:"-" form:"pickup-date"`
+	PickupDate    time.Time `gorm:"column:pickup_date"`
+	CreatedAt     time.Time `gorm:"column:created_at"`
+	UpdatedAt     time.Time `gorm:"column:updated_at"`
 }
 
 type EditOfflineOrderResponse struct {
@@ -38,5 +40,6 @@ type EditOfflineOrderResponse struct {
 	Total                      int
 	TotalFormatted             string
 	Status                     string
+	PickupDate                 string
 	DetailOfflineOrderResponse []DetailOfflineOrderResponse
 }

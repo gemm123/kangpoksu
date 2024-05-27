@@ -7,6 +7,7 @@ import (
 	"kopoksu/internal/model"
 	"log"
 	"net/http"
+	"time"
 )
 
 func (h *homeHandler) FormOrder(ctx *gin.Context) {
@@ -55,6 +56,9 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 	totalOrder = helper.RandomNumberOrder(totalOrder)
 	offlineOrder.Total = totalOrder
 	totalFormatted := helper.FormatRupiah(float64(offlineOrder.Total))
+
+	pickupDate, _ := time.Parse("2006-01-02T15:04", offlineOrder.PickupDateStr)
+	offlineOrder.PickupDate = pickupDate
 
 	if err := h.offlineOrderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
 		log.Println("error: " + err.Error())

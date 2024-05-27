@@ -108,6 +108,7 @@ func (s *offlineOrderService) EditOfflineOrder(id uuid.UUID) (model.EditOfflineO
 	editOfflineOrderResponse.Total = offlineOrder.Total
 	editOfflineOrderResponse.TotalFormatted = helper.FormatRupiah(float64(editOfflineOrderResponse.Total))
 	editOfflineOrderResponse.Status = offlineOrder.Status
+	editOfflineOrderResponse.PickupDate = offlineOrder.PickupDate.Format("15:04:05 Monday, 02 January 2006")
 	editOfflineOrderResponse.DetailOfflineOrderResponse = detailOfflineOrderResponse
 
 	return editOfflineOrderResponse, nil

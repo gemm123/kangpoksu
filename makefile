@@ -1,2 +1,2 @@
 run:
-	go run cmd/kopoksu/kopoksu.go
+	go run cmd/kangpoksu/kangpoksu.go
