@@ -39,30 +39,30 @@ func NewOfflineOrderRepository(DB *gorm.DB) *offlineOrderRepository {
 }
 
 func (r *offlineOrderRepository) SaveOfflineOrder(offlineOrder model.OfflineOrder) error {
-	err := r.DB.Create(&offlineOrder).Error
+	err := r.DB.Table("pickup_online_orders").Create(&offlineOrder).Error
 	return err
 }
 
 func (r *offlineOrderRepository) SaveDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
-	err := r.DB.Create(&detailOfflineOrder).Error
+	err := r.DB.Table("detail_pickup_online_orders").Create(&detailOfflineOrder).Error
 	return err
 }
 
 func (r *offlineOrderRepository) GetAllOfflineOrder() ([]model.OfflineOrder, error) {
 	var offlineOrders []model.OfflineOrder
-	err := r.DB.Find(&offlineOrders).Error
+	err := r.DB.Table("pickup_online_orders").Find(&offlineOrders).Error
 	return offlineOrders, err
 }
 
 func (r *offlineOrderRepository) GetOfflineOrderById(id uuid.UUID) (model.OfflineOrder, error) {
 	var offlineOrder model.OfflineOrder
-	err := r.DB.First(&offlineOrder, "id = ?", id).Error
+	err := r.DB.Table("pickup_online_orders").First(&offlineOrder, "id = ?", id).Error
 	return offlineOrder, err
 }
 
 func (r *offlineOrderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrderResponse, error) {
 	var detailOfflineOrdersResponse []model.DetailOfflineOrderResponse
-	err := r.DB.Table("detail_offline_orders").
+	err := r.DB.Table("detail_pickup_online_orders").
 		Select("products.name, detail_offline_orders.amount, detail_offline_orders.amount * products.price as price").
 		Joins("LEFT JOIN products ON products.id = detail_offline_orders.product_id").
 		Where("detail_offline_orders.offline_order_id = ?", id).
@@ -73,26 +73,26 @@ func (r *offlineOrderRepository) GetDetailOfflineOrderByOfflineOrderId(id uuid.U
 
 func (r *offlineOrderRepository) GetAllDetailOfflineOrderByOfflineOrderId(id uuid.UUID) ([]model.DetailOfflineOrder, error) {
 	var detailOfflineOrders []model.DetailOfflineOrder
-	err := r.DB.Table("detail_offline_orders").Where("offline_order_id = ?", id).Find(&detailOfflineOrders).Error
+	err := r.DB.Table("detail_pickup_online_orders").Where("offline_order_id = ?", id).Find(&detailOfflineOrders).Error
 	return detailOfflineOrders, err
 }
 
 func (r *offlineOrderRepository) UpdateOfflineOrder(id uuid.UUID, data map[string]interface{}) error {
-	err := r.DB.Table("offline_orders").Where("id = ?", id).Updates(data).Error
+	err := r.DB.Table("pickup_online_orders").Where("id = ?", id).Updates(data).Error
 	return err
 }
 
 func (r *offlineOrderRepository) DeleteOfflineOrder(offlineOrder model.OfflineOrder) error {
-	return r.DB.Delete(&offlineOrder).Error
+	return r.DB.Table("pickup_online_orders").Delete(&offlineOrder).Error
 }
 
 func (r *offlineOrderRepository) DeleteDetailOfflineOrder(detailOfflineOrder model.DetailOfflineOrder) error {
-	return r.DB.Delete(&detailOfflineOrder).Error
+	return r.DB.Table("pickup_online_orders").Delete(&detailOfflineOrder).Error
 }
 
 func (r *offlineOrderRepository) CountOfflineOrderByStatus(status string) (int, error) {
 	var count int64
-	err := r.DB.Table("offline_orders").Where("status = ?", status).Count(&count).Error
+	err := r.DB.Table("pickup_online_orders").Where("status = ?", status).Count(&count).Error
 	return int(count), err
 }
 
@@ -153,7 +153,7 @@ func (r *offlineOrderRepository) RecapProfitFormulaMilkOfflineOrder() (int, erro
 	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
 		from (
 			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
-    		FROM detail_offline_orders doo
+    		FROM detail_pickup_online_orders doo
     		INNER JOIN products p ON doo.product_id = p.id
     		inner join categories c on p.category_id = c.id
     		where c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
@@ -170,7 +170,7 @@ func (r *offlineOrderRepository) RecapProfitBabyDiaperOfflineOrder() (int, error
 	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
 		from (
 			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
-    		FROM detail_offline_orders doo
+    		FROM detail_pickup_online_orders doo
     		INNER JOIN products p ON doo.product_id = p.id
     		inner join categories c on p.category_id = c.id
     		where c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
@@ -187,7 +187,7 @@ func (r *offlineOrderRepository) RecapProfitAdultDiaperOfflineOrder() (int, erro
 	query := `select coalesce(sum(net_profit_offline_order), 0) as total_net_profit_offline_order  
 		from (
 			SELECT (p.price - p.buy_price) * doo.amount AS net_profit_offline_order
-    		FROM detail_offline_orders doo
+    		FROM detail_pickup_online_orders doo
     		INNER JOIN products p ON doo.product_id = p.id
     		inner join categories c on p.category_id = c.id
     		where c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
@@ -202,7 +202,7 @@ func (r *offlineOrderRepository) RecapSalesFormulaMilkByMonthOfflineOrder() ([]m
 	var RecapSalesByMonth []model.RecapSalesByMonth
 
 	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
-		FROM detail_offline_orders doo  
+		FROM detail_pickup_online_orders doo  
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 
@@ -220,7 +220,7 @@ func (r *offlineOrderRepository) RecapSalesBabyDiaperByMonthOfflineOrder() ([]mo
 	var RecapSalesByMonth []model.RecapSalesByMonth
 
 	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
-		FROM detail_offline_orders doo  
+		FROM detail_pickup_online_orders doo  
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 
@@ -238,7 +238,7 @@ func (r *offlineOrderRepository) RecapSalesAdultDiaperByMonthOfflineOrder() ([]m
 	var RecapSalesByMonth []model.RecapSalesByMonth
 
 	query := `SELECT to_char(date_trunc('month', doo.created_at), 'MM') AS bulan, SUM(doo.amount) AS terjual
-		FROM detail_offline_orders doo  
+		FROM detail_pickup_online_orders doo  
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 

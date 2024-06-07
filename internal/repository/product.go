@@ -130,7 +130,7 @@ func (r *productRepository) ReportSalesFormulaMilkOfflineOrderByMonthYear(month,
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 		left join products p ON p.id = doo.product_id 
 		left join categories c on c.id = p.category_id 
 		where EXTRACT(YEAR FROM CAST(doo.created_at AS date)) = %d
@@ -164,7 +164,7 @@ func (r *productRepository) ReportSalesBabyDiaperOfflineOrderByMonthYear(month, 
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 		left join products p ON p.id = doo.product_id 
 		left join categories c on c.id = p.category_id 
 		where EXTRACT(YEAR FROM CAST(doo.created_at AS date)) = %d
@@ -198,7 +198,7 @@ func (r *productRepository) ReportSalesAdultDiaperOfflineOrderByMonthYear(month,
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 		left join products p ON p.id = doo.product_id 
 		left join categories c on c.id = p.category_id 
 		where EXTRACT(YEAR FROM CAST(doo.created_at AS date)) = %d
@@ -231,7 +231,7 @@ func (r *productRepository) ReportSalesFormulaMilkOfflineOrderByDate(date string
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 			left join products p ON p.id = doo.product_id 
 			left join categories c on c.id = p.category_id 
 		where date(doo.created_at) = '%s'
@@ -263,7 +263,7 @@ func (r *productRepository) ReportSalesBabyDiaperOfflineOrderByDate(date string)
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 			left join products p ON p.id = doo.product_id 
 			left join categories c on c.id = p.category_id 
 		where date(doo.created_at) = '%s'
@@ -295,7 +295,7 @@ func (r *productRepository) ReportSalesAdultDiaperOfflineOrderByDate(date string
 	var proudctSales []model.ProductSales
 
 	query := fmt.Sprintf(`select p.id, p."name", sum(doo.amount) as sold
-		from detail_offline_orders doo 
+		from detail_pickup_online_orders doo 
 			left join products p ON p.id = doo.product_id 
 			left join categories c on c.id = p.category_id 
 		where date(doo.created_at) = '%s'
