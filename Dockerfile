@@ -21,4 +21,4 @@ RUN go mod download
 
 COPY *.go ./
 
-CMD go run cmd/kopoksu/kopoksu.go
+CMD go run cmd/kangpoksu/kangpoksu.go
