@@ -9,23 +9,23 @@ import (
 )
 
 type homeHandler struct {
-	productService      service.ProductService
-	cartService         service.CartService
-	offlineOrderService service.OfflineOrderService
-	onlineOrderService  service.OnlineOrderService
+	productService           service.ProductService
+	cartService              service.CartService
+	pickupOnlineOrderService service.PickupOnlineOrderService
+	onlineOrderService       service.OnlineOrderService
 }
 
 func NewHomeHandler(
 	productService service.ProductService,
 	cartService service.CartService,
-	offlineOrderService service.OfflineOrderService,
+	pickupOnlineOrderService service.PickupOnlineOrderService,
 	onlineOrderService service.OnlineOrderService,
 ) *homeHandler {
 	return &homeHandler{
-		productService:      productService,
-		cartService:         cartService,
-		offlineOrderService: offlineOrderService,
-		onlineOrderService:  onlineOrderService,
+		productService:           productService,
+		cartService:              cartService,
+		pickupOnlineOrderService: pickupOnlineOrderService,
+		onlineOrderService:       onlineOrderService,
 	}
 }
 
@@ -61,15 +61,6 @@ type SearchResult struct {
 
 func (h *homeHandler) Search(ctx *gin.Context) {
 	search := ctx.Query("term")
-
-	//searchResults := ""
-	//if strings.Contains("apple,banana,orange", search) {
-	//	searchResults = "Found: " + search
-	//} else {
-	//	searchResults = "Not Found: " + search
-	//}
-	//
-	//response := SearchResult{Results: searchResults}
 
 	searchResult, err := h.productService.SearchProductsByName(search)
 	if err != nil {

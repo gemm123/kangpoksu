@@ -21,9 +21,6 @@ type OnlineOrderRepository interface {
 	DeleteOnlineOrder(onlineOrder model.OnlineOrder) error
 	DeleteDetailOnlineOrder(detailOnlineOrder model.DetailOnlineOrder) error
 	CountOnlineOrderByStatus(status string) (int, error)
-	//RecapGrossProfitFormulaMilkOnlineOrder() (int, error)
-	//RecapGrossProfitBabyDiaperOnlineOrder() (int, error)
-	//RecapGrossProfitAdultDiaperOnlineOrder() (int, error)
 	RecapProfitFormulaMilkOnlineOrder() (int, error)
 	RecapProfitBabyDiaperOnlineOrder() (int, error)
 	RecapProfitAdultDiaperOnlineOrder() (int, error)
@@ -96,57 +93,6 @@ func (r *onlineOrderRepository) CountOnlineOrderByStatus(status string) (int, er
 	return int(count), err
 }
 
-//func (r *onlineOrderRepository) RecapGrossProfitFormulaMilkOnlineOrder() (int, error) {
-//	var GrossProfit int
-//
-//	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order
-//		from (
-//			SELECT p.price * doo.amount AS gross_profit_online_order
-//    		FROM detail_online_orders doo
-//    		INNER JOIN products p ON doo.product_id = p.id
-//    		inner join categories c on p.category_id = c.id
-//    		where c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
-//		) as gross_profit_online_order;`
-//
-//	err := r.DB.Raw(query).First(&GrossProfit).Error
-//
-//	return GrossProfit, err
-//}
-//
-//func (r *onlineOrderRepository) RecapGrossProfitBabyDiaperOnlineOrder() (int, error) {
-//	var GrossProfit int
-//
-//	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order
-//		from (
-//			SELECT p.price * doo.amount AS gross_profit_online_order
-//    		FROM detail_online_orders doo
-//    		INNER JOIN products p ON doo.product_id = p.id
-//    		inner join categories c on p.category_id = c.id
-//    		where c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
-//		) as gross_profit_online_order;`
-//
-//	err := r.DB.Raw(query).First(&GrossProfit).Error
-//
-//	return GrossProfit, err
-//}
-//
-//func (r *onlineOrderRepository) RecapGrossProfitAdultDiaperOnlineOrder() (int, error) {
-//	var GrossProfit int
-//
-//	query := `select coalesce(sum(gross_profit_online_order), 0) as total_gross_profit_online_order
-//		from (
-//			SELECT p.price * doo.amount AS gross_profit_online_order
-//    		FROM detail_online_orders doo
-//    		INNER JOIN products p ON doo.product_id = p.id
-//    		inner join categories c on p.category_id = c.id
-//    		where c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
-//		) as gross_profit_online_order;`
-//
-//	err := r.DB.Raw(query).First(&GrossProfit).Error
-//
-//	return GrossProfit, err
-//}
-
 func (r *onlineOrderRepository) RecapProfitFormulaMilkOnlineOrder() (int, error) {
 	var NetProfit int
 
@@ -206,7 +152,7 @@ func (r *onlineOrderRepository) RecapSalesFormulaMilkByMonthOnlineOrder() ([]mod
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 
-			AND doo.created_at <= current_date 
+			AND doo.created_at < current_date + interval '1 day' 
 		    and c.id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'
 		group by date_trunc('month', doo.created_at)
 		order by bulan;`
@@ -224,7 +170,7 @@ func (r *onlineOrderRepository) RecapSalesBabyDiaperByMonthOnlineOrder() ([]mode
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 
-			AND doo.created_at <= current_date 
+			AND doo.created_at < current_date + interval '1 day' 
 		    and c.id = '981464fb-3241-4a33-97ae-33b110e2d4aa'
 		group by date_trunc('month', doo.created_at)
 		order by bulan;`
@@ -242,7 +188,7 @@ func (r *onlineOrderRepository) RecapSalesAdultDiaperByMonthOnlineOrder() ([]mod
 			left join products p on doo.product_id = p.id 
 			left join categories c on p.category_id = c.id 
 		WHERE doo.created_at >= current_date - interval '6 months' 
-			AND doo.created_at <= current_date 
+			AND doo.created_at < current_date + interval '1 day' 
 		    and c.id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'
 		group by date_trunc('month', doo.created_at)
 		order by bulan;`

@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <form class="row g-3" action="/dashboard/orders/offline/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="/dashboard/orders/pickup-online/edit/{{.data.Id}}" method="POST" enctype="multipart/form-data">
                     <div class="col-12">
                         <label class="form-label" for="name">Nama:</label>
                         <input class="form-control" type="text" id="name" name="name" value="{{ .data.Name }}" disabled>
@@ -31,7 +31,7 @@
                     <div class="col-3">
                         <label class="form-label">Harga:</label>
                     </div>
-                    {{ range .data.DetailOfflineOrderResponse }}
+                    {{ range .data.DetailPickupOnlineOrderResponse }}
                     <div class="col-6">
                         <input class="form-control" type="text" value="{{ .Name }}" disabled>
                     </div>

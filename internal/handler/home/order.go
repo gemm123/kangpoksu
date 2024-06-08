@@ -31,9 +31,9 @@ func (h *homeHandler) FormOrder(ctx *gin.Context) {
 	})
 }
 
-func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
-	var offlineOrder model.OfflineOrder
-	if err := ctx.ShouldBind(&offlineOrder); err != nil {
+func (h *homeHandler) PostPickupOnlineOrder(ctx *gin.Context) {
+	var pickupOnlineOrder model.PickupOnlineOrder
+	if err := ctx.ShouldBind(&pickupOnlineOrder); err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
@@ -54,13 +54,13 @@ func (h *homeHandler) PostOfflineOrder(ctx *gin.Context) {
 	}
 
 	totalOrder = helper.RandomNumberOrder(totalOrder)
-	offlineOrder.Total = totalOrder
-	totalFormatted := helper.FormatRupiah(float64(offlineOrder.Total))
+	pickupOnlineOrder.Total = totalOrder
+	totalFormatted := helper.FormatRupiah(float64(pickupOnlineOrder.Total))
 
-	pickupDate, _ := time.Parse("2006-01-02T15:04", offlineOrder.PickupDateStr)
-	offlineOrder.PickupDate = pickupDate
+	pickupDate, _ := time.Parse("2006-01-02T15:04", pickupOnlineOrder.PickupDateStr)
+	pickupOnlineOrder.PickupDate = pickupDate
 
-	if err := h.offlineOrderService.SaveOfflineOrder(offlineOrder, cart); err != nil {
+	if err := h.pickupOnlineOrderService.SavePickupOnlineOrder(pickupOnlineOrder, cart); err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}

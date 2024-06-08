@@ -15,26 +15,26 @@ import (
 )
 
 type dashboardHandler struct {
-	adminService        service.AdminService
-	productService      service.ProductService
-	offlineOrderService service.OfflineOrderService
-	onlineOrderService  service.OnlineOrderService
-	recapService        service.RecapService
+	adminService             service.AdminService
+	productService           service.ProductService
+	pickupOnlineOrderService service.PickupOnlineOrderService
+	onlineOrderService       service.OnlineOrderService
+	recapService             service.RecapService
 }
 
 func NewDashboardHandler(
 	adminService service.AdminService,
 	productService service.ProductService,
-	offlineOrderService service.OfflineOrderService,
+	pickupOnlineOrderService service.PickupOnlineOrderService,
 	onlineOrderService service.OnlineOrderService,
 	recapService service.RecapService,
 ) *dashboardHandler {
 	return &dashboardHandler{
-		adminService:        adminService,
-		productService:      productService,
-		offlineOrderService: offlineOrderService,
-		onlineOrderService:  onlineOrderService,
-		recapService:        recapService,
+		adminService:             adminService,
+		productService:           productService,
+		pickupOnlineOrderService: pickupOnlineOrderService,
+		onlineOrderService:       onlineOrderService,
+		recapService:             recapService,
 	}
 }
 
@@ -98,19 +98,19 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	status := session.Get("user")
 
-	countOfflineOrderConfirmationPayment, err := h.offlineOrderService.CountOfflineOrderByStatus("Menunggu konfirmasi pembayaran")
+	countPickupOnlineOrderConfirmationPayment, err := h.pickupOnlineOrderService.CountPickupOnlineOrderByStatus("Menunggu konfirmasi pembayaran")
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
 
-	countOfflineOrderTake, err := h.offlineOrderService.CountOfflineOrderByStatus("Menunggu pengambilan")
+	countPickupOnlineOrderTake, err := h.pickupOnlineOrderService.CountPickupOnlineOrderByStatus("Menunggu pengambilan")
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
 	}
 
-	countOfflineOrderDone, err := h.offlineOrderService.CountOfflineOrderByStatus("Selesai")
+	countPickupOnlineOrderDone, err := h.pickupOnlineOrderService.CountPickupOnlineOrderByStatus("Selesai")
 	if err != nil {
 		log.Println("error: " + err.Error())
 		return
@@ -134,10 +134,10 @@ func (h *dashboardHandler) Home(ctx *gin.Context) {
 		return
 	}
 
-	totalCountConfirmationPayment := countOfflineOrderConfirmationPayment + countOnlineOrderConfirmationPayment
+	totalCountConfirmationPayment := countPickupOnlineOrderConfirmationPayment + countOnlineOrderConfirmationPayment
 	totalCountDelivery := countOnlineOrderDelivery
-	totalCountTake := countOfflineOrderTake
-	totalCountDone := countOfflineOrderDone + countOnlineOrderDone
+	totalCountTake := countPickupOnlineOrderTake
+	totalCountDone := countPickupOnlineOrderDone + countOnlineOrderDone
 
 	ctx.HTML(http.StatusOK, "dashboard-home.html", gin.H{
 		"confirmationPayment": totalCountConfirmationPayment,

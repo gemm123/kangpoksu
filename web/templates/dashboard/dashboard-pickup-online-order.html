@@ -22,10 +22,10 @@
                         <td>{{ $data.Name }}</td>
                         <td>{{ $data.Status }}</td>
                         <td>
-                            <form action="/dashboard/orders/offline/edit/{{ $data.Id }}" method="get" style="display: inline">
+                            <form action="/dashboard/orders/pickup-online/edit/{{ $data.Id }}" method="get" style="display: inline">
                                 <button class="btn btn-outline-primary text-decoration-none btn-sm" type="submit">Edit</button>
                             </form>
-                            <form action="/dashboard/orders/offline/delete/{{ $data.Id }}" method="post" style="display: inline">
+                            <form action="/dashboard/orders/pickup-online/delete/{{ $data.Id }}" method="post" style="display: inline">
                                 <button class="text-decoration-none btn btn-outline-danger btn-sm" type="submit">Delete</button>
                             </form>
                         </td>

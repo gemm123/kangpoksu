@@ -32,29 +32,29 @@ func main() {
 
 	//Repository
 	productRepository := repository.NewProductRepository(db)
-	offlineOrderRepository := repository.NewOfflineOrderRepository(db)
+	pickupOnlineOrderRepository := repository.NewPickupOnlineOrderRepository(db)
 	onlineOrderRepository := repository.NewOnlineOrderRepository(db)
 
 	//Service
 	adminService := service.NewAdminService()
 	productService := service.NewProductService(productRepository)
 	cartService := service.NewCartService(productRepository)
-	offlineOrderService := service.NewOfflineOrderService(offlineOrderRepository, productRepository)
+	pickupOnlineOrderService := service.NewPickupOnlineOrderService(pickupOnlineOrderRepository, productRepository)
 	onlineOrderService := service.NewOnlineOrderService(onlineOrderRepository, productRepository)
-	recapService := service.NewRecapService(offlineOrderRepository, onlineOrderRepository)
+	recapService := service.NewRecapService(pickupOnlineOrderRepository, onlineOrderRepository)
 
 	//Handler
 	dashboardHandler := dashboardHandler.NewDashboardHandler(
 		adminService,
 		productService,
-		offlineOrderService,
+		pickupOnlineOrderService,
 		onlineOrderService,
 		recapService,
 	)
 	homeHandler := homeHandler.NewHomeHandler(
 		productService,
 		cartService,
-		offlineOrderService,
+		pickupOnlineOrderService,
 		onlineOrderService,
 	)
 	shippingHandler := shipping.NewShippingHandler()
@@ -114,10 +114,10 @@ func main() {
 	dashboard.GET("/products/adult-diapers/edit/:id", dashboardHandler.EditProductAdultDiaper)
 	dashboard.POST("/products/adult-diapers/edit/:id", dashboardHandler.UpdateProductAdultDiaper)
 
-	dashboard.GET("/orders/offline", dashboardHandler.GetAllOfflineOrder)
-	dashboard.GET("/orders/offline/edit/:id", dashboardHandler.EditOfflineOrder)
-	dashboard.POST("/orders/offline/edit/:id", dashboardHandler.UpdateOfflineOrder)
-	dashboard.POST("/orders/offline/delete/:id", dashboardHandler.DeleteOfflineOrder)
+	dashboard.GET("/orders/pickup-online", dashboardHandler.GetAllPickupOnlineOrder)
+	dashboard.GET("/orders/pickup-online/edit/:id", dashboardHandler.EditPickupOnlineOrder)
+	dashboard.POST("/orders/pickup-online/edit/:id", dashboardHandler.UpdatePickupOnlineOrder)
+	dashboard.POST("/orders/pickup-online/delete/:id", dashboardHandler.DeletePickupOnlineOrder)
 
 	dashboard.GET("/orders/online", dashboardHandler.GetAllOnlineOrder)
 	dashboard.GET("/orders/online/edit/:id", dashboardHandler.EditOnlineOrder)
@@ -152,7 +152,7 @@ func main() {
 	router.GET("/cart", homeHandler.GetCartProduct)
 	router.POST("/cart-delete", homeHandler.DeleteProductAtCart)
 	router.GET("/order", homeHandler.FormOrder)
-	router.POST("/order/offline", homeHandler.PostOfflineOrder)
+	router.POST("/order/pickup-online", homeHandler.PostPickupOnlineOrder)
 	router.POST("/order/online", homeHandler.PostOnlineOrder)
 
 	router.GET("/api/city", shippingHandler.GetCity)
