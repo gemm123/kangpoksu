@@ -7,48 +7,48 @@ import (
 	"testing"
 )
 
-func setupRecapService(t *testing.T) (*gomock.Controller, *mock_repository.MockOfflineOrderRepository, *mock_repository.MockOnlineOrderRepository, RecapService) {
+func setupRecapService(t *testing.T) (*gomock.Controller, *mock_repository.MockPickupOnlineOrderRepository, *mock_repository.MockOnlineOrderRepository, RecapService) {
 	ctrl := gomock.NewController(t)
-	offlineOrderRepoMock := mock_repository.NewMockOfflineOrderRepository(ctrl)
+	pickupOnlineOrderRepoMock := mock_repository.NewMockPickupOnlineOrderRepository(ctrl)
 	onlineOrderRepoMock := mock_repository.NewMockOnlineOrderRepository(ctrl)
-	recapService := NewRecapService(offlineOrderRepoMock, onlineOrderRepoMock)
-	return ctrl, offlineOrderRepoMock, onlineOrderRepoMock, recapService
+	recapService := NewRecapService(pickupOnlineOrderRepoMock, onlineOrderRepoMock)
+	return ctrl, pickupOnlineOrderRepoMock, onlineOrderRepoMock, recapService
 }
 
-func TestRecapService_ProfitRecapFormulaMilkOfflineOrder(t *testing.T) {
-	ctrl, offlineOrderRepoMock, _, recapService := setupRecapService(t)
+func TestRecapService_ProfitRecapFormulaMilkPickupOnlineOrder(t *testing.T) {
+	ctrl, pickupOnlineOrderRepoMock, _, recapService := setupRecapService(t)
 	defer ctrl.Finish()
 
-	t.Run("should success profit recap formula milk offline order", func(t *testing.T) {
-		offlineOrderRepoMock.EXPECT().RecapProfitFormulaMilkOfflineOrder().Return(0, nil)
+	t.Run("should success profit recap formula milk pickupOnline order", func(t *testing.T) {
+		pickupOnlineOrderRepoMock.EXPECT().RecapProfitFormulaMilkPickupOnlineOrder().Return(0, nil)
 
-		result, err := recapService.ProfitRecapFormulaMilkOfflineOrder()
+		result, err := recapService.ProfitRecapFormulaMilkPickupOnlineOrder()
 		assert.NoError(t, err)
 		assert.Equal(t, 0, result)
 	})
 }
 
-func TestRecapService_ProfitRecapBabyDiaperOfflineOrder(t *testing.T) {
-	ctrl, offlineOrderRepoMock, _, recapService := setupRecapService(t)
+func TestRecapService_ProfitRecapBabyDiaperPickupOnlineOrder(t *testing.T) {
+	ctrl, pickupOnlineOrderRepoMock, _, recapService := setupRecapService(t)
 	defer ctrl.Finish()
 
-	t.Run("should success profit recap baby diaper offline order", func(t *testing.T) {
-		offlineOrderRepoMock.EXPECT().RecapProfitBabyDiaperOfflineOrder().Return(0, nil)
+	t.Run("should success profit recap baby diaper pickupOnline order", func(t *testing.T) {
+		pickupOnlineOrderRepoMock.EXPECT().RecapProfitBabyDiaperPickupOnlineOrder().Return(0, nil)
 
-		result, err := recapService.ProfitRecapBabyDiaperOfflineOrder()
+		result, err := recapService.ProfitRecapBabyDiaperPickupOnlineOrder()
 		assert.NoError(t, err)
 		assert.Equal(t, 0, result)
 	})
 }
 
-func TestRecapService_ProfitRecapAdultDiaperOfflineOrder(t *testing.T) {
-	ctrl, offlineOrderRepoMock, _, recapService := setupRecapService(t)
+func TestRecapService_ProfitRecapAdultDiaperPickupOnlineOrder(t *testing.T) {
+	ctrl, pickupOnlineOrderRepoMock, _, recapService := setupRecapService(t)
 	defer ctrl.Finish()
 
-	t.Run("should success profit recap adult diaper offline order", func(t *testing.T) {
-		offlineOrderRepoMock.EXPECT().RecapProfitAdultDiaperOfflineOrder().Return(0, nil)
+	t.Run("should success profit recap adult diaper pickupOnline order", func(t *testing.T) {
+		pickupOnlineOrderRepoMock.EXPECT().RecapProfitAdultDiaperPickupOnlineOrder().Return(0, nil)
 
-		result, err := recapService.ProfitRecapAdultDiaperOfflineOrder()
+		result, err := recapService.ProfitRecapAdultDiaperPickupOnlineOrder()
 		assert.NoError(t, err)
 		assert.Equal(t, 0, result)
 	})

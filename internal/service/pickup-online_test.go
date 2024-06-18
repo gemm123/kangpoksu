@@ -9,21 +9,21 @@ import (
 	"testing"
 )
 
-func TestOfflineOrderService_GetAllOfflineOrder(t *testing.T) {
+func TestPikupOnlineOrderService_GetAllPickupOnlineOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	offlineOrderRepoMock := mock_repository.NewMockOfflineOrderRepository(ctrl)
+	pickupOnlineOrderRepoMock := mock_repository.NewMockPickupOnlineOrderRepository(ctrl)
 	productRepoMock := mock_repository.NewMockProductRepository(ctrl)
-	offlineOrderService := NewPickupOnlineOrderService(offlineOrderRepoMock, productRepoMock)
+	pickupOnlineOrderService := NewPickupOnlineOrderService(pickupOnlineOrderRepoMock, productRepoMock)
 
-	t.Run("should success get all offline order", func(t *testing.T) {
+	t.Run("should success get all pickupOnline order", func(t *testing.T) {
 		uuidOfflineOrder := uuid.New()
-		offlineOrderRepoMock.EXPECT().GetAllOfflineOrder().Return([]model.PickupOnlineOrder{
+		pickupOnlineOrderRepoMock.EXPECT().GetAllPickupOnlineOrder().Return([]model.PickupOnlineOrder{
 			{
 				Id: uuidOfflineOrder,
 			},
 		}, nil)
 
-		result, err := offlineOrderService.GetAllPickupOnlineOrder()
+		result, err := pickupOnlineOrderService.GetAllPickupOnlineOrder()
 
 		assert.Equal(t, nil, err)
 		assert.Equal(t, []model.PickupOnlineOrder{
