@@ -187,13 +187,13 @@ func (s *productService) DeleteProduct(id uuid.UUID) error {
 		return err
 	}
 
-	imageDir := "./web"
-	imagePath := imageDir + product.Image
-
-	if err := os.Remove(imagePath); err != nil {
-		log.Println("error: " + err.Error())
-		return err
-	}
+	//imageDir := "./web"
+	//imagePath := imageDir + product.Image
+	//
+	//if err := os.Remove(imagePath); err != nil {
+	//	log.Println("error: " + err.Error())
+	//	return err
+	//}
 
 	if err := s.productRepository.DeleteProduct(product); err != nil {
 		log.Println("error: " + err.Error())

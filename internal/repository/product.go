@@ -46,37 +46,37 @@ func NewProductRepository(DB *gorm.DB) *productRepository {
 
 func (r *productRepository) GetAllProductsFormulaMilk() ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Where("category_id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'").Find(&products).Error
+	err := r.DB.Where("category_id = 'ea600c63-283a-415e-8ed1-b10d12c544a0' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
 func (r *productRepository) GetAllProductsFormulaMilkLimit(limit int) ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Limit(limit).Where("category_id = 'ea600c63-283a-415e-8ed1-b10d12c544a0'").Find(&products).Error
+	err := r.DB.Limit(limit).Where("category_id = 'ea600c63-283a-415e-8ed1-b10d12c544a0' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
 func (r *productRepository) GetAllProductsBabyDiaper() ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
+	err := r.DB.Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
 func (r *productRepository) GetAllProductsBabyDiaperLimit(limit int) ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Limit(limit).Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa'").Find(&products).Error
+	err := r.DB.Limit(limit).Where("category_id = '981464fb-3241-4a33-97ae-33b110e2d4aa' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
 func (r *productRepository) GetAllProductsAdultDiaper() ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'").Find(&products).Error
+	err := r.DB.Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
 func (r *productRepository) GetAllProductsAdultDiaperLimit(limit int) ([]model.Product, error) {
 	var products []model.Product
-	err := r.DB.Limit(limit).Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8'").Find(&products).Error
+	err := r.DB.Limit(limit).Where("category_id = 'f5976ce9-7496-4fd2-8322-3beaef36e4d8' AND deleted_at is NULL").Find(&products).Error
 	return products, err
 }
 
@@ -86,7 +86,7 @@ func (r *productRepository) SaveProduct(product model.Product) error {
 }
 
 func (r *productRepository) DeleteProduct(product model.Product) error {
-	return r.DB.Delete(&product).Error
+	return r.DB.Exec("UPDATE products SET deleted_at = NOW() WHERE id = ?", product.Id).Error
 }
 
 func (r *productRepository) GetProductById(id uuid.UUID) (model.Product, error) {
