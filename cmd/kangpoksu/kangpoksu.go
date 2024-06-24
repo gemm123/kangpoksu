@@ -34,6 +34,7 @@ func main() {
 	productRepository := repository.NewProductRepository(db)
 	pickupOnlineOrderRepository := repository.NewPickupOnlineOrderRepository(db)
 	onlineOrderRepository := repository.NewOnlineOrderRepository(db)
+	userRepository := repository.NewUserRepository(db)
 
 	//Service
 	adminService := service.NewAdminService()
@@ -42,6 +43,7 @@ func main() {
 	pickupOnlineOrderService := service.NewPickupOnlineOrderService(pickupOnlineOrderRepository, productRepository)
 	onlineOrderService := service.NewOnlineOrderService(onlineOrderRepository, productRepository)
 	recapService := service.NewRecapService(pickupOnlineOrderRepository, onlineOrderRepository)
+	userService := service.NewUserService(userRepository)
 
 	//Handler
 	dashboardHandler := dashboardHandler.NewDashboardHandler(
@@ -50,6 +52,7 @@ func main() {
 		pickupOnlineOrderService,
 		onlineOrderService,
 		recapService,
+		userService,
 	)
 	homeHandler := homeHandler.NewHomeHandler(
 		productService,
@@ -134,6 +137,13 @@ func main() {
 
 	dashboard.GET("/report/sales/adult-diaper", dashboardHandler.FormReportSalesAdultDiaper)
 	dashboard.POST("/report/sales/adult-diaper", dashboardHandler.PostFormReportSalesAdultDiaper)
+
+	dashboard.GET("/management-users", dashboardHandler.GetAllUser)
+	dashboard.GET("/management-users/create", dashboardHandler.AddUser)
+	dashboard.GET("/management-users/edit/:id", dashboardHandler.EditUser)
+	dashboard.POST("/management-users/create", dashboardHandler.PostAddUser)
+	dashboard.POST("/management-users/edit/:id", dashboardHandler.UpdateUser)
+	dashboard.POST("/management-users/delete/:id", dashboardHandler.DeleteUser)
 
 	router.Use(sessions.Sessions("cart-session", cartStore))
 	router.GET("/", homeHandler.Home)

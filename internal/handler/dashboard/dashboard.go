@@ -20,6 +20,7 @@ type dashboardHandler struct {
 	pickupOnlineOrderService service.PickupOnlineOrderService
 	onlineOrderService       service.OnlineOrderService
 	recapService             service.RecapService
+	userService              service.UserService
 }
 
 func NewDashboardHandler(
@@ -28,6 +29,7 @@ func NewDashboardHandler(
 	pickupOnlineOrderService service.PickupOnlineOrderService,
 	onlineOrderService service.OnlineOrderService,
 	recapService service.RecapService,
+	userService service.UserService,
 ) *dashboardHandler {
 	return &dashboardHandler{
 		adminService:             adminService,
@@ -35,6 +37,7 @@ func NewDashboardHandler(
 		pickupOnlineOrderService: pickupOnlineOrderService,
 		onlineOrderService:       onlineOrderService,
 		recapService:             recapService,
+		userService:              userService,
 	}
 }
 
