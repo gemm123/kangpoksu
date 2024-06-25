@@ -2,29 +2,39 @@ package service
 
 import (
 	"kopoksu/config"
+	"kopoksu/internal/repository"
 	"log"
 )
 
 type adminService struct {
+	userRepo repository.UserRepository
 }
 
 type AdminService interface {
 	CheckCredentials(email, password string) bool
 }
 
-func NewAdminService() *adminService {
-	return &adminService{}
+func NewAdminService(userRepo repository.UserRepository) *adminService {
+	return &adminService{
+		userRepo: userRepo,
+	}
 }
 
 func (s *adminService) CheckCredentials(email, password string) bool {
-	adminEmail := config.AdminEmail()
-	adminPassword := config.AdminPassword()
 	masterEmail := config.MasterEmail()
 	masterPassword := config.MasterPassword()
 
-	if email == adminEmail && password == adminPassword {
+	if email == masterEmail && password == masterPassword {
 		return true
-	} else if email == masterEmail && password == masterPassword {
+	}
+
+	user, err := s.userRepo.GetUserByEmailPassword(email, password)
+	if err != nil {
+		log.Println("error when get user by email and password: ", err.Error())
+		return false
+	}
+
+	if user.Name != "" {
 		return true
 	}
 

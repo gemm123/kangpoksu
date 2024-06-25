@@ -14,6 +14,7 @@ type UserRepository interface {
 	GetAllUser() ([]model.User, error)
 	CreateUser(user model.User) error
 	GetUserById(id uuid.UUID) (model.User, error)
+	GetUserByEmailPassword(email, password string) (model.User, error)
 	UpdateUser(user model.User) error
 	DeleteUser(user model.User) error
 }
@@ -40,6 +41,15 @@ func (r *userRepository) CreateUser(user model.User) error {
 func (r *userRepository) GetUserById(id uuid.UUID) (model.User, error) {
 	var user model.User
 	if err := r.DB.Where("id = ?", id).First(&user).Error; err != nil {
+		return user, err
+	}
+
+	return user, nil
+}
+
+func (r *userRepository) GetUserByEmailPassword(email, password string) (model.User, error) {
+	var user model.User
+	if err := r.DB.Where("email = ? AND password = ?", email, password).First(&user).Error; err != nil {
 		return user, err
 	}
 

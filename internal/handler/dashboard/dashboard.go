@@ -79,7 +79,7 @@ func (h *dashboardHandler) PostLogin(ctx *gin.Context) {
 
 	if strings.Contains(admin.Email, "master") {
 		session.Set("user", "master")
-	} else if strings.Contains(admin.Email, "admin") {
+	} else {
 		session.Set("user", "admin")
 	}
 

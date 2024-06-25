@@ -37,7 +37,7 @@ func main() {
 	userRepository := repository.NewUserRepository(db)
 
 	//Service
-	adminService := service.NewAdminService()
+	adminService := service.NewAdminService(userRepository)
 	productService := service.NewProductService(productRepository)
 	cartService := service.NewCartService(productRepository)
 	pickupOnlineOrderService := service.NewPickupOnlineOrderService(pickupOnlineOrderRepository, productRepository)
