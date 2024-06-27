@@ -20,6 +20,7 @@ type Product struct {
 	UpdatedAt         time.Time `gorm:"column:updated_at"`
 	PriceFormatted    string    `gorm:"-"`
 	BuyPriceFormatted string    `gorm:"-"`
+	DateFormatted     string    `gorm:"-"`
 }
 
 type Cart struct {

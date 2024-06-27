@@ -20,6 +20,7 @@
                         <th scope="col">Harga Jual</th>
                         <th scope="col">Jumlah</th>
                         <th scope="col">Berat(gram)</th>
+                        <th scope="col">Tanggal</th>
                         <th scope="col">Aksi</th>
                     </tr>
                     </thead>
@@ -32,6 +33,7 @@
                         <td>{{ $data.PriceFormatted }}</td>
                         <td>{{ $data.Quantity }}</td>
                         <td>{{ $data.Weight }}</td>
+                        <td>{{ $data.DateFormatted }}</td>
                         <td>
                             <form action="/dashboard/products/formula-milks/edit/{{$data.Id}}" method="get" style="display: inline">
                                 <button class="btn btn-outline-primary text-decoration-none btn-sm" type="submit">Edit</button>
